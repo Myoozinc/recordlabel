@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artistas | MYOOZ InC</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
     <style>
-        /* Page-specific styles */
         .container {
             margin-top: 120px;
         }
@@ -24,16 +25,13 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 3rem;
-            margin: 3rem 0;
+            margin: 3rem auto;
             max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .artist-card {
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             border-radius: 30px;
             overflow: hidden;
@@ -42,7 +40,6 @@
             text-decoration: none;
             color: var(--text-white);
             display: block;
-            cursor: pointer;
         }
 
         .artist-card:hover {
@@ -59,23 +56,6 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            overflow: hidden;
-        }
-
-        .artist-card-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            animation: shine 3s infinite;
-        }
-
-        .artist-card-image img {
-            position: relative;
-            z-index: 1;
         }
 
         .artist-card-content {
@@ -86,18 +66,15 @@
             font-size: 2rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: -1px;
             margin-bottom: 1rem;
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .artist-card-description {
             color: var(--text-secondary);
             line-height: 1.6;
-            font-size: 0.95rem;
         }
 
         @media (max-width: 768px) {
@@ -109,9 +86,22 @@
 </head>
 
 <body>
-    <!-- Header will be loaded here -->
-    <div id="header-placeholder"></div>
 
+    <!-- HEADER -->
+    <nav class="custom-header">
+        <div class="logo-container">
+            <img src="myooz-inc-logo.png" alt="MYOOZ InC Logo" class="logo-img">
+            <div class="logo-text">MYOOZ INC</div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="artistas.html" class="active">Artistas</a>
+            <a href="ggbbeats.html">GGB Beats</a>
+            <a href="tienda.html">Tienda</a>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
     <div class="container">
         <div class="page-header">
             <h1>Nuestros Artistas</h1>
@@ -119,35 +109,49 @@
         </div>
 
         <div class="artists-grid">
-            <!-- Rasta Mia Card -->
+
             <a href="rasta-mia.html" class="artist-card">
                 <div class="artist-card-image">
-                    <img src="myooz-inc-logo.png" alt="Rasta Mia" style="width: 70%; height: 70%; object-fit: contain;">
+                    <img src="myooz-inc-logo.png" alt="Rasta Mia" style="width:70%; height:70%; object-fit:contain;">
                 </div>
                 <div class="artist-card-content">
                     <h2>Rasta Mia</h2>
-                    <p class="artist-card-description">Cantautora del Norte de Francia. Versatilidad musical entre dancehall, latino, pop y más géneros.</p>
+                    <p class="artist-card-description">
+                        Cantautora del Norte de Francia. Versatilidad musical entre dancehall, latino, pop y más géneros.
+                    </p>
                 </div>
             </a>
 
-            <!-- JOSS Card -->
             <a href="joss.html" class="artist-card">
                 <div class="artist-card-image">
-                    <img src="myooz-inc-logo.png" alt="JOSS" style="width: 70%; height: 70%; object-fit: contain;">
+                    <img src="myooz-inc-logo.png" alt="JOSS" style="width:70%; height:70%; object-fit:contain;">
                 </div>
                 <div class="artist-card-content">
                     <h2>JOSS</h2>
-                    <p class="artist-card-description">Cantante y compositor de Venezuela. R&B y Rock con voz dulce y letras emotivas.</p>
+                    <p class="artist-card-description">
+                        Cantante y compositor de Venezuela. R&B y Rock con voz dulce y letras emotivas.
+                    </p>
                 </div>
             </a>
+
         </div>
     </div>
 
-    <!-- Footer will be loaded here -->
-    <div id="footer-placeholder"></div>
+    <!-- FOOTER -->
+    <footer>
+        <div class="social-links">
+            <a href="https://www.youtube.com/@myoozinc" class="social-icon" target="_blank">▶</a>
+            <a href="https://www.instagram.com/myooz.inc/" class="social-icon" target="_blank">📷</a>
+            <a href="https://www.facebook.com/myooz.inc/" class="social-icon" target="_blank">f</a>
+        </div>
+        <p>© 2024 MYOOZ InC</p>
+        <p>
+            <a href="#">Política de Privacidad</a> |
+            <a href="#">Política de Cookies</a>
+        </p>
+    </footer>
 
-    <script src="config.js"></script>
-    <script src="components.js"></script>
+    <script src="navigation.js"></script>
 </body>
 
 </html>
