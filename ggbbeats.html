@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GGB Beats | MYOOZ InC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Page-specific styles */
+        .container {
+            margin-top: 120px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-purple) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(74, 0, 224, 0.4);
+        }
+
+        .pricing-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent-purple);
+            filter: brightness(1.5);
+            margin: 1.5rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price-suffix {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features-list li {
+            padding: 0.8rem 0;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-text {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            text-align: center;
+            font-size: 1.05rem;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="custom-header">
+        <div class="logo-container">
+            <img src="myooz-inc-logo.png" alt="MYOOZ InC Logo" class="logo-img">
+            <div class="logo-text">MYOOZ INC</div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="artistas.html">Artistas</a>
+            <a href="ggbbeats.html" class="active">GGB Beats</a>
+            <a href="tienda.html">Tienda</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Estudio Musical</h1>
+            <p class="subtitle">GGB Beats Production Services</p>
+        </div>
+
+        <!-- Licenses Section -->
+        <h2 class="section-title">Licencias</h2>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>WAV Lease</h3>
+                <div class="price">$35<span class="price-suffix"> USD</span></div>
+                <ul class="features-list">
+                    <li>Archivo WAV de alta calidad</li>
+                    <li>Uso no exclusivo</li>
+                    <li>Streaming ilimitado</li>
+                    <li>Video clips permitidos</li>
+                </ul>
+                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Contactar</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Stem Lease</h3>
+                <div class="price">$65-100<span class="price-suffix"> USD</span></div>
+                <ul class="features-list">
+                    <li>Stems separados</li>
+                    <li>Mezcla completa</li>
+                    <li>Uso no exclusivo</li>
+                    <li>Mayor flexibilidad</li>
+                </ul>
+                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Contactar</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Beat Personalizado</h3>
+                <div class="price">$120<span class="price-suffix"> USD</span></div>
+                <ul class="features-list">
+                    <li>Composición y arreglos</li>
+                    <li>Máx. 7 instrumentos</li>
+                    <li>100% original</li>
+                    <li>Hecho a medida</li>
+                </ul>
+                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Contactar</a>
+            </div>
+        </div>
+
+        <!-- Other Services Section -->
+        <h2 class="section-title" style="margin-top: 5rem;">Otros Servicios</h2>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Mezcla</h3>
+                <div class="price">$60<span class="price-suffix"> USD</span></div>
+                <ul class="features-list">
+                    <li>Mezcla profesional</li>
+                    <li>Hasta 3 revisiones</li>
+                    <li>Balance y ecualización</li>
+                    <li>Efectos y procesamiento</li>
+                </ul>
+                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Contactar</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Máster</h3>
+                <div class="price">$60<span class="price-suffix"> USD</span></div>
+                <ul class="features-list">
+                    <li>Masterización profesional</li>
+                    <li>Con referencia</li>
+                    <li>Optimización para streaming</li>
+                    <li>Loudness estándar</li>
+                </ul>
+                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Contactar</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Mezcla + Máster</h3>
+                <div class="price">$100<span class="price-suffix"> USD</span></div>
+                <ul class="features-list">
+                    <li>Paquete completo</li>
+                    <li>Hasta 3 revisiones</li>
+                    <li>Mezcla y master integrados</li>
+                    <li>Listo para distribución</li>
+                </ul>
+                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Contactar</a>
+            </div>
+        </div>
+
+        <!-- Additional Services -->
+        <div class="pricing-grid" style="margin-top: 2rem;">
+            <div class="pricing-card">
+                <h3>Loop Packs</h3>
+                <p style="color: var(--text-secondary); margin: 2rem 0;">
+                    Packs de loops personalizados para tus producciones
+                </p>
+                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Consultar</a>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-card">
+            <p class="info-text">
+                <strong>Todas las ventas son a través de BeatStars.</strong><br><br>
+                Escoge tus beats y pídelos por Instagram DM.<br><br>
+                Licencias sujetas a disponibilidad.
+            </p>
+            
+            <div class="social-links">
+                <a href="https://www.youtube.com/c/ggbbeats" class="social-icon" target="_blank">▶</a>
+                <a href="https://open.spotify.com/intl-es/artist/0QrrPjP73pfBddZBUHUjd0" class="social-icon" target="_blank">♫</a>
+                <a href="https://www.instagram.com/gingerboybeats/" class="social-icon" target="_blank">📷</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://www.youtube.com/@myoozinc" class="social-icon" target="_blank">▶</a>
+            <a href="https://www.instagram.com/myooz.inc/" class="social-icon" target="_blank">📷</a>
+            <a href="https://www.facebook.com/myooz.inc/" class="social-icon" target="_blank">f</a>
+        </div>
+        <p>© 2024 MYOOZ InC</p>
+        <p>
+            <a href="#">Política de Privacidad</a> | 
+            <a href="#">Política de Cookies</a>
+        </p>
+    </footer>
+
+    <script src="navigation.js"></script>
+</body>
+
+</html>

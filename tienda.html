@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda | MYOOZ InC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Page-specific styles */
+        .container {
+            margin-top: 120px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(74, 0, 224, 0.4);
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shine 3s infinite;
+        }
+
+        .product-info {
+            padding: 2rem;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent-purple);
+            filter: brightness(1.5);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px 30px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .coming-soon {
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .coming-soon-icon {
+            font-size: 8rem;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 10px 30px var(--neon-glow));
+        }
+
+        .coming-soon h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .coming-soon p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="custom-header">
+        <div class="logo-container">
+            <img src="myooz-inc-logo.png" alt="MYOOZ InC Logo" class="logo-img">
+            <div class="logo-text">MYOOZ INC</div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="artistas.html">Artistas</a>
+            <a href="ggbbeats.html">GGB Beats</a>
+            <a href="tienda.html" class="active">Tienda</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Tienda</h1>
+            <p class="subtitle">Merch Exclusiva MYOOZ InC</p>
+        </div>
+
+        <!-- Sample Products Grid -->
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">👕</div>
+                <div class="product-info">
+                    <h3 class="product-title">Camiseta MYOOZ</h3>
+                    <p class="product-description">Camiseta oficial del sello con diseño exclusivo</p>
+                    <div class="product-price">$25</div>
+                    <button class="btn" onclick="alert('Próximamente disponible')">Comprar</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">🧢</div>
+                <div class="product-info">
+                    <h3 class="product-title">Gorra MYOOZ</h3>
+                    <p class="product-description">Gorra bordada con logo del sello</p>
+                    <div class="product-price">$20</div>
+                    <button class="btn" onclick="alert('Próximamente disponible')">Comprar</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">🎧</div>
+                <div class="product-info">
+                    <h3 class="product-title">Hoodie Premium</h3>
+                    <p class="product-description">Sudadera con capucha de alta calidad</p>
+                    <div class="product-price">$45</div>
+                    <button class="btn" onclick="alert('Próximamente disponible')">Comprar</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">💿</div>
+                <div class="product-info">
+                    <h3 class="product-title">Sticker Pack</h3>
+                    <p class="product-description">Set de calcomanías MYOOZ InC</p>
+                    <div class="product-price">$8</div>
+                    <button class="btn" onclick="alert('Próximamente disponible')">Comprar</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">🎵</div>
+                <div class="product-info">
+                    <h3 class="product-title">Tote Bag</h3>
+                    <p class="product-description">Bolsa de tela con diseño exclusivo</p>
+                    <div class="product-price">$15</div>
+                    <button class="btn" onclick="alert('Próximamente disponible')">Comprar</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">⚡</div>
+                <div class="product-info">
+                    <h3 class="product-title">Poster Set</h3>
+                    <p class="product-description">Set de 3 posters artísticos</p>
+                    <div class="product-price">$18</div>
+                    <button class="btn" onclick="alert('Próximamente disponible')">Comprar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coming Soon Section -->
+        <div class="coming-soon">
+            <div class="coming-soon-icon">🛍️</div>
+            <h2>Más Productos Próximamente</h2>
+            <p>Estamos preparando nueva merch exclusiva para ti.<br>Síguenos en redes para estar al tanto de los lanzamientos.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://www.youtube.com/@myoozinc" class="social-icon" target="_blank">▶</a>
+            <a href="https://www.instagram.com/myooz.inc/" class="social-icon" target="_blank">📷</a>
+            <a href="https://www.facebook.com/myooz.inc/" class="social-icon" target="_blank">f</a>
+        </div>
+        <p>© 2024 MYOOZ InC</p>
+        <p>
+            <a href="#">Política de Privacidad</a> | 
+            <a href="#">Política de Cookies</a>
+        </p>
+    </footer>
+
+    <script src="navigation.js"></script>
+</body>
+
+</html>
