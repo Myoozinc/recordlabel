@@ -20,28 +20,49 @@
             margin-bottom: 4rem;
         }
 
-        .artist-grid {
+        .artists-grid {
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 3rem;
-            align-items: start;
+            margin: 3rem 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .artist-image {
+        .artist-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            color: var(--text-white);
+            display: block;
+            cursor: pointer;
+        }
+
+        .artist-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(74, 0, 224, 0.4);
+        }
+
+        .artist-card-image {
             width: 100%;
             aspect-ratio: 1;
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 8rem;
-            filter: drop-shadow(0 10px 30px var(--neon-glow));
             position: relative;
             overflow: hidden;
         }
 
-        .artist-image::before {
+        .artist-card-image::before {
             content: '';
             position: absolute;
             top: 0;
@@ -52,8 +73,17 @@
             animation: shine 3s infinite;
         }
 
-        .artist-content h2 {
-            font-size: 2.5rem;
+        .artist-card-image img {
+            position: relative;
+            z-index: 1;
+        }
+
+        .artist-card-content {
+            padding: 2rem;
+        }
+
+        .artist-card-content h2 {
+            font-size: 2rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: -1px;
@@ -64,63 +94,23 @@
             background-clip: text;
         }
 
-        .artist-bio {
+        .artist-card-description {
             color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
         }
 
-        .social-links {
-            justify-content: flex-start;
-        }
-
-        .social-icon {
-            width: 45px;
-            height: 45px;
-            font-size: 1.2rem;
-        }
-
-        .section-divider {
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .section-divider h2 {
-            font-size: 2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-            color: var(--text-white);
-            opacity: 0.8;
-        }
-
-        @media (max-width: 900px) {
-            .artist-grid {
+        @media (max-width: 768px) {
+            .artists-grid {
                 grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .artist-image {
-                max-width: 300px;
-                margin: 0 auto;
             }
         }
     </style>
 </head>
 
 <body>
-    <nav class="custom-header">
-        <div class="logo-container">
-            <img src="myooz-inc-logo.png" alt="MYOOZ InC Logo" class="logo-img">
-            <div class="logo-text">MYOOZ INC</div>
-        </div>
-        <div class="nav-links">
-            <a href="index.html">Inicio</a>
-            <a href="artistas.html" class="active">Artistas</a>
-            <a href="ggbbeats.html">GGB Beats</a>
-            <a href="tienda.html">Tienda</a>
-        </div>
-    </nav>
+    <!-- Header will be loaded here -->
+    <div id="header-placeholder"></div>
 
     <div class="container">
         <div class="page-header">
@@ -128,101 +118,36 @@
             <p class="subtitle">Talento Original</p>
         </div>
 
-        <!-- Rasta Mia -->
-        <div class="glass-card">
-            <div class="artist-grid">
-                <div class="artist-image">🎤</div>
-                <div class="artist-content">
+        <div class="artists-grid">
+            <!-- Rasta Mia Card -->
+            <a href="rasta-mia.html" class="artist-card">
+                <div class="artist-card-image">
+                    <img src="myooz-inc-logo.png" alt="Rasta Mia" style="width: 70%; height: 70%; object-fit: contain;">
+                </div>
+                <div class="artist-card-content">
                     <h2>Rasta Mia</h2>
-                    <div class="social-links">
-                        <a href="https://www.youtube.com/channel/UCsqw0muwpHyuL4TOVfaeoiw" class="social-icon" target="_blank">▶</a>
-                        <a href="https://open.spotify.com/intl-es/artist/54quVpJMmTu6ENlQoWYFlg" class="social-icon" target="_blank">♫</a>
-                        <a href="https://www.instagram.com/rasta_mia/" class="social-icon" target="_blank">📷</a>
-                    </div>
-                    <p class="artist-bio">
-                        <strong>Cantautora del Norte de Francia:</strong><br><br>
-                        "Je suis une artiste passionnée, j'aime découvrir de nouveaux styles, à chanter, à danser, à écrire...
-                        <br><br>
-                        Je peux passer du mélancolique au dancehall, latino, pop, rock, deephouse, reggae, rap, trap, musique consciente, chanson d'amour, psycho...
-                        <br><br>
-                        Si l'inspiration me vient, je la saisie et le caméléon entre en action.
-                        <br><br>
-                        J'aime travailler avec mes nombreux collaborateurs et amis... Et collaborateurs devenus amis. Qui viennent pour beaucoup d'Amérique Latine (Venezuela, Chili, Sao Polo, Bresil, Mexique, Colombie...) Mais aussi d'Allemagne, Belgique, Espagne, Russie, Turquie, Togo, Benin, Congo....
-                        <br><br>
-                        J'ai mon propre univers et je m'inspire de mon vécu, mes émotions, mon imagination, mais aussi tout ce qui m'entour... J'espère vous avoir conquis par mes mots et que ma musique séduira vos oreilles."
-                    </p>
+                    <p class="artist-card-description">Cantautora del Norte de Francia. Versatilidad musical entre dancehall, latino, pop y más géneros.</p>
                 </div>
-            </div>
-        </div>
+            </a>
 
-        <!-- JOSS -->
-        <div class="glass-card">
-            <div class="artist-grid">
-                <div class="artist-image">🎵</div>
-                <div class="artist-content">
+            <!-- JOSS Card -->
+            <a href="joss.html" class="artist-card">
+                <div class="artist-card-image">
+                    <img src="myooz-inc-logo.png" alt="JOSS" style="width: 70%; height: 70%; object-fit: contain;">
+                </div>
+                <div class="artist-card-content">
                     <h2>JOSS</h2>
-                    <div class="social-links">
-                        <a href="https://www.youtube.com/channel/UCtp1mv_ve3MC1bBc6NP9FJA" class="social-icon" target="_blank">▶</a>
-                        <a href="https://open.spotify.com/intl-es/artist/25nl20axSY4pECNeN9vUy8" class="social-icon" target="_blank">♫</a>
-                        <a href="https://www.instagram.com/josszpvl/" class="social-icon" target="_blank">📷</a>
-                    </div>
-                    <p class="artist-bio">
-                        "Soy Joss, un cantante y compositor emergente de la ciudad de El Tigre, ubicada en el estado Anzoátegui de Venezuela.
-                        <br><br>
-                        Mi biografía artística se caracteriza por una pasión innata por la música desde temprana edad y siempre intento mejorar mi voz y habilidades de composición.
-                        <br><br>
-                        A través de mis letras busco transmitir emociones y conectar con el público de una manera auténtica.
-                        <br><br>
-                        Mi objetivo es seguir creciendo en la industria musical y dejar una huella duradera en la escena artística nacional e internacional."
-                    </p>
+                    <p class="artist-card-description">Cantante y compositor de Venezuela. R&B y Rock con voz dulce y letras emotivas.</p>
                 </div>
-            </div>
-        </div>
-
-        <!-- Producers Section -->
-        <div class="section-divider">
-            <h2>Productores</h2>
-        </div>
-
-        <!-- GGB Beats -->
-        <div class="glass-card">
-            <div class="artist-grid">
-                <div class="artist-image">🎹</div>
-                <div class="artist-content">
-                    <h2>GGB Beats</h2>
-                    <div class="social-links">
-                        <a href="https://www.youtube.com/c/ggbbeats" class="social-icon" target="_blank">▶</a>
-                        <a href="https://open.spotify.com/intl-es/artist/0QrrPjP73pfBddZBUHUjd0" class="social-icon" target="_blank">♫</a>
-                        <a href="https://www.instagram.com/gingerboybeats/" class="social-icon" target="_blank">📷</a>
-                    </div>
-                    <p class="artist-bio">
-                        <strong>Compositor y productor venezolano.</strong>
-                        <br><br>
-                        Se desempeña como músico en una variedad de géneros: pop, pop latino, pop rock, trova, balada, blues, rock, bossa nova y jazz.
-                        <br><br>
-                        Hoy en día, su música se inspira en el dancehall, el afrobeat, el trap y el rap, encarnando un estilo musical urbano.
-                        <br><br>
-                        Sus proyectos actuales incluyen composición instrumental, así como colaborar y producir canciones para otros artistas.
-                    </p>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
 
-    <footer>
-        <div class="social-links" style="justify-content: center;">
-            <a href="https://www.youtube.com/@myoozinc" class="social-icon" target="_blank">▶</a>
-            <a href="https://www.instagram.com/myooz.inc/" class="social-icon" target="_blank">📷</a>
-            <a href="https://www.facebook.com/myooz.inc/" class="social-icon" target="_blank">f</a>
-        </div>
-        <p>© 2024 MYOOZ InC</p>
-        <p>
-            <a href="#">Política de Privacidad</a> | 
-            <a href="#">Política de Cookies</a>
-        </p>
-    </footer>
+    <!-- Footer will be loaded here -->
+    <div id="footer-placeholder"></div>
 
-    <script src="navigation.js"></script>
+    <script src="config.js"></script>
+    <script src="components.js"></script>
 </body>
 
 </html>

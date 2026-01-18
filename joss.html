@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOSS | MYOOZ InC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .container {
+            margin-top: 120px;
+        }
+
+        .artist-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .artist-hero {
+            width: 300px;
+            height: 300px;
+            margin: 2rem auto;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 20px 60px var(--neon-glow));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .artist-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shine 3s infinite;
+        }
+
+        .artist-hero img {
+            position: relative;
+            z-index: 1;
+        }
+
+        .artist-name {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .artist-bio {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+        }
+
+        .social-section {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: var(--accent-purple);
+            border-color: var(--accent-purple);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header will be loaded here -->
+    <div id="header-placeholder"></div>
+
+    <div class="container">
+        <div class="artist-header">
+            <div class="artist-hero">
+                <img src="myooz-inc-logo.png" alt="JOSS" style="width: 70%; height: 70%; object-fit: contain;">
+            </div>
+            <h1 class="artist-name">JOSS</h1>
+            <p class="subtitle">Cantante & Compositor · Venezuela</p>
+        </div>
+
+        <div class="glass-card">
+            <div class="social-section">
+                <div class="social-links">
+                    <a href="https://www.youtube.com/channel/UCtp1mv_ve3MC1bBc6NP9FJA" class="social-icon" target="_blank">
+                        <img src="youtube-logo.png" alt="YouTube">
+                    </a>
+                    <a href="https://open.spotify.com/intl-es/artist/25nl20axSY4pECNeN9vUy8" class="social-icon" target="_blank">♫</a>
+                    <a href="https://www.instagram.com/josszpvl/" class="social-icon" target="_blank">
+                        <img src="instagram-logo.png" alt="Instagram">
+                    </a>
+                </div>
+            </div>
+
+            <div class="artist-bio">
+                "Soy Joss, un cantante y compositor emergente de la ciudad de El Tigre, ubicada en el estado Anzoátegui de Venezuela.
+                <br><br>
+                Mi biografía artística se caracteriza por una pasión innata por la música desde temprana edad y siempre intento mejorar mi voz y habilidades de composición.
+                <br><br>
+                A través de mis letras busco transmitir emociones y conectar con el público de una manera auténtica.
+                <br><br>
+                Mi objetivo es seguir creciendo en la industria musical y dejar una huella duradera en la escena artística nacional e internacional."
+            </div>
+
+            <div style="text-align: center;">
+                <a href="artistas.html" class="back-link">← Volver a Artistas</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer will be loaded here -->
+    <div id="footer-placeholder"></div>
+
+    <script src="config.js"></script>
+    <script src="components.js"></script>
+</body>
+
+</html>
