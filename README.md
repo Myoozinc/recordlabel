@@ -15,7 +15,7 @@ myoozinc-website/
 ├── styles.css          # Shared CSS styles (all pages use this)
 ├── navigation.js       # Shared navigation JavaScript
 │
-└── logo.png           # Your logo file (add this)
+└── logo.png         
 ```
 
 ## How to Add Your Logo
