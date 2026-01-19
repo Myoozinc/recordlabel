@@ -218,20 +218,30 @@ h1 {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--glass-border);
     border-radius: 50%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
     transition: all 0.3s;
     text-decoration: none;
-    color: var(--text-white);
+    padding: 10px;
+}
+
+.social-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
 }
 
 .social-icon:hover {
-    background: var(--accent-purple);
-    border-color: var(--accent-purple);
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    border-color: var(--accent-blue);
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(74, 0, 224, 0.4);
+}
+
+.social-icon:hover img {
+    filter: brightness(0) invert(1);
 }
 
 /* Footer */
