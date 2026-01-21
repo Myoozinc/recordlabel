@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Page-specific styles */
         .container {
             margin-top: 120px;
         }
@@ -20,6 +19,100 @@
             margin-bottom: 4rem;
         }
 
+        /* MYOOZ Labs Section */
+        .labs-section {
+            margin-bottom: 6rem;
+        }
+
+        .labs-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .labs-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid var(--accent-blue);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 20px 50px rgba(0, 219, 222, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .tool-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 219, 222, 0.4);
+        }
+
+        .tool-card:hover::before {
+            opacity: 0.15;
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-card h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            color: var(--accent-blue);
+        }
+
+        .tool-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Pricing Section */
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -126,8 +219,15 @@
             font-size: 1.05rem;
         }
 
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+            margin: 5rem 0;
+        }
+
         @media (max-width: 768px) {
-            .pricing-grid {
+            .pricing-grid,
+            .tools-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -135,9 +235,34 @@
 </head>
 
 <body>
-    <!-- Header will be loaded here by navigation.js -->
-
     <div class="container">
+        <div class="page-header">
+            <h1>Servicios</h1>
+            <p class="subtitle">Producción Musical & Herramientas</p>
+        </div>
+
+        <!-- MYOOZ Labs TOOLS Section -->
+        <section class="labs-section">
+            <div class="labs-header">
+                <h2 class="labs-title">MYOOZ Labs TOOLS</h2>
+                <p class="subtitle">Herramientas de Audio Avanzadas</p>
+            </div>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🎵</div>
+                    <h3>Stem Separation Tool</h3>
+                    <p class="tool-description">
+                        Separa cualquier canción en sus elementos individuales: voces, batería, bajo e instrumentos.
+                    </p>
+                    <a href="stem-separation-tool.html" class="btn">Abrir Herramienta</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- GGB Beats Production Services -->
         <div class="page-header">
             <h1>Estudio Musical</h1>
             <p class="subtitle">GGB Beats Production Services</p>
@@ -156,7 +281,7 @@
                     <li>Streaming ilimitado</li>
                     <li>Video clips permitidos</li>
                 </ul>
-                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Contactar</a>
+                <a href="https://instagram.com/gingerboybeats" target="_blank" class="btn">Contactar</a>
             </div>
 
             <div class="pricing-card">
@@ -168,7 +293,7 @@
                     <li>Uso no exclusivo</li>
                     <li>Mayor flexibilidad</li>
                 </ul>
-                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Contactar</a>
+                <a href="https://instagram.com/gingerboybeats" target="_blank" class="btn">Contactar</a>
             </div>
 
             <div class="pricing-card">
@@ -180,7 +305,7 @@
                     <li>100% original</li>
                     <li>Hecho a medida</li>
                 </ul>
-                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Contactar</a>
+                <a href="https://instagram.com/gingerboybeats" target="_blank" class="btn">Contactar</a>
             </div>
         </div>
 
@@ -197,7 +322,7 @@
                     <li>Balance y ecualización</li>
                     <li>Efectos y procesamiento</li>
                 </ul>
-                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Contactar</a>
+                <a href="https://instagram.com/gingerboybeats" target="_blank" class="btn">Contactar</a>
             </div>
 
             <div class="pricing-card">
@@ -209,7 +334,7 @@
                     <li>Optimización para streaming</li>
                     <li>Loudness estándar</li>
                 </ul>
-                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Contactar</a>
+                <a href="https://instagram.com/gingerboybeats" target="_blank" class="btn">Contactar</a>
             </div>
 
             <div class="pricing-card">
@@ -221,7 +346,7 @@
                     <li>Mezcla y master integrados</li>
                     <li>Listo para distribución</li>
                 </ul>
-                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Contactar</a>
+                <a href="https://instagram.com/gingerboybeats" target="_blank" class="btn">Contactar</a>
             </div>
         </div>
 
@@ -232,7 +357,7 @@
                 <p style="color: var(--text-secondary); margin: 2rem 0;">
                     Packs de loops personalizados para tus producciones
                 </p>
-                <a href="https://www.instagram.com/gingerboybeats/" target="_blank" class="btn">Consultar</a>
+                <a href="https://instagram.com/gingerboybeats" target="_blank" class="btn">Consultar</a>
             </div>
         </div>
 
@@ -245,14 +370,18 @@
             </p>
             
             <div class="social-links">
-                <a href="https://www.youtube.com/c/ggbbeats" class="social-icon" target="_blank">▶</a>
-                <a href="https://open.spotify.com/intl-es/artist/0QrrPjP73pfBddZBUHUjd0" class="social-icon" target="_blank">♫</a>
-                <a href="https://www.instagram.com/gingerboybeats/" class="social-icon" target="_blank">📷</a>
+                <a href="https://youtube.com/@ggbbeats" class="social-icon" target="_blank">
+                    <img src="youtube-logo.png" alt="YouTube">
+                </a>
+                <a href="https://open.spotify.com/artist/0QrrPjP73pfBddZBUHUjd0" class="social-icon" target="_blank">
+                    <img src="spotify-logo.png" alt="Spotify">
+                </a>
+                <a href="https://instagram.com/gingerboybeats" class="social-icon" target="_blank">
+                    <img src="instagram-logo.png" alt="Instagram">
+                </a>
             </div>
         </div>
     </div>
-
-    <!-- Footer will be loaded here by navigation.js -->
 
     <script src="navigation.js"></script>
 </body>
