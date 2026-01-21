@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stem Separation Tool | MYOOZ Labs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .container {
+            margin-top: 120px;
+            max-width: 1000px;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .tool-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tool-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .main-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid var(--accent-blue);
+            border-radius: 30px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 20px 50px rgba(0, 219, 222, 0.2);
+        }
+
+        .upload-zone {
+            border: 3px dashed var(--glass-border);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .upload-zone:hover {
+            border-color: var(--accent-blue);
+            background: rgba(0, 219, 222, 0.05);
+        }
+
+        .upload-zone.dragover {
+            border-color: var(--accent-blue);
+            background: rgba(0, 219, 222, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        }
+
+        .upload-text {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .process-btn {
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .status-message {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .status-message.processing {
+            background: rgba(0, 219, 222, 0.1);
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            display: block;
+        }
+
+        .status-message.success {
+            background: rgba(0, 255, 127, 0.1);
+            border: 1px solid #00ff7f;
+            color: #00ff7f;
+            display: block;
+        }
+
+        .status-message.error {
+            background: rgba(255, 0, 100, 0.1);
+            border: 1px solid #ff0064;
+            color: #ff0064;
+            display: block;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+            display: none;
+        }
+
+        .results-grid.active {
+            display: grid;
+        }
+
+        .stem-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stem-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-5px);
+        }
+
+        .stem-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stem-label {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .download-btn {
+            background: rgba(0, 219, 222, 0.2);
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .download-btn:hover {
+            background: var(--accent-blue);
+            color: var(--bg-black);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            transform: translateY(-3px);
+        }
+
+        .info-box {
+            background: rgba(0, 219, 222, 0.05);
+            border: 1px solid var(--accent-blue);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .info-box h3 {
+            color: var(--accent-blue);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-box li {
+            color: var(--text-secondary);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .info-box li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+        }
+
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid var(--accent-blue);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+            display: none;
+        }
+
+        .loader.active {
+            display: block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="tool-header">
+            <h1 class="tool-title">Stem Separation Tool</h1>
+            <p class="subtitle">MYOOZ Labs · Powered by AI</p>
+            <p class="tool-description">
+                Separa cualquier canción en sus componentes individuales: voces, batería, bajo e instrumentos. 
+                Utiliza inteligencia artificial avanzada para extraer stems de alta calidad.
+            </p>
+        </div>
+
+        <div class="main-card">
+            <div class="upload-zone" id="uploadZone">
+                <div class="upload-icon">🎵</div>
+                <p class="upload-text">
+                    <strong>Arrastra tu archivo de audio aquí</strong><br>
+                    o haz clic para seleccionar
+                </p>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    Formatos soportados: MP3, WAV, FLAC, M4A
+                </p>
+                <input type="file" id="fileInput" class="file-input" accept="audio/*">
+            </div>
+
+            <div id="fileName" style="text-align: center; margin-top: 1.5rem; color: var(--accent-blue); font-weight: 600;"></div>
+
+            <div style="text-align: center;">
+                <button class="btn process-btn" id="processBtn" style="display: none;">
+                    Separar Stems
+                </button>
+            </div>
+
+            <div class="loader" id="loader"></div>
+
+            <div class="status-message" id="statusMessage"></div>
+
+            <div class="results-grid" id="resultsGrid">
+                <div class="stem-card">
+                    <div class="stem-icon">🎤</div>
+                    <div class="stem-label">Vocals</div>
+                    <button class="download-btn">Descargar</button>
+                </div>
+                <div class="stem-card">
+                    <div class="stem-icon">🥁</div>
+                    <div class="stem-label">Drums</div>
+                    <button class="download-btn">Descargar</button>
+                </div>
+                <div class="stem-card">
+                    <div class="stem-icon">🎸</div>
+                    <div class="stem-label">Bass</div>
+                    <button class="download-btn">Descargar</button>
+                </div>
+                <div class="stem-card">
+                    <div class="stem-icon">🎹</div>
+                    <div class="stem-label">Other</div>
+                    <button class="download-btn">Descargar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>Cómo funciona:</h3>
+            <ul>
+                <li>Sube tu archivo de audio (MP3, WAV, FLAC o M4A)</li>
+                <li>La IA procesará el audio y separará los elementos</li>
+                <li>Descarga cada stem por separado en formato WAV de alta calidad</li>
+                <li>Usa los stems en tus proyectos de producción musical</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="servicios.html" class="back-link">← Volver a Servicios</a>
+        </div>
+    </div>
+
+    <script src="navigation.js"></script>
+    <script>
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileName = document.getElementById('fileName');
+        const processBtn = document.getElementById('processBtn');
+        const loader = document.getElementById('loader');
+        const statusMessage = document.getElementById('statusMessage');
+        const resultsGrid = document.getElementById('resultsGrid');
+
+        // Click to upload
+        uploadZone.addEventListener('click', () => fileInput.click());
+
+        // Drag and drop
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            // Check if file is audio
+            if (!file.type.startsWith('audio/')) {
+                showStatus('error', 'Por favor, selecciona un archivo de audio válido.');
+                return;
+            }
+
+            fileName.textContent = `📁 ${file.name}`;
+            processBtn.style.display = 'block';
+            resultsGrid.classList.remove('active');
+            statusMessage.style.display = 'none';
+        }
+
+        // Process button
+        processBtn.addEventListener('click', () => {
+            processBtn.style.display = 'none';
+            loader.classList.add('active');
+            showStatus('processing', 'Procesando audio... Esto puede tomar unos minutos.');
+
+            // Simulate processing (replace with actual API call)
+            setTimeout(() => {
+                loader.classList.remove('active');
+                showStatus('success', '¡Separación completada! Descarga tus stems abajo.');
+                resultsGrid.classList.add('active');
+            }, 3000);
+        });
+
+        function showStatus(type, message) {
+            statusMessage.className = 'status-message ' + type;
+            statusMessage.textContent = message;
+        }
+
+        // Download buttons (placeholder)
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                showStatus('success', 'Descarga iniciada...');
+            });
+        });
+    </script>
+</body>
+
+</html>
