@@ -7,10 +7,11 @@
     <title>MYOOZ InC | Record Label</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;400;700;900&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Page-specific styles */
+
+        /* ── Hero ── */
         .hero-section {
             min-height: 100vh;
             display: flex;
@@ -18,94 +19,268 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-top: 100px;
+            padding-top: 110px;
+            padding-bottom: 4rem;
+            position: relative;
         }
 
-    .hero-image {
-           width: 300px;
-           height: 300px;
-           margin: 2rem 0;
-           background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-           border-radius: 50%;
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           font-size: 8rem;
-           filter: drop-shadow(0 20px 60px var(--neon-glow));
-          animation: float 3s ease-in-out infinite;
-          overflow: hidden;
-     }
+        .hero-eyebrow {
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--purple-glow);
+            margin-bottom: 1.25rem;
+            opacity: 0;
+            animation: fade-in-up 800ms var(--ease-out-expo) 200ms forwards;
+        }
 
+        .hero-title {
+            opacity: 0;
+            animation: fade-in-up 900ms var(--ease-out-expo) 350ms forwards;
+        }
+
+        .hero-subtitle {
+            opacity: 0;
+            animation: fade-in-up 800ms var(--ease-out-expo) 500ms forwards;
+            margin-bottom: 0;
+        }
+
+        /* Mandala container */
+        .hero-image-wrap {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 2.5rem 0;
+            opacity: 0;
+            animation: fade-in-up 1000ms var(--ease-out-expo) 650ms forwards;
+        }
+
+        /* Pulsing glow behind the mandala */
+        .hero-glow {
+            position: absolute;
+            inset: -40px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(107, 53, 204, 0.45) 0%, transparent 70%);
+            animation: glow-pulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .hero-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: var(--void);
+            border: 1px solid rgba(107, 53, 204, 0.2);
+            /* float + slow spin running simultaneously */
+            animation: float 4s ease-in-out infinite, spin-slow 60s linear infinite;
+            box-shadow:
+                0 0 0 1px rgba(107, 53, 204, 0.15),
+                0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-image img {
+            width: 103%;
+            height: 103%;
+            object-fit: cover;
+        }
+
+        /* Description text */
         .description {
-            max-width: 800px;
-            margin: 2rem auto;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
+            max-width: 580px;
+            margin: 0 auto 2.5rem;
+            font-size: 1rem;
+            line-height: 1.85;
+            color: var(--secondary);
+            font-weight: 300;
+            opacity: 0;
+            animation: fade-in-up 800ms var(--ease-out-expo) 800ms forwards;
         }
 
+        .description em {
+            color: var(--purple-light);
+            font-style: normal;
+        }
+
+        /* CTA row */
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            animation: fade-in-up 700ms var(--ease-out-expo) 950ms forwards;
+        }
+
+        .btn-ghost {
+            font-family: var(--font-display);
+            background: transparent;
+            color: var(--secondary);
+            border: 1px solid var(--border);
+            padding: 14px 36px;
+            border-radius: var(--radius-pill);
+            font-weight: 400;
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            transition: all var(--duration-mid) var(--ease-out-expo);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--purple-core);
+            color: var(--purple-light);
+            background: var(--purple-bloom);
+        }
+
+        /* SVG ambient waveform — decorative separator */
+        .waveform-divider {
+            width: 100%;
+            overflow: hidden;
+            margin: 1rem 0 0;
+            opacity: 0.35;
+        }
+
+        .waveform-divider svg path {
+            stroke-dasharray: 1200;
+            stroke-dashoffset: 1200;
+            animation: wave-draw 2.5s var(--ease-out-expo) 1.2s forwards;
+        }
+
+        @keyframes wave-draw {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* ── Contact section ── */
         .contact-section {
             padding: 4rem 0;
             text-align: center;
         }
 
         .contact-form {
-            max-width: 600px;
+            max-width: 560px;
             margin: 0 auto;
+            text-align: left;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
-        .form-input,
-        .form-textarea {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            color: var(--text-white);
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: all 0.3s;
+        /* In-page form confirmation */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 2.5rem 1rem;
         }
 
-        .form-input:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--accent-purple);
-            background: rgba(255, 255, 255, 0.08);
+        .form-success.visible {
+            display: block;
+            animation: fade-in-up 500ms var(--ease-out-expo);
         }
 
-        .form-textarea {
-            min-height: 150px;
-            resize: vertical;
+        .success-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--purple-haze);
+            border: 1px solid var(--purple-core);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            font-size: 1.4rem;
+        }
+
+        .success-title {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .success-text {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
         }
     </style>
 </head>
 
 <body>
-    <!-- Header will be loaded here by navigation.js -->
+
+    <!-- Custom cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Page transition overlay -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <!-- Header injected by navigation.js -->
 
     <div class="container">
+
+        <!-- ── HERO ── -->
         <section class="hero-section">
-            <h1>MYOOZ InC</h1>
-            <p class="subtitle">Record Label</p>
-            
-            <div class="hero-image">
-                <img src="myooz-inc-logo.png" alt="MYOOZ InC" style="width: 102%; height: 102%; object-fit: cover;">
+
+            <p class="hero-eyebrow">Est. — Urban · Electronic · Crossover</p>
+
+            <h1 class="hero-title">MYOOZ<br>InC</h1>
+            <p class="subtitle hero-subtitle">Record Label</p>
+
+            <!-- Mandala with glow + float + spin -->
+            <div class="hero-image-wrap">
+                <div class="hero-glow"></div>
+                <div class="hero-image">
+                    <img src="myooz-inc-logo.png" alt="MYOOZ InC">
+                </div>
             </div>
 
             <p class="description">
-                "Creamos narrativas auténticas que conectan con tu público. Transformamos ideas creativas en experiencias únicas que inspiran."
+                "Creamos <em>narrativas auténticas</em> que conectan con tu público.<br>
+                Transformamos ideas creativas en experiencias únicas que inspiran."
             </p>
+
+            <div class="hero-cta">
+                <a href="#artistas" class="btn"><span>Nuestros Artistas</span></a>
+                <a href="#contacto" class="btn-ghost">Trabajemos Juntos</a>
+            </div>
+
+            <!-- SVG animated waveform separator -->
+            <div class="waveform-divider" aria-hidden="true">
+                <svg viewBox="0 0 1200 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;height:48px;">
+                    <path d="M0 30 Q50 10 100 30 Q150 50 200 30 Q250 10 300 30 Q350 50 400 30 Q450 10 500 30 Q550 50 600 30 Q650 10 700 30 Q750 50 800 30 Q850 10 900 30 Q950 50 1000 30 Q1050 10 1100 30 Q1150 50 1200 30"
+                        stroke="url(#waveGrad)" stroke-width="1.5" fill="none"/>
+                    <defs>
+                        <linearGradient id="waveGrad" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="transparent"/>
+                            <stop offset="20%" stop-color="#6B35CC"/>
+                            <stop offset="50%" stop-color="#9B5FFF"/>
+                            <stop offset="80%" stop-color="#6B35CC"/>
+                            <stop offset="100%" stop-color="transparent"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
         </section>
 
-        <section class="contact-section">
+        <!-- ── CONTACT ── -->
+        <section class="contact-section reveal" id="contacto">
             <div class="glass-card">
                 <h2 class="section-title">Contacto</h2>
-                
+
                 <form class="contact-form" id="contactForm">
                     <div class="form-group">
                         <input type="text" class="form-input" placeholder="Nombre" required>
@@ -116,34 +291,105 @@
                     <div class="form-group">
                         <textarea class="form-textarea" placeholder="Mensaje" required></textarea>
                     </div>
-                    <button type="submit" class="btn">ENVIAR</button>
+                    <div style="text-align:center;">
+                        <button type="submit" class="btn"><span>Enviar</span></button>
+                    </div>
                 </form>
 
+                <!-- In-page confirmation (replaces browser alert) -->
+                <div class="form-success" id="formSuccess">
+                    <div class="success-icon">✓</div>
+                    <div class="success-title">Mensaje Enviado</div>
+                    <p class="success-text">Gracias por contactarnos.<br>Te responderemos pronto.</p>
+                </div>
+
+                <div class="glow-divider"></div>
+
                 <div class="social-links">
-                    <a href="https://www.youtube.com/@myoozinc" class="social-icon" target="_blank">
+                    <a href="https://www.youtube.com/@myoozinc" class="social-icon" target="_blank" rel="noopener" aria-label="YouTube">
                         <img src="youtube-logo.png" alt="Youtube">
                     </a>
-                    <a href="https://www.instagram.com/myooz.inc/" class="social-icon" target="_blank">
+                    <a href="https://www.instagram.com/myooz.inc/" class="social-icon" target="_blank" rel="noopener" aria-label="Instagram">
                         <img src="instagram-logo.png" alt="Instagram">
                     </a>
-                    <a href="https://www.facebook.com/myooz.inc/" class="social-icon" target="_blank">
+                    <a href="https://www.facebook.com/myooz.inc/" class="social-icon" target="_blank" rel="noopener" aria-label="Facebook">
                         <img src="facebook-logo.png" alt="Facebook">
                     </a>
                 </div>
             </div>
         </section>
+
     </div>
 
-    <!-- Footer will be loaded here by navigation.js -->
+    <!-- Footer injected by navigation.js -->
 
     <script src="navigation.js"></script>
+
     <script>
+        // ── Custom cursor ──
+        const cursor = document.getElementById('cursor');
+        const ring   = document.getElementById('cursorRing');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+
+        document.addEventListener('mousemove', e => {
+            mx = e.clientX; my = e.clientY;
+            cursor.style.left = mx + 'px';
+            cursor.style.top  = my + 'px';
+        });
+
+        // Ring follows with slight lag
+        (function animateRing() {
+            rx += (mx - rx) * 0.12;
+            ry += (my - ry) * 0.12;
+            ring.style.left = rx + 'px';
+            ring.style.top  = ry + 'px';
+            requestAnimationFrame(animateRing);
+        })();
+
+        // Hide cursor when leaving window
+        document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; ring.style.opacity = '0'; });
+        document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; ring.style.opacity = '1'; });
+
+
+        // ── Scroll reveal (IntersectionObserver) ──
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer  = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        revealEls.forEach(el => observer.observe(el));
+
+
+        // ── Contact form — in-page confirmation ──
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('¡Gracias por tu mensaje!');
-            this.reset();
+            this.style.transition = 'opacity 300ms ease';
+            this.style.opacity = '0';
+            setTimeout(() => {
+                this.style.display = 'none';
+                document.getElementById('formSuccess').classList.add('visible');
+            }, 300);
+        });
+
+
+        // ── Page transition on nav link clicks ──
+        const pt = document.getElementById('pageTransition');
+        document.addEventListener('click', e => {
+            const link = e.target.closest('a[href]');
+            if (!link) return;
+            const href = link.getAttribute('href');
+            // Only intercept same-origin page navigations, not anchors or external
+            if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
+            e.preventDefault();
+            pt.classList.add('active');
+            setTimeout(() => { window.location.href = href; }, 350);
         });
     </script>
-</body>
 
+</body>
 </html>
