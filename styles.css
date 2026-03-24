@@ -21,8 +21,8 @@ body {
     font-family: 'Outfit', sans-serif;
     background-color: var(--bg-black);
     background-image:
-        radial-gradient(circle at 10% 20%, rgba(107, 53, 204, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(155, 95, 255, 0.1) 0%, transparent 40%);
+        radial-gradient(circle at 10% 20%, rgba(48, 3, 89, 0.25) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(48, 3, 89, 0.15) 0%, transparent 50%);
     color: var(--text-white);
     min-height: 100vh;
     line-height: 1.6;
