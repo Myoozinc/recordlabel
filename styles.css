@@ -2,7 +2,7 @@
     --bg-black: #050505;
     --header-white: #FFFFFF;
     --purple-core: #300359;
-    --purple-glow: #5A1080;
+    --purple-glow: #8B3FCC;
     --neon-glow: rgba(48, 3, 89, 0.6);
     --text-white: #FFFFFF;
     --text-secondary: rgba(255, 255, 255, 0.6);
@@ -20,9 +20,7 @@
 body {
     font-family: 'Outfit', sans-serif;
     background-color: var(--bg-black);
-    background-image:
-        radial-gradient(circle at 10% 20%, rgba(48, 3, 89, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(48, 3, 89, 0.08) 0%, transparent 40%);
+    background-image: none;
     color: var(--text-white);
     min-height: 100vh;
     line-height: 1.6;
@@ -196,14 +194,13 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 3px;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 30px rgba(48, 3, 89, 0.5);
     text-decoration: none;
     display: inline-block;
 }
 
 .btn:hover {
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 15px 40px rgba(48, 3, 89, 0.7);
+    background: #3d0470;
 }
 
 /* Social Links */
