@@ -7,7 +7,7 @@
     <title>Servicios | MYOOZ InC</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
         .container {
@@ -35,7 +35,7 @@
             text-transform: uppercase;
             letter-spacing: -2px;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            background: linear-gradient(135deg, var(--purple-glow), var(--purple-core));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -53,7 +53,7 @@
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 2px solid var(--accent-blue);
+            border: 2px solid var(--purple-glow);
             border-radius: 30px;
             padding: 3rem 2rem;
             text-align: center;
@@ -70,13 +70,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, transparent 100%);
+            background: linear-gradient(135deg, var(--purple-glow) 0%, transparent 100%);
             opacity: 0;
             transition: opacity 0.4s;
         }
 
         .tool-card:hover {
-            border-color: var(--accent-blue);
+            border-color: var(--purple-glow);
             transform: translateY(-10px) scale(1.02);
             box-shadow: 0 30px 60px rgba(0, 219, 222, 0.4);
         }
@@ -100,7 +100,7 @@
             margin-bottom: 1rem;
             position: relative;
             z-index: 1;
-            color: var(--accent-blue);
+            color: var(--purple-glow);
         }
 
         .tool-description {
@@ -141,13 +141,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--accent-purple) 0%, transparent 100%);
+            background: linear-gradient(135deg, var(--purple-core) 0%, transparent 100%);
             opacity: 0;
             transition: opacity 0.4s;
         }
 
         .pricing-card:hover {
-            border-color: var(--accent-purple);
+            border-color: var(--purple-core);
             transform: translateY(-10px);
             box-shadow: 0 30px 60px rgba(74, 0, 224, 0.4);
         }
@@ -169,7 +169,7 @@
         .price {
             font-size: 3rem;
             font-weight: 900;
-            color: var(--accent-purple);
+            color: var(--purple-core);
             filter: brightness(1.5);
             margin: 1.5rem 0;
             position: relative;

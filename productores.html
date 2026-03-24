@@ -8,7 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
     <style>
@@ -43,7 +43,7 @@
         }
 
         .artist-card:hover {
-            border-color: var(--accent-purple);
+            border-color: var(--purple-core);
             transform: translateY(-10px);
             box-shadow: 0 30px 60px rgba(74, 0, 224, 0.4);
         }
@@ -51,7 +51,7 @@
         .artist-card-image {
             width: 100%;
             aspect-ratio: 1;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            background: linear-gradient(135deg, var(--purple-core), var(--purple-glow));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -67,8 +67,9 @@
             font-weight: 800;
             text-transform: uppercase;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            background: linear-gradient(135deg, var(--purple-core), var(--purple-glow));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 

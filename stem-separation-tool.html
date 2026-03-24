@@ -7,7 +7,7 @@
     <title>Stem Separation Tool | MYOOZ Labs</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
         .container {
@@ -26,7 +26,7 @@
             text-transform: uppercase;
             letter-spacing: -2px;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            background: linear-gradient(135deg, var(--purple-glow), var(--purple-core));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -44,7 +44,7 @@
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 2px solid var(--accent-blue);
+            border: 2px solid var(--purple-glow);
             border-radius: 30px;
             padding: 3rem;
             margin: 3rem 0;
@@ -62,12 +62,12 @@
         }
 
         .upload-zone:hover {
-            border-color: var(--accent-blue);
+            border-color: var(--purple-glow);
             background: rgba(0, 219, 222, 0.05);
         }
 
         .upload-zone.dragover {
-            border-color: var(--accent-blue);
+            border-color: var(--purple-glow);
             background: rgba(0, 219, 222, 0.1);
             transform: scale(1.02);
         }
@@ -104,8 +104,8 @@
 
         .status-message.processing {
             background: rgba(0, 219, 222, 0.1);
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
+            border: 1px solid var(--purple-glow);
+            color: var(--purple-glow);
             display: block;
         }
 
@@ -145,7 +145,7 @@
         }
 
         .stem-card:hover {
-            border-color: var(--accent-blue);
+            border-color: var(--purple-glow);
             transform: translateY(-5px);
         }
 
@@ -164,8 +164,8 @@
 
         .download-btn {
             background: rgba(0, 219, 222, 0.2);
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
+            border: 1px solid var(--purple-glow);
+            color: var(--purple-glow);
             padding: 10px 20px;
             border-radius: 100px;
             font-weight: 600;
@@ -179,7 +179,7 @@
         }
 
         .download-btn:hover {
-            background: var(--accent-blue);
+            background: var(--purple-glow);
             color: var(--bg-black);
         }
 
@@ -200,21 +200,21 @@
         }
 
         .back-link:hover {
-            background: var(--accent-blue);
-            border-color: var(--accent-blue);
+            background: var(--purple-glow);
+            border-color: var(--purple-glow);
             transform: translateY(-3px);
         }
 
         .info-box {
             background: rgba(0, 219, 222, 0.05);
-            border: 1px solid var(--accent-blue);
+            border: 1px solid var(--purple-glow);
             border-radius: 20px;
             padding: 2rem;
             margin: 3rem 0;
         }
 
         .info-box h3 {
-            color: var(--accent-blue);
+            color: var(--purple-glow);
             font-size: 1.3rem;
             margin-bottom: 1rem;
             font-weight: 700;
@@ -236,12 +236,12 @@
             content: "→";
             position: absolute;
             left: 0;
-            color: var(--accent-blue);
+            color: var(--purple-glow);
         }
 
         .loader {
             border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top: 3px solid var(--accent-blue);
+            border-top: 3px solid var(--purple-glow);
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -285,7 +285,7 @@
                 <input type="file" id="fileInput" class="file-input" accept="audio/*">
             </div>
 
-            <div id="fileName" style="text-align: center; margin-top: 1.5rem; color: var(--accent-blue); font-weight: 600;"></div>
+            <div id="fileName" style="text-align: center; margin-top: 1.5rem; color: var(--purple-glow); font-weight: 600;"></div>
 
             <div style="text-align: center;">
                 <button class="btn process-btn" id="processBtn" style="display: none;">
