@@ -1,9 +1,9 @@
 :root {
     --bg-black: #080810;
     --header-white: #FFFFFF;
-    --purple-core: #6B35CC;
-    --purple-glow: #9B5FFF;
-    --neon-glow: rgba(155, 95, 255, 0.5);
+    --purple-core: #300359;
+    --purple-glow: #5A1080;
+    --neon-glow: rgba(48, 3, 89, 0.6);
     --text-white: #FFFFFF;
     --text-secondary: rgba(255, 255, 255, 0.6);
     --glass-border: rgba(255, 255, 255, 0.1);
