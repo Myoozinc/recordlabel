@@ -18,7 +18,7 @@
 }
 
 body {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Outfit', sans-serif;
     background-color: var(--bg-black);
     background-image:
         radial-gradient(circle at 10% 20%, rgba(107, 53, 204, 0.15) 0%, transparent 40%),
@@ -120,25 +120,16 @@ nav.custom-header {
 
 /* Typography */
 h1 {
-    font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(3rem, 10vw, 5.5rem);
     line-height: 0.95;
-    font-weight: 400;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: -3px;
     margin-bottom: 1rem;
-    color: #e8e8e8;
-    -webkit-text-fill-color: initial;
-    background: none;
-    text-shadow:
-        0 1px 0 rgba(220, 220, 220, 0.9),
-        0 2px 0 rgba(180, 180, 180, 0.7),
-        0 3px 0 rgba(130, 130, 130, 0.6),
-        0 4px 0 rgba(90, 90, 90, 0.5),
-        0 5px 0 rgba(60, 60, 60, 0.4),
-        0 6px 1px rgba(0, 0, 0, 0.2),
-        0 8px 15px rgba(0, 0, 0, 0.5),
-        0 15px 30px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .subtitle {
@@ -149,23 +140,16 @@ h1 {
 }
 
 .section-title {
-    font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 400;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: -2px;
     margin-bottom: 2rem;
     text-align: center;
-    color: #e8e8e8;
-    -webkit-text-fill-color: initial;
-    background: none;
-    text-shadow:
-        0 1px 0 rgba(200, 200, 200, 0.8),
-        0 2px 0 rgba(150, 150, 150, 0.6),
-        0 3px 0 rgba(100, 100, 100, 0.5),
-        0 4px 0 rgba(60, 60, 60, 0.4),
-        0 6px 10px rgba(0, 0, 0, 0.5),
-        0 12px 25px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, var(--purple-core), var(--purple-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* Glass Card */
