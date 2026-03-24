@@ -84,8 +84,13 @@
         }
 
         /* Hero Logo Animation */
-        #mandala-container {
+        #mandala-img {
             transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center center;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         /* Gliding Stream */
@@ -153,7 +158,7 @@
             display: none;
             font-size: 1.5rem;
             color: var(--purple-glow);
-            font-family: 'URIAL', sans-serif;
+            font-family: inherit;
             text-shadow: 0 0 20px rgba(155, 95, 255, 0.5);
             text-align: center;
             animation: fadeInUp 0.5s ease-out forwards;
@@ -175,7 +180,7 @@
             
             <div class="hero-image" id="mandala-container">
                 <a href="tienda.html" style="display: block; width: 100%; height: 100%;" id="mandala-link">
-                    <img src="myooz-inc-logo.png" alt="MYOOZ InC" id="mandala-img" style="width: 102%; height: 102%; object-fit: cover;">
+                    <img src="myooz-inc-logo.png" alt="MYOOZ InC" id="mandala-img">
                 </a>
             </div>
 
@@ -199,7 +204,7 @@
                 </a>
                 <a href="prodbycarrot.html" class="talent-item">
                     <img src="prodbycarrot.png" alt="Prodigy Carrot">
-                    <span>Prodigy Carrot</span>
+                    <span>Prodbycarrot</span>
                 </a>
                 <a href="ggbbeats.html" class="talent-item">
                     <img src="ggbbeats-logo.png" alt="GGB Beats">
@@ -224,7 +229,7 @@
                 </a>
                 <a href="prodbycarrot.html" class="talent-item">
                     <img src="prodbycarrot.png" alt="Prodigy Carrot">
-                    <span>Prodigy Carrot</span>
+                    <span>Prodbycarrot</span>
                 </a>
                 <a href="ggbbeats.html" class="talent-item">
                     <img src="ggbbeats-logo.png" alt="GGB Beats">
@@ -286,18 +291,18 @@
             this.reset();
         });
 
-        // Loop Mandala Rotation exactly once clockwise per interaction
-        const mandalaContainer = document.getElementById('mandala-container');
+        // Mandala Rotation: exactly once clockwise per trigger
+        const mandalaImg = document.getElementById('mandala-img');
         let currentRotation = 0;
         
         window.addEventListener('load', () => {
             currentRotation += 360;
-            mandalaContainer.style.transform = `rotate(${currentRotation}deg)`;
+            mandalaImg.style.transform = `rotate(${currentRotation}deg)`;
         });
 
-        mandalaContainer.addEventListener('mouseenter', () => {
+        document.getElementById('mandala-container').addEventListener('mouseenter', () => {
              currentRotation += 360;
-             mandalaContainer.style.transform = `rotate(${currentRotation}deg)`;
+             mandalaImg.style.transform = `rotate(${currentRotation}deg)`;
         });
     </script>
 </body>
