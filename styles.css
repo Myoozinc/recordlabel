@@ -10,24 +10,6 @@
     --radius: 20px;
 }
 
-@font-face {
-    font-family: 'URIAL';
-    src: url('fonts/URIAL FONT.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'URIAL';
-    src: url('fonts/URIAL FONT Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'URIAL';
-    src: url('fonts/URIAL FONT Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
-}
 
 * {
     box-sizing: border-box;
@@ -138,14 +120,13 @@ nav.custom-header {
 
 /* Typography */
 h1 {
-    font-family: 'URIAL', sans-serif;
     font-size: clamp(3rem, 10vw, 5.5rem);
     line-height: 0.95;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -3px;
     margin-bottom: 1rem;
-    background: linear-gradient(180deg, #FFFFFF 0%, #B0B5B9 40%, #5E656B 45%, #FFFFFF 50%, #B0B5B9 100%);
+    background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.2) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -165,7 +146,7 @@ h1 {
     letter-spacing: -2px;
     margin-bottom: 2rem;
     text-align: center;
-    background: linear-gradient(135deg, var(--purple-core), var(--purple-glow));
+    background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.2) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

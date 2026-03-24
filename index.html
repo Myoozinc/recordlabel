@@ -84,11 +84,8 @@
         }
 
         /* Hero Logo Animation */
-        #mandala-img {
+        #mandala-container {
             transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .rotate-power {
-            transform: rotate(360deg);
         }
 
         /* Gliding Stream */
@@ -100,15 +97,10 @@
         }
         .gliding-stream {
             display: flex;
-            gap: 2rem;
-            padding: 1rem 0;
+            gap: 4rem;
+            padding: 2rem 0;
             width: max-content;
-        }
-        .stream-left {
-            animation: glideLeft 30s linear infinite;
-        }
-        .stream-right {
-            animation: glideRight 30s linear infinite backwards;
+            animation: glideLeft 40s linear infinite;
         }
         .gliding-stream:hover {
             animation-play-state: paused;
@@ -117,49 +109,43 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-        @keyframes glideRight {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
-        }
-        .talent-card {
-            width: 250px;
-            height: 300px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--glass-border);
-            transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        .talent-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-decoration: none;
             color: var(--text-white);
-            padding: 1.5rem;
-            overflow: hidden;
-            position: relative;
+            transition: transform 0.3s ease;
         }
-        .talent-card:hover {
-            border-color: var(--purple-glow);
+        .talent-item:hover {
             transform: translateY(-5px);
-            background: rgba(107, 53, 204, 0.1);
-            box-shadow: 0 0 20px var(--purple-glow);
         }
-        .talent-card img {
-            width: 100%;
+        .talent-item img {
+            width: 150px;
             height: 150px;
+            border-radius: 50%;
             object-fit: contain;
+            background: rgba(255, 255, 255, 0.05);
             margin-bottom: 1rem;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
         }
-        .talent-card span {
-            font-family: 'URIAL', sans-serif;
+        .talent-item:hover img {
+            border-color: var(--purple-glow);
+            box-shadow: 0 0 30px rgba(155, 95, 255, 0.4);
+        }
+        .talent-item span {
             font-size: 1.2rem;
+            font-weight: 700;
             text-align: center;
-            background: linear-gradient(180deg, #FFFFFF 0%, #B0B5B9 100%);
+            background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.2) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* Success message */
@@ -202,76 +188,55 @@
         <section class="talent-section">
             <h2 class="section-title">El Talento</h2>
             
-            <div class="gliding-stream stream-left">
-                <!-- Duplicate cards for infinite loop effect -->
-                <a href="rasta-mia.html" class="talent-card">
+            <div class="gliding-stream">
+                <a href="rasta-mia.html" class="talent-item">
                     <img src="rasta-mia.png" alt="Rasta Mia">
                     <span>Rasta Mia</span>
                 </a>
-                <a href="joss.html" class="talent-card">
+                <a href="joss.html" class="talent-item">
                     <img src="joss.png" alt="JOSS">
                     <span>JOSS</span>
                 </a>
-                <a href="prodbycarrot.html" class="talent-card">
+                <a href="prodbycarrot.html" class="talent-item">
                     <img src="prodbycarrot.png" alt="Prodigy Carrot">
                     <span>Prodigy Carrot</span>
                 </a>
-                <a href="ggbbeats.html" class="talent-card">
+                <a href="ggbbeats.html" class="talent-item">
                     <img src="ggbbeats-logo.png" alt="GGB Beats">
                     <span>GGB Beats</span>
                 </a>
-                <!-- Duplicates -->
-                <a href="rasta-mia.html" class="talent-card">
+                <a href="patanegra.html" class="talent-item">
+                    <img src="patanegra-logo.png" alt="Pata Negra">
+                    <span>Pata Negra</span>
+                </a>
+                <a href="mnimalbeats.html" class="talent-item">
+                    <img src="mnimalbeats-logo.png" alt="Mnimal Beats">
+                    <span>Mnimal Beats</span>
+                </a>
+                <!-- Duplicates for scrolling effect -->
+                <a href="rasta-mia.html" class="talent-item">
                     <img src="rasta-mia.png" alt="Rasta Mia">
                     <span>Rasta Mia</span>
                 </a>
-                <a href="joss.html" class="talent-card">
+                <a href="joss.html" class="talent-item">
                     <img src="joss.png" alt="JOSS">
                     <span>JOSS</span>
                 </a>
-                <a href="prodbycarrot.html" class="talent-card">
+                <a href="prodbycarrot.html" class="talent-item">
                     <img src="prodbycarrot.png" alt="Prodigy Carrot">
                     <span>Prodigy Carrot</span>
                 </a>
-                <a href="ggbbeats.html" class="talent-card">
+                <a href="ggbbeats.html" class="talent-item">
                     <img src="ggbbeats-logo.png" alt="GGB Beats">
                     <span>GGB Beats</span>
                 </a>
-            </div>
-
-            <div class="gliding-stream stream-right" style="margin-top: 2rem;">
-                <a href="patanegra.html" class="talent-card">
+                <a href="patanegra.html" class="talent-item">
                     <img src="patanegra-logo.png" alt="Pata Negra">
                     <span>Pata Negra</span>
                 </a>
-                <a href="mnimalbeats.html" class="talent-card">
+                <a href="mnimalbeats.html" class="talent-item">
                     <img src="mnimalbeats-logo.png" alt="Mnimal Beats">
                     <span>Mnimal Beats</span>
-                </a>
-                <a href="rasta-mia.html" class="talent-card">
-                    <img src="rasta-mia.png" alt="Rasta Mia">
-                    <span>Rasta Mia</span>
-                </a>
-                <a href="joss.html" class="talent-card">
-                    <img src="joss.png" alt="JOSS">
-                    <span>JOSS</span>
-                </a>
-                <!-- Duplicates -->
-                <a href="patanegra.html" class="talent-card">
-                    <img src="patanegra-logo.png" alt="Pata Negra">
-                    <span>Pata Negra</span>
-                </a>
-                <a href="mnimalbeats.html" class="talent-card">
-                    <img src="mnimalbeats-logo.png" alt="Mnimal Beats">
-                    <span>Mnimal Beats</span>
-                </a>
-                <a href="rasta-mia.html" class="talent-card">
-                    <img src="rasta-mia.png" alt="Rasta Mia">
-                    <span>Rasta Mia</span>
-                </a>
-                <a href="joss.html" class="talent-card">
-                    <img src="joss.png" alt="JOSS">
-                    <span>JOSS</span>
                 </a>
             </div>
         </section>
@@ -321,26 +286,18 @@
             this.reset();
         });
 
-        // Loop Mandala Rotation
-        const mandalaImg = document.getElementById('mandala-img');
-        const mandalaLink = document.getElementById('mandala-link');
+        // Loop Mandala Rotation exactly once clockwise per interaction
+        const mandalaContainer = document.getElementById('mandala-container');
+        let currentRotation = 0;
         
-        // Rotate on load
         window.addEventListener('load', () => {
-            mandalaImg.classList.add('rotate-power');
-            setTimeout(() => {
-                mandalaImg.classList.remove('rotate-power');
-            }, 1000);
+            currentRotation += 360;
+            mandalaContainer.style.transform = `rotate(${currentRotation}deg)`;
         });
 
-        // Rotate on hover
-        mandalaLink.addEventListener('mouseenter', () => {
-             mandalaImg.classList.add('rotate-power');
-        });
-        mandalaLink.addEventListener('mouseleave', () => {
-            setTimeout(() => {
-                mandalaImg.classList.remove('rotate-power');
-            }, 300);
+        mandalaContainer.addEventListener('mouseenter', () => {
+             currentRotation += 360;
+             mandalaContainer.style.transform = `rotate(${currentRotation}deg)`;
         });
     </script>
 </body>
