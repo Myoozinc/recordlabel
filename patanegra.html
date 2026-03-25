@@ -1,138 +1,106 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pata Negra | MYOOZ InC</title>
+    <meta name="description" content="El Beat Vault de Pata Negra — Productor MYOOZ InC.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .container {
-            margin-top: 0px;
-        }
-
-        .artist-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .artist-hero {
-            width: 300px;
-            height: 300px;
-            margin: 2rem auto;
-            background: linear-gradient(135deg, var(--purple-core), var(--purple-glow));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            filter: drop-shadow(0 20px 60px var(--neon-glow));
-            position: relative;
-            overflow: hidden;
-        }
-
-        .artist-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            animation: shine 3s infinite;
-        }
-
-        .artist-hero img {
-            position: relative;
-            z-index: 1;
-        }
-
-        .artist-name {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -2px;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--purple-core), var(--purple-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .artist-bio {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 1.05rem;
-            max-width: 900px;
-            margin: 0 auto 2rem;
-        }
-
-        .social-section {
-            text-align: center;
-            margin: 3rem 0;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 3rem;
-            padding: 12px 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 100px;
-            color: var(--text-white);
-            text-decoration: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-        }
-
-        .back-link:hover {
-            background: var(--purple-core);
-            border-color: var(--purple-core);
-            transform: translateY(-3px);
-        }
+        #bloom-overlay { position:fixed;inset:0;background:radial-gradient(circle at center,rgba(48,3,89,0.85) 0%,rgba(5,5,5,0.4) 60%,transparent 100%);z-index:9000;pointer-events:none;animation:bloomFade 0.9s ease forwards; }
+        @keyframes bloomFade { 0%{opacity:1;}100%{opacity:0;} }
+        body { overflow-x: hidden; }
+        .container { margin-top:0; padding-top:0; }
+        .hero-section { position:relative;width:100%;min-height:85vh;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;padding-bottom:5rem; }
+        .hero-bg { position:absolute;inset:0;background:#050505;display:flex;align-items:center;justify-content:center; }
+        .hero-bg img { width:60%;height:60%;object-fit:contain;opacity:0.3; }
+        .hero-overlay { position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,5,5,0.2) 0%,rgba(5,5,5,0.5) 50%,rgba(5,5,5,1) 100%); }
+        .hero-purple-light { position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(48,3,89,0.6) 0%,transparent 70%);pointer-events:none; }
+        .hero-content { position:relative;z-index:2;text-align:center;padding:0 2rem; }
+        .artist-name { font-family:'Outfit',sans-serif;font-size:clamp(3rem,10vw,7rem);font-weight:800;text-transform:uppercase;letter-spacing:-3px;line-height:0.9;margin-bottom:1rem;background:linear-gradient(180deg,#ffffff 0%,#d8d8d8 25%,#909090 55%,#c0c0c0 75%,#686868 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:nameReveal 0.8s ease 0.5s both; }
+        @keyframes nameReveal { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);} }
+        .artist-role { color:var(--text-secondary);font-size:0.9rem;text-transform:uppercase;letter-spacing:6px;margin-bottom:2rem;animation:nameReveal 0.8s ease 0.7s both; }
+        .hero-socials { display:flex;gap:1rem;justify-content:center;animation:nameReveal 0.8s ease 0.9s both; }
+        .talent-content { max-width:1000px;margin:0 auto;padding:0 2rem 6rem; }
+        .module-title { font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;text-transform:uppercase;letter-spacing:-1px;margin-bottom:1.5rem;background:linear-gradient(180deg,var(--purple-glow) 0%,var(--purple-core) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent; }
+        .bio-module { background:rgba(255,255,255,0.02);border:1px solid var(--glass-border);border-radius:12px;padding:2.5rem;margin-bottom:4rem; }
+        .bio-text { color:var(--text-secondary);line-height:1.9;font-size:1rem; }
+        .beat-vault { margin-bottom:4rem;border:1px solid var(--glass-border);border-radius:12px;overflow:hidden;transition:border-color 0.6s ease,box-shadow 0.6s ease;background:rgba(255,255,255,0.02); }
+        .beat-vault.glowing { border-color:var(--purple-core);box-shadow:0 0 60px rgba(48,3,89,0.5),inset 0 0 30px rgba(48,3,89,0.1); }
+        .vault-header { display:flex;align-items:center;gap:1rem;padding:2rem 2rem 1rem; }
+        .vault-dot { width:10px;height:10px;border-radius:50%;background:var(--purple-glow);box-shadow:0 0 10px rgba(139,63,204,0.8);animation:pulse 2s ease infinite; }
+        @keyframes pulse { 0%,100%{box-shadow:0 0 10px rgba(139,63,204,0.8);}50%{box-shadow:0 0 20px rgba(139,63,204,1),0 0 40px rgba(48,3,89,0.5);} }
+        .vault-embed { padding:0 2rem 2rem; }
+        .vault-embed iframe { width:100%;border:none;border-radius:8px;display:block; }
+        .services-module { margin-bottom:4rem; }
+        .services-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem; }
+        .service-card { background:rgba(255,255,255,0.02);border:1px solid var(--glass-border);border-radius:12px;padding:1.5rem;transition:border-color 0.3s,box-shadow 0.3s; }
+        .service-card:hover { border-color:var(--purple-core);box-shadow:0 0 20px rgba(48,3,89,0.3); }
+        .service-icon { font-size:1.8rem;margin-bottom:0.8rem; }
+        .service-title { font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:0.4rem;font-size:0.9rem; }
+        .service-desc { color:var(--text-secondary);font-size:0.85rem;line-height:1.5; }
+        .nav-back { display:inline-flex;align-items:center;gap:0.5rem;padding:12px 28px;border:1px solid var(--glass-border);border-radius:100px;color:var(--text-secondary);text-decoration:none;font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;transition:all 0.3s; }
+        .nav-back:hover { border-color:var(--purple-core);color:var(--text-white); }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="artist-header">
-            <div class="artist-hero">
-                <img src="patanegra-logo.png" alt="Pata Negra" style="width: 100%; height: 100%; object-fit: contain;">
-            </div>
+    <div id="bloom-overlay"></div>
+    <!-- Header will be loaded here by navigation.js -->
+
+    <section class="hero-section">
+        <div class="hero-bg"><img src="patanegra-logo.png" alt="Pata Negra"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-purple-light"></div>
+        <div class="hero-content">
             <h1 class="artist-name">Pata Negra</h1>
-            <p class="subtitle">Productor</p>
-        </div>
-
-        <div class="glass-card">
-            <div class="social-section">
-                <div class="social-links">
-                    <a href="https://youtube.com/@gatopatanegra" class="social-icon" target="_blank">
-                        <img src="youtube-logo.png" alt="YouTube">
-                    </a>
-                    <a href="https://open.spotify.com/artist/2ApQZKGc7NaGfTWIDwAGnG" class="social-icon" target="_blank">
-                         <img src="spotify-logo.png" alt="Spotify">  
-                    </a>
-                    <a href="https://instagram.com/gatodepatanegra" class="social-icon" target="_blank">
-                        <img src="instagram-logo.png" alt="Instagram">
-                    </a>
-                </div>
-            </div>
-
-            <div class="artist-bio">
-                <strong>Productor:</strong><br><br>
-                "Bla..."
-            </div>
-
-            <div style="text-align: center;">
-                <a href="productores.html" class="back-link">← Volver a Productores</a>
+            <p class="artist-role">Productor · MYOOZ InC</p>
+            <div class="hero-socials">
+                <a href="https://youtube.com/@gatopatanegra" class="social-icon" target="_blank"><img src="youtube-logo.png" alt="YouTube"></a>
+                <a href="https://open.spotify.com/artist/2ApQZKGc7NaGfTWIDwAGnG" class="social-icon" target="_blank"><img src="spotify-logo.png" alt="Spotify"></a>
+                <a href="https://instagram.com/gatodepatanegra" class="social-icon" target="_blank"><img src="instagram-logo.png" alt="Instagram"></a>
             </div>
         </div>
+    </section>
+
+    <div class="talent-content">
+        <div class="bio-module">
+            <p class="bio-text">Pata Negra trae un sonido crudo y con carácter. Su música fusiona lo clásico con lo moderno — beats que golpean fuerte sin perder el alma.</p>
+        </div>
+
+        <div class="beat-vault" id="beat-vault">
+            <div class="vault-header">
+                <div class="vault-dot"></div>
+                <h2 class="module-title" style="margin-bottom:0;">The Beat Vault</h2>
+            </div>
+            <div class="vault-embed">
+                <iframe src="https://player.beatstars.com/?storeId=patanegra" height="500" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <div class="services-module">
+            <h2 class="module-title">Studio Services</h2>
+            <div class="services-grid">
+                <div class="service-card"><div class="service-icon">🎛️</div><div class="service-title">Mixing</div><div class="service-desc">Mezcla profesional con carácter y profundidad sónica.</div></div>
+                <div class="service-card"><div class="service-icon">🔊</div><div class="service-title">Mastering</div><div class="service-desc">Master con impacto. Listo para streaming y vinyl.</div></div>
+                <div class="service-card"><div class="service-icon">🎹</div><div class="service-title">Custom Beats</div><div class="service-desc">Beats a medida con la firma Pata Negra.</div></div>
+                <div class="service-card"><div class="service-icon">🎤</div><div class="service-title">Producción Completa</div><div class="service-desc">Tu proyecto, de inicio a fin.</div></div>
+            </div>
+        </div>
+
+        <a href="productores.html" class="nav-back">← The Architects</a>
     </div>
-</body>
 
+    <!-- Footer will be loaded here by navigation.js -->
+    <script src="navigation.js"></script>
+    <script>
+        const vault = document.getElementById('beat-vault');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if(e.isIntersecting) vault.classList.add('glowing'); else vault.classList.remove('glowing'); });
+        }, { threshold: 0.3 });
+        observer.observe(vault);
+    </script>
+</body>
 </html>

@@ -1,145 +1,345 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JOSS | MYOOZ InC</title>
+    <meta name="description" content="El mundo de JOSS — Cantante y compositor venezolano. R&B y Rock.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .container {
-            margin-top: 0px;
+        /* Purple Bloom entrance */
+        #bloom-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(48, 3, 89, 0.85) 0%, rgba(5,5,5,0.4) 60%, transparent 100%);
+            z-index: 9000;
+            pointer-events: none;
+            animation: bloomFade 0.9s ease forwards;
+        }
+        @keyframes bloomFade { 0% { opacity: 1; } 100% { opacity: 0; } }
+
+        body { overflow-x: hidden; }
+        .container { margin-top: 0; padding-top: 0; }
+
+        /* ── CINEMATIC HERO ── */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            min-height: 90vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+            padding-bottom: 5rem;
         }
 
-        .artist-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .artist-hero {
-            width: 300px;
-            height: 300px;
-            margin: 2rem auto;
-            background: linear-gradient(135deg, var(--purple-core), var(--purple-glow));
-            border-radius: 50%;
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: #050505;
             display: flex;
             align-items: center;
             justify-content: center;
-            filter: drop-shadow(0 20px 60px var(--neon-glow));
-            position: relative;
-            overflow: hidden;
         }
 
-        .artist-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+        .hero-bg img {
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            animation: shine 3s infinite;
+            object-fit: cover;
+            opacity: 0.35;
+            filter: saturate(0.4);
         }
 
-        .artist-hero img {
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,0.4) 50%, rgba(5,5,5,1) 100%);
+        }
+
+        .hero-purple-light {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(48, 3, 89, 0.5) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            text-align: center;
+            padding: 0 2rem;
         }
 
+        /* Chrome name — metallic gradient, no URIAL */
         .artist-name {
-            font-size: clamp(3rem, 8vw, 5rem);
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(4rem, 14vw, 9rem);
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: -2px;
+            letter-spacing: -3px;
+            line-height: 0.9;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--purple-core), var(--purple-glow));
+            background: linear-gradient(180deg,
+                #ffffff 0%,
+                #d8d8d8 25%,
+                #909090 55%,
+                #c0c0c0 75%,
+                #686868 100%
+            );
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: nameReveal 0.8s ease 0.5s both;
         }
 
-        .artist-bio {
+        @keyframes nameReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .artist-role {
             color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 1.05rem;
-            max-width: 900px;
-            margin: 0 auto 2rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin-bottom: 2rem;
+            animation: nameReveal 0.8s ease 0.7s both;
         }
 
-        .social-section {
-            text-align: center;
-            margin: 3rem 0;
+        .hero-socials {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: nameReveal 0.8s ease 0.9s both;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-top: 3rem;
-            padding: 12px 30px;
-            background: rgba(255, 255, 255, 0.05);
+        /* ── SECTIONS WRAPPER ── */
+        .talent-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+
+        /* Module title */
+        .module-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(180deg, var(--purple-glow) 0%, var(--purple-core) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ── GLASSMORPHISM PLAYER ── */
+        .player-module {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .player-embed {
+            border-radius: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .player-embed iframe {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* ── BIO MODULE ── */
+        .bio-module {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .bio-text {
+            color: var(--text-secondary);
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+
+        /* ── VIDEO CAROUSEL ── */
+        .video-module {
+            margin-bottom: 4rem;
+        }
+
+        .video-module-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .light-source-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--purple-glow);
+            box-shadow: 0 0 10px rgba(139, 63, 204, 0.8);
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(139, 63, 204, 0.8); }
+            50%       { box-shadow: 0 0 20px rgba(139, 63, 204, 1), 0 0 40px rgba(48, 3, 89, 0.5); }
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .video-item {
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--glass-border);
+            aspect-ratio: 16/9;
+        }
+
+        .video-item iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* ── BACK LINK ── */
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 12px 28px;
             border: 1px solid var(--glass-border);
             border-radius: 100px;
-            color: var(--text-white);
+            color: var(--text-secondary);
             text-decoration: none;
-            font-weight: 600;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: 0.85rem;
             transition: all 0.3s;
+            margin-top: 2rem;
         }
 
-        .back-link:hover {
-            background: var(--purple-core);
+        .nav-back:hover {
             border-color: var(--purple-core);
-            transform: translateY(-3px);
+            color: var(--text-white);
+        }
+
+        @media (max-width: 600px) {
+            .video-grid { grid-template-columns: 1fr; }
+            .artist-name { letter-spacing: -2px; }
         }
     </style>
 </head>
 
 <body>
-    
-    <div class="container">
-        <div class="artist-header">
-            <div class="artist-hero">
-                <img src="joss.png" alt="JOSS" style="width: 100%; height: 100%; object-fit: contain;">
-            </div>
+    <div id="bloom-overlay"></div>
+
+    <!-- Header will be loaded here by navigation.js -->
+
+    <!-- ── CINEMATIC HERO ── -->
+    <section class="hero-section">
+        <div class="hero-bg">
+            <img src="joss.png" alt="JOSS">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-purple-light"></div>
+
+        <div class="hero-content">
             <h1 class="artist-name">JOSS</h1>
-            <p class="subtitle">Cantante & Compositor · Venezuela</p>
+            <p class="artist-role">Cantante &amp; Compositor · Venezuela</p>
+            <div class="hero-socials">
+                <a href="https://youtube.com/@joss." class="social-icon" target="_blank" title="YouTube">
+                    <img src="youtube-logo.png" alt="YouTube">
+                </a>
+                <a href="https://open.spotify.com/artist/25nl20axSY4pECNeN9vUy8" class="social-icon" target="_blank" title="Spotify">
+                    <img src="spotify-logo.png" alt="Spotify">
+                </a>
+                <a href="https://instagram.com/josszpvl" class="social-icon" target="_blank" title="Instagram">
+                    <img src="instagram-logo.png" alt="Instagram">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CONTENT ── -->
+    <div class="talent-content">
+
+        <!-- Glassmorphism Player -->
+        <div class="player-module">
+            <h2 class="module-title">The Whole Work</h2>
+            <div class="player-embed">
+                <iframe src="https://open.spotify.com/embed/artist/25nl20axSY4pECNeN9vUy8?utm_source=generator&theme=0"
+                    height="380"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+            </div>
         </div>
 
-        <div class="glass-card">
-            <div class="social-section">
-                <div class="social-links">
-                    <a href="https://youtube.com/@joss." class="social-icon" target="_blank">
-                        <img src="youtube-logo.png" alt="YouTube">
-                    </a>
-                    <a href="https://open.spotify.com/artist/25nl20axSY4pECNeN9vUy8" class="social-icon" target="_blank">
-                        <img src="spotify-logo.png" alt="Spotify">    
-                    </a>
-                    <a href="https://instagram.com/josszpvl" class="social-icon" target="_blank">
-                        <img src="instagram-logo.png" alt="Instagram">
-                    </a>
-                </div>
-            </div>
-
-            <div class="artist-bio">
+        <!-- Bio -->
+        <div class="bio-module">
+            <p class="bio-text">
                 "Soy Joss, un cantante y compositor emergente de la ciudad de El Tigre, ubicada en el estado Anzoátegui de Venezuela.
                 <br><br>
                 Mi biografía artística se caracteriza por una pasión innata por la música desde temprana edad y siempre intento mejorar mi voz y habilidades de composición.
                 <br><br>
-                A través de mis letras busco transmitir emociones y conectar con el público de una manera auténtica.
-                <br><br>
-                Mi objetivo es seguir creciendo en la industria musical y dejar una huella duradera en la escena artística nacional e internacional."
-            </div>
+                A través de mis letras busco transmitir emociones y conectar con el público de una manera auténtica. Mi objetivo es seguir creciendo en la industria musical y dejar una huella duradera en la escena artística nacional e internacional."
+            </p>
+        </div>
 
-            <div style="text-align: center;">
-                <a href="artistas.html" class="back-link">← Volver a Artistas</a>
+        <!-- Top 5 Videos — The Light Source -->
+        <div class="video-module">
+            <div class="video-module-header">
+                <div class="light-source-dot"></div>
+                <h2 class="module-title" style="margin-bottom:0;">El Video Carrete</h2>
+            </div>
+            <div class="video-grid">
+                <!-- Replace VIDEO_ID with actual YouTube video IDs -->
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed?listType=search&list=JOSS+myoozinc" loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+                <div class="video-item" style="display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15);font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;">
+                    Próximamente
+                </div>
+                <div class="video-item" style="display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15);font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;">
+                    Próximamente
+                </div>
+                <div class="video-item" style="display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15);font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;">
+                    Próximamente
+                </div>
             </div>
         </div>
+
+        <a href="artistas.html" class="nav-back">← The Voices</a>
     </div>
 
+    <!-- Footer will be loaded here by navigation.js -->
+    <script src="navigation.js"></script>
 </body>
-
 </html>
