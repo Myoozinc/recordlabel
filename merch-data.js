@@ -1,5 +1,28 @@
 const merchProducts = [
-    // --- HATS FIRST ---
+    // --- 1. MYOOZ INC (TOP) ---
+    {
+        id: 'myooz-hoodie',
+        name: 'MYOOZ InC Hoodie',
+        price: 44.99,
+        category: 'MYOOZ InC',
+        tag: 'Signature Merch',
+        variants: [
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/myoozinc-hoodie.png' }
+        ]
+    },
+    {
+        id: 'myooz-jersey',
+        name: 'MYOOZ InC Jersey',
+        price: 22.99,
+        category: 'MYOOZ InC',
+        tag: 'Classic Essential',
+        variants: [
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/myoozinc-blackjersey.png' },
+            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/myoozinc-whitejersey.png' }
+        ]
+    },
+
+    // --- 2. GGB BEATS BRANDED (EXPLICIT NAME) ---
     {
         id: 'ggb-adidas-hat',
         name: 'GGB Beats Adidas Hat',
@@ -7,8 +30,8 @@ const merchProducts = [
         category: 'GGB Beats',
         tag: 'Sportswear',
         variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeats-blackhat.png' },
-            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeats-whitehat.png' }
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeats-adidas-blackhat.png' },
+            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeats-adidas-whitehat.png' }
         ]
     },
     {
@@ -20,29 +43,6 @@ const merchProducts = [
         variants: [
             { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeats-blackhat.png' },
             { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeats-whitehat.png' }
-        ]
-    },
-    {
-        id: 'ggb-hat',
-        name: 'GGB Beats Hat',
-        price: 25.00,
-        category: 'GGB Beats',
-        tag: 'Accessory',
-        variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeats-blackhat.png' },
-            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeats-whitehat.png' }
-        ]
-    },
-
-    // --- LOGO HOODIES ---
-    {
-        id: 'myooz-hoodie',
-        name: 'MYOOZ InC Hoodie',
-        price: 44.99,
-        category: 'MYOOZ InC',
-        tag: 'Signature Merch',
-        variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/myoozinc-hoodie.png' }
         ]
     },
     {
@@ -61,62 +61,6 @@ const merchProducts = [
         ]
     },
     {
-        id: 'ggpad-sweatshirt',
-        name: 'GG Pad Sweatshirt',
-        price: 45.00,
-        category: 'GGB Beats',
-        tag: 'Signature Gear',
-        variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsggpad-blacksweatshirt.png' },
-            { id: 'blue', color: '#0047ab', label: 'Blue', image: 'images/merch/ggbbeatsggpad-bluesweatshirt.png' },
-            { id: 'cream', color: '#fffdd0', label: 'Cream', image: 'images/merch/ggbbeatsggpad-creamsweatshirt.png' },
-            { id: 'darkblue', color: '#00008b', label: 'Dark Blue', image: 'images/merch/ggbbeatsggpad-darkbluesweatshirt.png' },
-            { id: 'deep', color: '#0b132b', label: 'Deep', image: 'images/merch/ggbbeatsggpad-deepsweatshirt.png' },
-            { id: 'lightblue', color: '#add8e6', label: 'Light Blue', image: 'images/merch/ggbbeatsggpad-lightbluesweatshirt.png' },
-            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeatsggpad-whitesweatshirt.png' }
-        ]
-    },
-
-    // --- ALBUM MERCH / SPECIALS ---
-    {
-        id: 'ggb-last-urban-x',
-        name: 'Last Urban X Hoodie',
-        price: 65.00,
-        category: 'GGB Beats',
-        tag: 'Collectors Series',
-        variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatslasturbanx-blackhoodie-front.png' },
-            { id: 'deep', color: '#0b132b', label: 'Deep Blue', image: 'images/merch/ggbbeatslasturbanx-deephoodie-front.png' },
-            { id: 'green', color: '#004b23', label: 'Green', image: 'images/merch/ggbbeatslasturbanx-greenhoodie-front.png' },
-            { id: 'grey', color: '#555555', label: 'Grey', image: 'images/merch/ggbbeatslasturbanx-greyhoodie-front.png' },
-            { id: 'lightgrey', color: '#d3d3d3', label: 'Light Grey', image: 'images/merch/ggbbeatslasturbanx-lightgreyhoodie-front.png' },
-            { id: 'solidgrey', color: '#a9a9a9', label: 'Solid Grey', image: 'images/merch/ggbbeatslasturbanx-solidgreyhoodie-front.png' }
-        ]
-    },
-    {
-        id: 'ggb-urban-x-crop',
-        name: 'Urban X Crop Hoodie',
-        price: 45.00,
-        category: 'GGB Beats',
-        tag: 'Limited Trend',
-        variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsurbanx-crop-blackhoodie.png' },
-            { id: 'grey', color: '#555555', label: 'Grey', image: 'images/merch/ggbbeatsurbanx-crop-greyhoodie.png' },
-            { id: 'olive', color: '#3d3d22', label: 'Olive', image: 'images/merch/ggbbeatsurbanx-crop-olivehoodie.png' }
-        ]
-    },
-    {
-        id: 'myooz-jersey',
-        name: 'MYOOZ InC Jersey',
-        price: 22.99,
-        category: 'MYOOZ InC',
-        tag: 'Classic Essential',
-        variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/myoozinc-blackjersey.png' },
-            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/myoozinc-whitejersey.png' }
-        ]
-    },
-    {
         id: 'ggb-jersey',
         name: 'GGB Beats Jersey',
         price: 40.00,
@@ -128,28 +72,19 @@ const merchProducts = [
         ]
     },
     {
-        id: 'ggb-oldies-tank',
-        name: "Oldies' Summer Tank Top",
-        price: 30.00,
+        id: 'ggb-children-gameplay',
+        name: 'Gameplay M Children Hoodie',
+        price: 39.99,
         category: 'GGB Beats',
-        tag: 'Summer Vibe',
+        tag: 'Kids Collection',
         variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsoldiessummer-blacktanktop.png' },
-            { id: 'deep', color: '#0b132b', label: 'Deep Blue', image: 'images/merch/ggbbeatsoldiessummer-deeptanktop.png' },
-            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeatsoldiessummer-whitetanktop.png' }
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsgameplaym-children-blackhoodie.png' },
+            { id: 'blue', color: '#0047ab', label: 'Blue', image: 'images/merch/ggbbeatsgameplaym-children-bluehoodie.png' },
+            { id: 'deep', color: '#0b132b', label: 'Deep', image: 'images/merch/ggbeatsgameplaym-children-deephoodie.png' }
         ]
     },
-    {
-        id: 'ggb-targan-shirt',
-        name: '90s Targan Shirt',
-        price: 35.00,
-        category: 'GGB Beats',
-        tag: 'Retro Style',
-        variants: [
-            { id: 'blackwhite', color: '#000000', label: 'B/W', image: 'images/merch/ggbbeats90s-bwtarganshirt.png' },
-            { id: 'whiteblack', color: '#ffffff', label: 'W/B', image: 'images/merch/ggbbeats90s-wbtarganshirt.png' }
-        ]
-    },
+
+    // --- 3. JOSS & RASTA MIA ---
     {
         id: 'joss-fantasma-sweatshirt',
         name: 'Fantasma Remix Sweatshirt',
@@ -159,6 +94,7 @@ const merchProducts = [
         variants: [
             { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/jossfantasmaremix-blacksweatshirt.png' },
             { id: 'blue', color: '#0047ab', label: 'Blue', image: 'images/merch/jossfantasmaremix-bluesweatshirt.png' },
+            { id: 'darkblue', color: '#00008b', label: 'Dark Blue', image: 'images/merch/jossfantasmaremix-darkbluesweatshirt.png' },
             { id: 'deepblue', color: '#0b132b', label: 'Deep Blue', image: 'images/merch/jossfantasmaremix-deepsweatshirt.png' },
             { id: 'grey', color: '#555555', label: 'Grey', image: 'images/merch/jossfantasmaremix-greysweatshirt.png' },
             { id: 'olive', color: '#3d3d22', label: 'Olive', image: 'images/merch/jossfantasmaremix-olivesweatshirt.png' }
@@ -229,16 +165,72 @@ const merchProducts = [
             { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/rastamiadjbarbie-crop-whitetop.png' }
         ]
     },
+
+    // --- 4. GGB BEATS (THE REST) ---
     {
-        id: 'ggb-children-gameplay',
-        name: 'Gameplay M Children Hoodie',
-        price: 39.99,
+        id: 'ggpad-sweatshirt',
+        name: 'GG Pad Sweatshirt',
+        price: 45.00,
         category: 'GGB Beats',
-        tag: 'Kids Collection',
+        tag: 'Signature Gear',
         variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsgameplaym-children-blackhoodie.png' },
-            { id: 'blue', color: '#0047ab', label: 'Blue', image: 'images/merch/ggbbeatsgameplaym-children-bluehoodie.png' },
-            { id: 'deep', color: '#0b132b', label: 'Deep', image: 'images/merch/ggbeatsgameplaym-children-deephoodie.png' }
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsggpad-blacksweatshirt.png' },
+            { id: 'blue', color: '#0047ab', label: 'Blue', image: 'images/merch/ggbbeatsggpad-bluesweatshirt.png' },
+            { id: 'cream', color: '#fffdd0', label: 'Cream', image: 'images/merch/ggbbeatsggpad-creamsweatshirt.png' },
+            { id: 'darkblue', color: '#00008b', label: 'Dark Blue', image: 'images/merch/ggbbeatsggpad-darkbluesweatshirt.png' },
+            { id: 'deep', color: '#0b132b', label: 'Deep', image: 'images/merch/ggbbeatsggpad-deepsweatshirt.png' },
+            { id: 'lightblue', color: '#add8e6', label: 'Light Blue', image: 'images/merch/ggbbeatsggpad-lightbluesweatshirt.png' },
+            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeatsggpad-whitesweatshirt.png' }
+        ]
+    },
+    {
+        id: 'ggb-last-urban-x',
+        name: 'Last Urban X Hoodie',
+        price: 65.00,
+        category: 'GGB Beats',
+        tag: 'Collectors Series',
+        variants: [
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatslasturbanx-blackhoodie-front.png' },
+            { id: 'deep', color: '#0b132b', label: 'Deep Blue', image: 'images/merch/ggbbeatslasturbanx-deephoodie-front.png' },
+            { id: 'green', color: '#004b23', label: 'Green', image: 'images/merch/ggbbeatslasturbanx-greenhoodie-front.png' },
+            { id: 'grey', color: '#555555', label: 'Grey', image: 'images/merch/ggbbeatslasturbanx-greyhoodie-front.png' },
+            { id: 'lightgrey', color: '#d3d3d3', label: 'Light Grey', image: 'images/merch/ggbbeatslasturbanx-lightgreyhoodie-front.png' },
+            { id: 'solidgrey', color: '#a9a9a9', label: 'Solid Grey', image: 'images/merch/ggbbeatslasturbanx-solidgreyhoodie-front.png' }
+        ]
+    },
+    {
+        id: 'ggb-urban-x-crop',
+        name: 'Urban X Crop Hoodie',
+        price: 45.00,
+        category: 'GGB Beats',
+        tag: 'Limited Trend',
+        variants: [
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsurbanx-crop-blackhoodie.png' },
+            { id: 'grey', color: '#555555', label: 'Grey', image: 'images/merch/ggbbeatsurbanx-crop-greyhoodie.png' },
+            { id: 'olive', color: '#3d3d22', label: 'Olive', image: 'images/merch/ggbbeatsurbanx-crop-olivehoodie.png' }
+        ]
+    },
+    {
+        id: 'ggb-oldies-tank',
+        name: "Oldies' Summer Tank Top",
+        price: 30.00,
+        category: 'GGB Beats',
+        tag: 'Summer Vibe',
+        variants: [
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsoldiessummer-blacktanktop.png' },
+            { id: 'deep', color: '#0b132b', label: 'Deep Blue', image: 'images/merch/ggbbeatsoldiessummer-deeptanktop.png' },
+            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeatsoldiessummer-whitetanktop.png' }
+        ]
+    },
+    {
+        id: 'ggb-targan-shirt',
+        name: '90s Targan Shirt',
+        price: 35.00,
+        category: 'GGB Beats',
+        tag: 'Retro Style',
+        variants: [
+            { id: 'blackwhite', color: '#000000', label: 'B/W', image: 'images/merch/ggbbeats90s-bwtarganshirt.png' },
+            { id: 'whiteblack', color: '#ffffff', label: 'W/B', image: 'images/merch/ggbbeats90s-wbtarganshirt.png' }
         ]
     }
 ];
