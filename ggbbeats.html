@@ -189,14 +189,9 @@
             document.getElementById('payment-modal').style.display = 'none';
         }
         window.addEventListener('load', () => {
-            renderMerchGrid('artist-merch-container', 'GGB Beats');
+            renderMerchGrid('artist-merch-container', 'GGB Beats', true);
         });
     </script>
-        <div class="content-section">
-
-        </div>
-        <a href="productores.html" class="nav-back">← Nuestros Productores</a>
-    </div>
 
     <!-- Licence Request Modal -->
     <div class="modal-overlay" id="licenceModal">
@@ -230,7 +225,6 @@
     </div>
 
     <!-- Footer will be loaded here by navigation.js -->
-    <script src="navigation.js"></script>
     <script>
         function openModal(type, price) {
             document.getElementById('licenceModal').classList.add('open');

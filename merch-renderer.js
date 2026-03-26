@@ -1,7 +1,13 @@
 // Merch Rendering Logic for MYOOZ InC Label
-function renderMerchGrid(containerId, filterCategory = 'all') {
+function renderMerchGrid(containerId, filterCategory = 'all', isCompact = false) {
     const grid = document.getElementById(containerId);
     if (!grid) return;
+
+    if (isCompact) {
+        grid.classList.add('compact');
+    } else {
+        grid.classList.remove('compact');
+    }
 
     const filtered = filterCategory === 'all' 
         ? merchProducts 
@@ -23,7 +29,7 @@ function renderMerchGrid(containerId, filterCategory = 'all') {
         return `
             <div class="product-card" data-category="${p.category}">
                 <div class="product-image-wrapper">
-                    <img id="img-${p.id}" src="${activeVariant.image}" alt="${p.name}" onerror="this.src='https://placehold.co/400x400/222/8b3fcc?text=${p.name.replace(/ /g, '+')}'">
+                    <img id="img-${p.id}" src="${activeVariant.image}" alt="${p.name}" onerror="this.src='https://placehold.co/400x400/050505/8b3fcc?text=${p.name.replace(/ /g, '+')}'">
                 </div>
                 <div class="product-meta">
                     <span class="product-tag">${p.tag}</span>

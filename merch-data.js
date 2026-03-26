@@ -1,4 +1,40 @@
 const merchProducts = [
+    // --- HATS FIRST ---
+    {
+        id: 'ggb-adidas-hat',
+        name: 'GGB Beats Adidas Hat',
+        price: 25.00,
+        category: 'GGB Beats',
+        tag: 'Sportswear',
+        variants: [
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeats-blackhat.png' },
+            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeats-whitehat.png' }
+        ]
+    },
+    {
+        id: 'ggb-standard-hat',
+        name: 'GGB Beats Hat',
+        price: 25.00,
+        category: 'GGB Beats',
+        tag: 'Accessory',
+        variants: [
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeats-blackhat.png' },
+            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeats-whitehat.png' }
+        ]
+    },
+    {
+        id: 'ggb-hat',
+        name: 'GGB Beats Hat',
+        price: 25.00,
+        category: 'GGB Beats',
+        tag: 'Accessory',
+        variants: [
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeats-blackhat.png' },
+            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeats-whitehat.png' }
+        ]
+    },
+
+    // --- LOGO HOODIES ---
     {
         id: 'myooz-hoodie',
         name: 'MYOOZ InC Hoodie',
@@ -7,28 +43,6 @@ const merchProducts = [
         tag: 'Signature Merch',
         variants: [
             { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/myoozinc-hoodie.png' }
-        ]
-    },
-    {
-        id: 'myooz-jersey',
-        name: 'MYOOZ InC Jersey',
-        price: 22.99,
-        category: 'MYOOZ InC',
-        tag: 'Classic Essential',
-        variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/myoozinc-jersey-black.png' },
-            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/myoozinc-jersey-white.png' }
-        ]
-    },
-    {
-        id: 'ggb-jersey',
-        name: 'GGB Beats Jersey',
-        price: 40.00,
-        category: 'GGB Beats',
-        tag: 'Artist Essential',
-        variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeats-blackjersey.png' },
-            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeats-whitejersey.png' }
         ]
     },
     {
@@ -62,6 +76,23 @@ const merchProducts = [
             { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeatsggpad-whitesweatshirt.png' }
         ]
     },
+
+    // --- ALBUM MERCH / SPECIALS ---
+    {
+        id: 'ggb-last-urban-x',
+        name: 'Last Urban X Hoodie',
+        price: 65.00,
+        category: 'GGB Beats',
+        tag: 'Collectors Series',
+        variants: [
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatslasturbanx-blackhoodie-front.png' },
+            { id: 'deep', color: '#0b132b', label: 'Deep Blue', image: 'images/merch/ggbbeatslasturbanx-deephoodie-front.png' },
+            { id: 'green', color: '#004b23', label: 'Green', image: 'images/merch/ggbbeatslasturbanx-greenhoodie-front.png' },
+            { id: 'grey', color: '#555555', label: 'Grey', image: 'images/merch/ggbbeatslasturbanx-greyhoodie-front.png' },
+            { id: 'lightgrey', color: '#d3d3d3', label: 'Light Grey', image: 'images/merch/ggbbeatslasturbanx-lightgreyhoodie-front.png' },
+            { id: 'solidgrey', color: '#a9a9a9', label: 'Solid Grey', image: 'images/merch/ggbbeatslasturbanx-solidgreyhoodie-front.png' }
+        ]
+    },
     {
         id: 'ggb-urban-x-crop',
         name: 'Urban X Crop Hoodie',
@@ -72,6 +103,28 @@ const merchProducts = [
             { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsurbanx-crop-blackhoodie.png' },
             { id: 'grey', color: '#555555', label: 'Grey', image: 'images/merch/ggbbeatsurbanx-crop-greyhoodie.png' },
             { id: 'olive', color: '#3d3d22', label: 'Olive', image: 'images/merch/ggbbeatsurbanx-crop-olivehoodie.png' }
+        ]
+    },
+    {
+        id: 'myooz-jersey',
+        name: 'MYOOZ InC Jersey',
+        price: 22.99,
+        category: 'MYOOZ InC',
+        tag: 'Classic Essential',
+        variants: [
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/myoozinc-blackjersey.png' },
+            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/myoozinc-whitejersey.png' }
+        ]
+    },
+    {
+        id: 'ggb-jersey',
+        name: 'GGB Beats Jersey',
+        price: 40.00,
+        category: 'GGB Beats',
+        tag: 'Artist Essential',
+        variants: [
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeats-blackjersey.png' },
+            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeats-whitejersey.png' }
         ]
     },
     {
@@ -95,28 +148,6 @@ const merchProducts = [
         variants: [
             { id: 'blackwhite', color: '#000000', label: 'B/W', image: 'images/merch/ggbbeats90s-bwtarganshirt.png' },
             { id: 'whiteblack', color: '#ffffff', label: 'W/B', image: 'images/merch/ggbbeats90s-wbtarganshirt.png' }
-        ]
-    },
-    {
-        id: 'ggb-adidas-hat',
-        name: 'GGB Beats Adidas Hat',
-        price: 25.00,
-        category: 'GGB Beats',
-        tag: 'Sportswear',
-        variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeats-adidas-blackhat.png' },
-            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeats-adidas-whitehat.png' }
-        ]
-    },
-    {
-        id: 'ggb-standard-hat',
-        name: 'GGB Beats Beanie',
-        price: 25.00,
-        category: 'GGB Beats',
-        tag: 'Accessory',
-        variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeats-blackhat.png' },
-            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeats-whitehat.png' }
         ]
     },
     {
@@ -199,43 +230,6 @@ const merchProducts = [
         ]
     },
     {
-        id: 'ggb-hat',
-        name: 'GGB Beats Hat',
-        price: 25.00,
-        category: 'GGB Beats',
-        tag: 'Accessory',
-        variants: [
-            { id: 'white', color: '#ffffff', label: 'White', image: 'images/merch/ggbbeats-hat.png' }
-        ]
-    },
-    {
-        id: 'ggb-last-urban-x',
-        name: 'Last Urban X Hoodie',
-        price: 65.00,
-        category: 'GGB Beats',
-        tag: 'Collectors Series',
-        variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatslasturbanx-blackhoodie-front.png' },
-            { id: 'deep', color: '#0b132b', label: 'Deep Blue', image: 'images/merch/ggbbeatslasturbanx-deephoodie-front.png' },
-            { id: 'green', color: '#004b23', label: 'Green', image: 'images/merch/ggbbeatslasturbanx-greenhoodie-front.png' },
-            { id: 'grey', color: '#555555', label: 'Grey', image: 'images/merch/ggbbeatslasturbanx-greyhoodie-front.png' },
-            { id: 'beige', color: '#f5f5dc', label: 'Beige', image: 'images/merch/ggbbeatslasturbanx-beigehoodie-front.png' },
-            { id: 'purple', color: '#800080', label: 'Purple', image: 'images/merch/ggbbeats-purplehoodie.png' }
-        ]
-    },
-    {
-        id: 'ggb-children-urban-x',
-        name: 'GGB Urban X Children Hoodie',
-        price: 39.99,
-        category: 'GGB Beats',
-        tag: 'Kids Collection',
-        variants: [
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsurbanx-children-blackhoodie.png' },
-            { id: 'blue', color: '#0047ab', label: 'Blue', image: 'images/merch/ggbbeatsurbanx-children-bluehoodie.png' },
-            { id: 'grey', color: '#555555', label: 'Grey', image: 'images/merch/ggbbeatsurbanx-children-greyhoodie.png' }
-        ]
-    },
-    {
         id: 'ggb-children-gameplay',
         name: 'Gameplay M Children Hoodie',
         price: 39.99,
@@ -244,7 +238,7 @@ const merchProducts = [
         variants: [
             { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsgameplaym-children-blackhoodie.png' },
             { id: 'blue', color: '#0047ab', label: 'Blue', image: 'images/merch/ggbbeatsgameplaym-children-bluehoodie.png' },
-            { id: 'grey', color: '#555555', label: 'Grey', image: 'images/merch/ggbbeatsgameplaym-children-greyhoodie.png' }
+            { id: 'deep', color: '#0b132b', label: 'Deep', image: 'images/merch/ggbeatsgameplaym-children-deephoodie.png' }
         ]
     }
 ];

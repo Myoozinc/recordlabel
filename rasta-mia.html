@@ -9,12 +9,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="merch.css">
     <style>
         body { overflow-x: hidden; }
         .container { margin-top: 0; padding-top: 0; }
-        .hero-section { position: relative; width: 100%; min-height: 88vh; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; padding-bottom: 4rem; }
+        .hero-section { position: relative; width: 100%; min-height: 85vh; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; padding-bottom: 4rem; }
         .hero-bg { position: absolute; inset: 0; background: #050505; display: flex; align-items: center; justify-content: center; }
-        .hero-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; filter: saturate(0.3); }
+        .hero-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; filter: saturate(0.6); }
         .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,0.5) 55%, rgba(5,5,5,1) 100%); }
         .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 2rem; }
         .artist-name {
@@ -29,24 +30,15 @@
         .hero-socials { display: flex; gap: 1rem; justify-content: center; animation: nameReveal 0.8s ease 0.7s both; }
         .talent-content { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem 6rem; }
         .content-section { margin-bottom: 4rem; }
-        .video-grid { display: flex; gap: 1rem; overflow-x: auto; scrollbar-width: none; padding-bottom: 0.5rem; }
-        .video-grid::-webkit-scrollbar { display: none; }
-        .video-item { flex: 0 0 80vw; max-width: 560px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.02); }
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .video-item { aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); }
         .video-item iframe { width: 100%; height: 100%; border: none; display: block; }
-        .video-placeholder { display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.1); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; }
-        .music-embed { border-radius: 8px; overflow: hidden; }
-        .music-embed iframe { width: 100%; border: none; border-radius: 8px; display: block; }
-        .bio-text { color: var(--text-secondary); line-height: 1.9; font-size: 1rem; max-width: 720px; }
-        .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; padding: 10px 24px; border: 1px solid var(--glass-border); border-radius: 100px; color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s; }
+        .music-embed { border-radius: 12px; overflow: hidden; }
+        .music-embed iframe { width: 100%; border: none; border-radius: 12px; display: block; }
+        .bio-text { color: var(--text-secondary); line-height: 1.9; font-size: 1.1rem; max-width: 800px; margin: 0 auto; }
+        .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; padding: 10px 24px; border: 1px solid var(--glass-border); border-radius: 100px; color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s; margin-top: 4rem; }
         .nav-back:hover { border-color: var(--purple-core); color: var(--text-white); }
-        .merch-scroll { display: flex; gap: 1rem; overflow-x: auto; scrollbar-width: none; padding-bottom: 0.5rem; }
-        .merch-scroll::-webkit-scrollbar { display: none; }
-        .merch-item { flex: 0 0 200px; border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); text-decoration: none; color: var(--text-white); transition: border-color 0.3s, box-shadow 0.3s; display: block; }
-        .merch-item:hover { border-color: var(--purple-core); box-shadow: 0 0 20px rgba(48,3,89,0.35); }
-        .merch-img { width: 100%; aspect-ratio: 1; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.08); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; overflow: hidden; }
-        .merch-img img { width: 100%; height: 100%; object-fit: cover; }
-        .merch-name { padding: 0.8rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); }
-        @media (max-width: 600px) { .video-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) { .video-grid { grid-template-columns: 1fr; } .artist-name { font-size: 4rem; } }
     </style>
 </head>
 <body>
@@ -129,7 +121,7 @@
         document.getElementById('payment-modal').style.display = 'none';
     }
     window.addEventListener('load', () => {
-        renderMerchGrid('artist-merch-container', 'Rasta Mia');
+        renderMerchGrid('artist-merch-container', 'Rasta Mia', true);
     });
 </script>
 </body>
