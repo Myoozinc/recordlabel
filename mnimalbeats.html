@@ -169,6 +169,10 @@
                     <input type="text" id="beat-name" placeholder="¿Cuál es el beat?" required>
                 </div>
                 <div class="modal-field">
+                    <label for="client-name">Tu Nombre</label>
+                    <input type="text" id="client-name" placeholder="Tu Nombre o Alias" required>
+                </div>
+                <div class="modal-field">
                     <label for="licence-type">Tipo de Licencia</label>
                     <select id="licence-type">
                         <option value="WAV Lease — $25">WAV Lease — $25</option>
@@ -202,8 +206,10 @@
             const beat = document.getElementById('beat-name').value;
             const licence = document.getElementById('licence-type').value;
             const email = document.getElementById('client-email').value;
+            const name = document.getElementById('client-name').value;
             const data = new FormData();
             data.append('access_key', 'b91241a6-e5bd-482b-b19b-7d1f707121fa');
+            data.append('name', name);
             data.append('beat', beat);
             data.append('licencia', licence);
             data.append('email', email);
