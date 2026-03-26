@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="merch.css">
     <style>
         body{overflow-x:hidden;}.container{margin-top:0;padding-top:0;}
         .hero-section{position:relative;width:100%;min-height:85vh;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;padding-bottom:4rem;}
@@ -155,53 +156,42 @@
         </div>
         <div class="content-section">
             <h2 class="section-title" style="font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1.5rem;color:var(--text-white);">Merch Oficial</h2>
-            <div class="merch-scroll">
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20GGB%20Beats%20Jersey" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">GGB Beats Jersey<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$40</span></div>
-                </a>
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20GGB%20Beats%20Hoodie" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">GGB Beats Hoodie<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$55</span></div>
-                </a>
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20GG%20Pad%20Sweatshirt" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">GG Pad Sweatshirt<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$45</span></div>
-                </a>
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20GGB%20Beats%20Kid%20Hoodie" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">GGB Beats Kid Hoodie<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$40</span></div>
-                </a>
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20GGB%20Beats%20Adidas%20Hat" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">GGB Beats Adidas Hat<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$25</span></div>
-                </a>
-                <a href="mailto:info@myoozinc.com?subject=Comprar%2090s%20Raglan%20Shirt" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">90s Raglan Shirt<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$35</span></div>
-                </a>
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20The%20Last%20Urban%20X%20Hoodie" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">The Last Urban X Hoodie<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$55</span></div>
-                </a>
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20Urban%20X%20Crop%20Hoodie" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">Urban X Crop Hoodie<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$45</span></div>
-                </a>
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20Urban%20X%20III" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">Urban X III<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$40</span></div>
-                </a>
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20Gameplay%20M%20Kid%20Hoodie" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">Gameplay M Kid Hoodie<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$40</span></div>
-                </a>
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20Oldies%20Summer%20Tank%20Top" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">Oldies' Summer. Tank Top<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$30</span></div>
-                </a>
+            <div id="artist-merch-container" class="products-grid">
+                <!-- Merch will be loaded here -->
             </div>
         </div>
+        <div class="content-section">
+
+        </div>
+        <a href="productores.html" class="nav-back">← Nuestros Productores</a>
+    </div>
+
+    <!-- Modal Success -->
+    <div id="payment-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 5000; justify-content: center; align-items: center;">
+        <div style="background: #111; border: 1px solid rgba(255,255,255,0.1); padding: 3rem; border-radius: 40px; max-width: 500px; width: 90%; text-align: center;">
+            <h2 id="modal-title" style="font-size: 2rem; margin-bottom: 1rem; background: linear-gradient(135deg, #300359, #8B3FCC); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">¡Pedido Recibido!</h2>
+            <p id="modal-body" style="color: rgba(255,255,255,0.7); margin-bottom: 2rem;">Gracias por tu compra. Pronto recibirás un correo con los detalles del envío.</p>
+            <button onclick="closeModal()" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 12px 30px; border-radius: 100px; cursor: pointer; font-weight: 700;">Cerrar</button>
+        </div>
+    </div>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+    <script src="navigation.js"></script>
+    <script src="merch-data.js"></script>
+    <script src="merch-renderer.js"></script>
+    <script>
+        function showModal(title, body) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerText = body;
+            document.getElementById('payment-modal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('payment-modal').style.display = 'none';
+        }
+        window.addEventListener('load', () => {
+            renderMerchGrid('artist-merch-container', 'GGB Beats');
+        });
+    </script>
         <div class="content-section">
 
         </div>

@@ -4,221 +4,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda | MYOOZ InC</title>
+    <title>Tienda Oficial | MYOOZ InC</title>
+    <meta name="description" content="Merchandising exclusivo de MYOOZ InC. Jerseys, hoodies y accesorios de edición limitada.">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="merch.css">
     <style>
-        /* Page-specific styles */
-        .container {
-            margin-top: 120px;
-        }
-
-        .page-header {
+        .tienda-hero {
+            padding: 180px 0 40px;
             text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .product-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-        }
-
-        .product-card:hover {
-            border-color: var(--purple-core);
-            transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(74, 0, 224, 0.4);
-        }
-
-        .product-image {
-            width: 100%;
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, var(--purple-core), var(--purple-glow));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
             position: relative;
-            overflow: hidden;
         }
 
-        .product-image::before {
-            content: '';
-            position: absolute;
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 110px;
+            z-index: 100;
+            padding: 10px;
+            background: rgba(5, 5, 5, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 100px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid var(--glass-border);
+        }
+
+        .filter-btn {
+            padding: 10px 24px;
+            border-radius: 100px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            color: #fff;
+        }
+
+        .filter-btn.active {
+            background: var(--accent-gradient);
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(48, 3, 89, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .category-filter {
+                width: 95%;
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding: 10px 20px;
+                border-radius: 20px;
+                top: 90px;
+            }
+        }
+
+        /* Payment Modal */
+        #payment-modal {
+            display: none;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            animation: shine 3s infinite;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
         }
 
-        .product-info {
-            padding: 2rem;
-        }
-
-        .product-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-description {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .product-price {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--purple-core);
-            filter: brightness(1.5);
-            margin-bottom: 1.5rem;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px 30px;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-        }
-
-        .coming-soon {
+        .modal-content {
+            background: #111;
+            border: 1px solid var(--glass-border);
+            padding: 3rem;
+            border-radius: 40px;
+            max-width: 500px;
+            width: 90%;
             text-align: center;
-            padding: 5rem 2rem;
         }
 
-        .coming-soon-icon {
-            font-size: 8rem;
-            margin-bottom: 2rem;
-            filter: drop-shadow(0 10px 30px var(--neon-glow));
-        }
-
-        .coming-soon h2 {
-            font-size: 3rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -2px;
+        .modal-content h2 {
+            font-size: 2rem;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--purple-core), var(--purple-glow));
+            background: var(--accent-gradient);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .coming-soon p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
+        .close-modal {
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid var(--glass-border);
+            padding: 12px 30px;
+            border-radius: 100px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
         }
 
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
+        .close-modal:hover {
+            background: #fff;
+            color: #000;
         }
     </style>
 </head>
 
 <body>
-    <!-- Header will be loaded here by navigation.js -->
+    <!-- Navigation loaded by navigation.js -->
 
     <div class="container">
-        <div class="page-header">
-            <h1>Tienda</h1>
-            <p class="subtitle">Merch Exclusiva MYOOZ InC</p>
+        <section class="tienda-hero">
+            <h1>Merch Store</h1>
+            <p class="subtitle">Colección Oficial MYOOZ InC</p>
+        </section>
+
+        <!-- Category Filter Bar -->
+        <div class="category-filter">
+            <button class="filter-btn active" onclick="filterProducts('all')">Todos</button>
+            <button class="filter-btn" onclick="filterProducts('MYOOZ InC')">MYOOZ InC</button>
+            <button class="filter-btn" onclick="filterProducts('GGB Beats')">GGB Beats</button>
+            <button class="filter-btn" onclick="filterProducts('Joss')">Joss</button>
+            <button class="filter-btn" onclick="filterProducts('Rasta Mia')">Rasta Mia</button>
         </div>
 
-        <!-- Sample Products Grid -->
-        <div class="products-grid">
-            <div class="product-card">
-                <div class="product-image">👕</div>
-                <div class="product-info">
-                    <h3 class="product-title">Camiseta MYOOZ</h3>
-                    <p class="product-description">Camiseta oficial del sello con diseño exclusivo</p>
-                    <div class="product-price">$25</div>
-                    <button class="btn" onclick="alert('Próximamente disponible')">Comprar</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">🧢</div>
-                <div class="product-info">
-                    <h3 class="product-title">Gorra MYOOZ</h3>
-                    <p class="product-description">Gorra bordada con logo del sello</p>
-                    <div class="product-price">$20</div>
-                    <button class="btn" onclick="alert('Próximamente disponible')">Comprar</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">🎧</div>
-                <div class="product-info">
-                    <h3 class="product-title">Hoodie Premium</h3>
-                    <p class="product-description">Sudadera con capucha de alta calidad</p>
-                    <div class="product-price">$45</div>
-                    <button class="btn" onclick="alert('Próximamente disponible')">Comprar</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">💿</div>
-                <div class="product-info">
-                    <h3 class="product-title">Sticker Pack</h3>
-                    <p class="product-description">Set de calcomanías MYOOZ InC</p>
-                    <div class="product-price">$8</div>
-                    <button class="btn" onclick="alert('Próximamente disponible')">Comprar</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">🎵</div>
-                <div class="product-info">
-                    <h3 class="product-title">Tote Bag</h3>
-                    <p class="product-description">Bolsa de tela con diseño exclusivo</p>
-                    <div class="product-price">$15</div>
-                    <button class="btn" onclick="alert('Próximamente disponible')">Comprar</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">⚡</div>
-                <div class="product-info">
-                    <h3 class="product-title">Poster Set</h3>
-                    <p class="product-description">Set de 3 posters artísticos</p>
-                    <div class="product-price">$18</div>
-                    <button class="btn" onclick="alert('Próximamente disponible')">Comprar</button>
-                </div>
-            </div>
+        <div id="products-grid" class="products-grid">
+            <!-- Products injected by JS -->
         </div>
 
-        <!-- Coming Soon Section -->
-        <div class="coming-soon">
-            <div class="coming-soon-icon">🛍️</div>
-            <h2>Más Productos Próximamente</h2>
-            <p>Estamos preparando nueva merch exclusiva para ti.<br>Síguenos en redes para estar al tanto de los lanzamientos.</p>
+        <section class="glass-card" style="text-align: center; margin-top: 4rem;">
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 1.1rem;">
+                Todas nuestras ventas son gestionadas manualmente para garantizar el mejor servicio.<br>
+                ¿Necesitas ayuda con tu pedido?
+            </p>
+            <a href="mailto:info@myoozinc.com" class="btn">Soporte al Cliente</a>
+        </section>
+    </div>
+
+    <!-- Modal Success -->
+    <div id="payment-modal">
+        <div class="modal-content">
+            <h2 id="modal-title">¡Pedido Recibido!</h2>
+            <p id="modal-body">Gracias por tu compra. Pronto recibirás un correo con los detalles del envío.</p>
+            <button class="close-modal" onclick="closeModal()">Cerrar</button>
         </div>
     </div>
 
-    <!-- Footer will be loaded here by navigation.js -->
-
     <script src="navigation.js"></script>
+    <script src="merch-data.js"></script>
+    <script src="merch-renderer.js"></script>
+    <script>
+        let currentCategory = 'all';
+
+        function filterProducts(category) {
+            currentCategory = category;
+            
+            // Update buttons
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(b => {
+                const label = b.innerText.trim();
+                const expected = (category === 'all' ? 'Todos' : category);
+                if (label === expected) b.classList.add('active');
+                else b.classList.remove('active');
+            });
+
+            renderMerchGrid('products-grid', category);
+        }
+
+        function showModal(title, body) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerText = body;
+            document.getElementById('payment-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('payment-modal').style.display = 'none';
+        }
+
+        window.addEventListener('load', () => {
+            renderMerchGrid('products-grid', 'all');
+        });
+    </script>
 </body>
 
 </html>

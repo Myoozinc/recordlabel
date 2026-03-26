@@ -82,42 +82,55 @@
             </div>
         </div>
 
-        <!-- MERCH -->
-        <div class="content-section">
-            <h2 class="section-title" style="font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1.5rem;color:var(--text-white);">Merch Oficial</h2>
-            <div class="merch-scroll">
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20DJ%20Barbie%20Crop%20Hoodie" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">DJ Barbie Crop Hoodie<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$45</span></div>
-                </a>
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20DJ%20Barbie%20Gold%20Crop%20Top" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">DJ Barbie Gold Crop Top<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$35</span></div>
-                </a>
-                <a href="mailto:info@myoozinc.com?subject=Comprar%20Dancing%20in%20the%20Shadows%20Crop%20Hoodie" class="merch-item">
-                    <div class="merch-img">Imágen Pendiente</div>
-                    <div class="merch-name">Dancing in the Shadows Crop Hoodie<br><span style="color:var(--purple-core);font-size:0.9rem;display:block;margin-top:0.3rem;">$45</span></div>
-                </a>
-            </div>
+    <!-- MERCH -->
+    <div class="content-section">
+        <h2 class="section-title" style="font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1.5rem;color:var(--text-white);">Merch Oficial</h2>
+        <div id="artist-merch-container" class="products-grid">
+            <!-- Merch will be loaded here -->
         </div>
-
-        <!-- BIO -->
-        <div class="content-section">
-            <p class="bio-text">
-                "Je suis une artiste passionnée, j'aime découvrir de nouveaux styles, à chanter, à danser, à écrire...
-                <br><br>
-                Je peux passer du mélancolique au dancehall, latino, pop, rock, deephouse, reggae, rap, trap, musique consciente, chanson d'amour...
-                <br><br>
-                Si l'inspiration me vient, je la saisie et le caméléon entre en action. J'aime travailler avec mes nombreux collaborateurs et amis qui viennent d'Amérique Latine, d'Europe et d'Afrique.
-                <br><br>
-                J'espère vous avoir conquis et que ma musique séduira vos oreilles."
-            </p>
-        </div>
-
-        <a href="artistas.html" class="nav-back">← Nuestros Artistas</a>
     </div>
 
-    <!-- Footer will be loaded here by navigation.js -->
-    <script src="navigation.js"></script>
+    <!-- BIO -->
+    <div class="content-section">
+        <p class="bio-text">
+            "Je suis une artiste passionnée, j'aime découvrir de nouveaux styles, à chanter, à danser, à écrire...
+            <br><br>
+            Je peux passer du mélancolique au dancehall, latino, pop, rock, deephouse, reggae, rap, trap, musique consciente, chanson d'amour...
+            <br><br>
+            Si l'inspiration me vient, je la saisie et le caméléon entre en action. J'aime travailler avec mes nombreux collaborateurs et amis qui viennent d'Amérique Latine, d'Europe et d'Afrique.
+            <br><br>
+            J'espère vous avoir conquis et que ma musique séduira vos oreilles."
+        </p>
+    </div>
+
+    <a href="artistas.html" class="nav-back">← Nuestros Artistas</a>
+</div>
+
+<!-- Modal Success -->
+<div id="payment-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 5000; justify-content: center; align-items: center;">
+    <div style="background: #111; border: 1px solid rgba(255,255,255,0.1); padding: 3rem; border-radius: 40px; max-width: 500px; width: 90%; text-align: center;">
+        <h2 id="modal-title" style="font-size: 2rem; margin-bottom: 1rem; background: linear-gradient(135deg, #300359, #8B3FCC); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">¡Pedido Recibido!</h2>
+        <p id="modal-body" style="color: rgba(255,255,255,0.7); margin-bottom: 2rem;">Gracias por tu compra. Pronto recibirás un correo con los detalles del envío.</p>
+        <button onclick="closeModal()" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 12px 30px; border-radius: 100px; cursor: pointer; font-weight: 700;">Cerrar</button>
+    </div>
+</div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+<script src="navigation.js"></script>
+<script src="merch-data.js"></script>
+<script src="merch-renderer.js"></script>
+<script>
+    function showModal(title, body) {
+        document.getElementById('modal-title').innerText = title;
+        document.getElementById('modal-body').innerText = body;
+        document.getElementById('payment-modal').style.display = 'flex';
+    }
+    function closeModal() {
+        document.getElementById('payment-modal').style.display = 'none';
+    }
+    window.addEventListener('load', () => {
+        renderMerchGrid('artist-merch-container', 'Rasta Mia');
+    });
+</script>
 </body>
 </html>
