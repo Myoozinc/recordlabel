@@ -251,14 +251,16 @@
             <h2 class="section-title">Contacto</h2>
             
             <form class="contact-form" id="contactForm">
+                <input type="hidden" name="access_key" value="TU_ACCESS_KEY_AQUI">
+                <input type="hidden" name="subject" value="Nuevo mensaje de contacto — MYOOZ InC">
                 <div class="form-group">
-                    <input type="text" class="form-input" placeholder="Nombre" required>
+                    <input type="text" name="name" class="form-input" placeholder="Nombre" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-input" placeholder="Email" required>
+                    <input type="email" name="email" class="form-input" placeholder="Email" required>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-textarea" placeholder="Mensaje" required></textarea>
+                    <textarea name="message" class="form-textarea" placeholder="Mensaje" required></textarea>
                 </div>
                 <button type="submit" class="btn">ENVIAR</button>
             </form>
@@ -270,12 +272,19 @@
 
     <script src="navigation.js"></script>
     <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            this.style.display = 'none';
-            var successMsg = document.getElementById('success-message');
-            successMsg.style.display = 'block';
-            this.reset();
+            const data = new FormData(this);
+            try {
+                const res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST', body: data
+                });
+                if (res.ok) {
+                    this.style.display = 'none';
+                    document.getElementById('success-message').style.display = 'block';
+                    this.reset();
+                } else { alert('Error al enviar. Inténtalo de nuevo.'); }
+            } catch(err) { alert('Error de conexión. Inténtalo de nuevo.'); }
         });
 
         // Mandala Rotation: exactly once clockwise per trigger

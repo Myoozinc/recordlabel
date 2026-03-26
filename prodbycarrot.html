@@ -138,7 +138,7 @@
                         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>1 videoclip</li>
                         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Actuaciones en directo con fines lucrativos</li>
                     </ul>
-                    <a href="index.html#contactForm" class="licence-cta">Contactar</a>
+                    <button type="button" onclick="openModal('WAV Lease','$25')" class="licence-cta">Contactar</button>
                 </div>
 
                 <!-- UNLIMITED LEASE -->
@@ -157,7 +157,7 @@
                         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Actuaciones en directo con fines lucrativos</li>
                         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="9" width="20" height="12" rx="2"/><path d="M17 13h2M2 5l6 4"/><circle cx="9" cy="15" r="3"/></svg>Emisión en radio — 20 emisoras</li>
                     </ul>
-                    <a href="index.html#contactForm" class="licence-cta">Contactar</a>
+                    <button type="button" onclick="openModal('Unlimited Lease','$100')" class="licence-cta">Contactar</button>
                 </div>
 
             </div>
@@ -227,10 +227,20 @@
             const beat = document.getElementById('beat-name').value;
             const licence = document.getElementById('licence-type').value;
             const email = document.getElementById('client-email').value;
-            const subject = encodeURIComponent('Solicitud de licencia: ' + licence + ' — ' + beat);
-            const body = encodeURIComponent('Nombre del beat: ' + beat + '\nTipo de licencia: ' + licence + '\nEmail de contacto: ' + email);
-            window.location.href = 'mailto:contacto@myoozinc.com?subject=' + subject + '&body=' + body;
-            closeModal();
+            const data = new FormData();
+            data.append('access_key', 'TU_ACCESS_KEY_AQUI');
+            data.append('beat', beat);
+            data.append('licencia', licence);
+            data.append('email', email);
+            data.append('subject', 'Solicitud de licencia: ' + licence + ' — ' + beat);
+            
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST', body: data
+            }).then(res => {
+                if (res.ok) {
+                    document.querySelector('#licenceModal form').innerHTML = '<p style="color:rgba(255,255,255,0.7);text-align:center;padding:2rem 0;font-size:0.9rem;">&#10003; Solicitud enviada. Te contactamos pronto.</p>';
+                } else { alert('Error al enviar. Inténtalo de nuevo.'); }
+            }).catch(() => { alert('Error de conexión.'); });
         }
     </script>
 </body>
