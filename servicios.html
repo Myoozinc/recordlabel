@@ -87,10 +87,11 @@
 
         .btn-solicitar {
             display: inline-block;
-            background: linear-gradient(135deg, var(--purple-core) 0%, #8b3fcc 100%);
+            background: #6a0dad;
             color: var(--text-white);
-            padding: 1rem 2.5rem;
+            padding: 0.75rem 2rem;
             border-radius: 100px;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 700;
@@ -98,7 +99,6 @@
             cursor: pointer;
             border: none;
             transition: transform 0.3s, box-shadow 0.3s;
-            margin: 2rem auto;
         }
         
         .btn-solicitar:hover {
@@ -106,9 +106,9 @@
             box-shadow: 0 10px 20px rgba(106, 13, 173, 0.4);
         }
 
-        .center-btn {
+        .action-btn-container {
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
         }
 
         /* Modal Styles */
@@ -240,7 +240,7 @@
             <p class="subtitle">Audiovisuales</p>
         </div>
 
-        <div class="center-btn">
+        <div class="action-btn-container" style="margin-top: -3rem; margin-bottom: 5rem;">
             <button class="btn-solicitar" onclick="openModal()">Solicitar Servicio</button>
         </div>
 
@@ -338,7 +338,7 @@
             </div>
         </section>
 
-        <div class="center-btn" style="margin-bottom: 4rem;">
+        <div class="action-btn-container" style="margin-bottom: 4rem;">
             <button class="btn-solicitar" onclick="openModal()">Solicitar Servicio</button>
         </div>
 
