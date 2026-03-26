@@ -29,10 +29,16 @@
         }
 
         .service-list {
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem 4rem;
             margin-top: 4rem;
+        }
+
+        @media screen and (max-width: 900px) {
+            .service-list {
+                grid-template-columns: 1fr;
+            }
         }
 
         .service-item {
@@ -43,15 +49,10 @@
             border-bottom: 1px solid var(--glass-border);
         }
 
-        .service-item:last-child {
-            border-bottom: none;
-        }
-
         .service-item-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            flex-wrap: wrap;
             gap: 1rem;
         }
 
@@ -88,25 +89,24 @@
         }
 
         .btn-outline-custom {
-            display: block;
-            width: 100%;
+            display: inline-block;
             background: transparent;
-            color: #8b3fcc; 
-            padding: 1.25rem 0;
+            color: #6a0dad; 
+            padding: 0.75rem 2.5rem;
             border-radius: 100px;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             font-weight: 700;
             text-align: center;
             text-decoration: none;
             cursor: pointer;
-            border: 2px solid #8b3fcc;
+            border: 2px solid #6a0dad;
             transition: all 0.3s ease;
         }
 
         .btn-outline-custom:hover {
-            background: rgba(139, 63, 204, 0.1);
+            background: rgba(106, 13, 173, 0.1);
             transform: translateY(-2px);
         }
 
@@ -265,7 +265,7 @@
             <p class="subtitle">Audiovisuales</p>
         </div>
 
-        <div class="action-btn-container" style="margin-top: -3rem; margin-bottom: 5rem; width: 100%;">
+        <div class="action-btn-container" style="margin-top: -3rem; margin-bottom: 5rem; justify-content: flex-end;">
             <button class="btn-outline-custom" onclick="openModal()">Solicitar Servicio</button>
         </div>
 
