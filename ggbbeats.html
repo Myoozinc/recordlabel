@@ -174,7 +174,7 @@
             <h2 class="modal-title">Solicitar Licencia</h2>
             <p class="modal-sub">Completa el formulario y te contactamos.</p>
             <form onsubmit="submitLicenceForm(event)">
-                <div class="modal-field">
+                <div class="modal-field" id="beat-name-container">
                     <label for="beat-name">Nombre del Beat</label>
                     <input type="text" id="beat-name" placeholder="¿Cuál es el beat?" required>
                 </div>
@@ -198,10 +198,35 @@
     <script src="navigation.js"></script>
     <script>
         function openModal(type, price) {
-            document.getElementById('licence-type').value = type + ' — ' + price;
             document.getElementById('licenceModal').classList.add('open');
             document.body.style.overflow = 'hidden';
+            const select = document.getElementById('licence-type');
+            for(let i=0; i<select.options.length; i++){
+                if(select.options[i].value.includes(type)){
+                    select.selectedIndex = i;
+                    break;
+                }
+            }
+            toggleBeatNameField();
         }
+
+        document.getElementById('licence-type').addEventListener('change', toggleBeatNameField);
+
+        function toggleBeatNameField() {
+            const val = document.getElementById('licence-type').value;
+            const beatContainer = document.getElementById('beat-name-container');
+            const beatInput = document.getElementById('beat-name');
+            if (val.includes('Beat Personalizado')) {
+                beatContainer.style.display = 'none';
+                beatInput.removeAttribute('required');
+                if(beatInput.value === '') beatInput.value = 'N/A - Beat Personalizado';
+            } else {
+                beatContainer.style.display = 'block';
+                beatInput.setAttribute('required', 'true');
+                if(beatInput.value === 'N/A - Beat Personalizado') beatInput.value = '';
+            }
+        }
+
         function closeModal() {
             document.getElementById('licenceModal').classList.remove('open');
             document.body.style.overflow = '';
