@@ -39,9 +39,10 @@
         .music-embed iframe { width: 100%; border: none; border-radius: 8px; display: block; }
         .licences-section { margin-bottom: 0; }
         .licences-intro { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.7; }
-        .licence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-        .licence-card { border: 1px solid var(--glass-border); border-radius: 12px; padding: 2rem; background: rgba(255,255,255,0.02); display: flex; flex-direction: column; gap: 1.2rem; transition: border-color 0.3s; }
-        .licence-card.featured { border-color: rgba(139,63,204,0.6); background: rgba(139,63,204,0.04); }
+        .licence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+        .licence-card { padding: 2rem 2.5rem 2rem 0; border-top: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 1.2rem; }
+        .licence-card:last-child { padding-left: 2.5rem; padding-right: 0; border-left: 1px solid var(--glass-border); border-top: 1px solid var(--glass-border); }
+        .licence-card.featured { background: none; border-color: var(--glass-border); }
         .licence-header { display: flex; flex-direction: column; gap: 0.4rem; }
         .licence-name { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-secondary); }
         .licence-price { font-size: 2.5rem; font-weight: 800; letter-spacing: -2px; background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.3) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
@@ -54,6 +55,22 @@
         .licence-card.featured .licence-cta { border-color: rgba(139,63,204,0.9); color: #8B3FCC; }
         .licence-cta:hover { background: rgba(139,63,204,0.15); border-color: #8B3FCC; color: #fff; }
         @media (max-width: 640px) { .licence-grid { grid-template-columns: 1fr; } }
+        /* Modal */
+        .modal-overlay{position:fixed;inset:0;background:rgba(5,5,5,0.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:5000;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+        .modal-overlay.open{opacity:1;pointer-events:all;}
+        .modal-box{background:#0a0a0a;border:1px solid rgba(139,63,204,0.45);border-radius:12px;padding:2.5rem;width:min(460px,90vw);position:relative;transform:translateY(20px);transition:transform 0.3s;}
+        .modal-overlay.open .modal-box{transform:translateY(0);}
+        .modal-close{position:absolute;top:1.2rem;right:1.4rem;background:none;border:none;color:var(--text-secondary);font-size:1.1rem;cursor:pointer;padding:0;line-height:1;}
+        .modal-close:hover{color:#fff;}
+        .modal-title{font-size:1.3rem;font-weight:800;text-transform:uppercase;letter-spacing:-0.5px;margin-bottom:0.3rem;background:linear-gradient(180deg,#fff 30%,rgba(255,255,255,0.3) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+        .modal-sub{color:var(--text-secondary);font-size:0.82rem;margin-bottom:2rem;}
+        .modal-field{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.4rem;}
+        .modal-field label{font-size:0.72rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-secondary);}
+        .modal-field input,.modal-field select{background:rgba(255,255,255,0.04);border:1px solid var(--glass-border);border-radius:8px;padding:12px 16px;color:#fff;font-family:'Outfit',sans-serif;font-size:0.9rem;width:100%;transition:border-color 0.3s;}
+        .modal-field input:focus,.modal-field select:focus{outline:none;border-color:rgba(139,63,204,0.7);}
+        .modal-field select option{background:#0a0a0a;}
+        .modal-submit{width:100%;padding:14px;background:linear-gradient(180deg,rgba(139,63,204,0.8) 0%,rgba(48,3,89,0.8) 100%);border:none;border-radius:100px;color:#fff;font-family:'Outfit',sans-serif;font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;cursor:pointer;transition:filter 0.3s;margin-top:0.5rem;}
+        .modal-submit:hover{filter:brightness(1.2);}
         .bio-text { color: var(--text-secondary); line-height: 1.9; font-size: 1rem; max-width: 720px; }
         .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; padding: 10px 24px; border: 1px solid var(--glass-border); border-radius: 100px; color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s; }
         .nav-back:hover { border-color: var(--purple-core); color: var(--text-white); }
@@ -164,7 +181,57 @@
         <a href="productores.html" class="nav-back">← Nuestros Productores</a>
     </div>
 
-    <!-- Footer will be loaded here by navigation.js -->
+    <!-- Licence Request Modal -->
+    <div class="modal-overlay" id="licenceModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+            <h2 class="modal-title">Solicitar Licencia</h2>
+            <p class="modal-sub">Completa el formulario y te contactamos.</p>
+            <form onsubmit="submitLicenceForm(event)">
+                <div class="modal-field">
+                    <label for="beat-name">Nombre del Beat</label>
+                    <input type="text" id="beat-name" placeholder="¿Cuál es el beat?" required>
+                </div>
+                <div class="modal-field">
+                    <label for="licence-type">Tipo de Licencia</label>
+                    <select id="licence-type">
+                        <option value="WAV Lease — $25">WAV Lease — $25</option>
+                        <option value="Unlimited Lease — $100">Unlimited Lease — $100</option>
+                    </select>
+                </div>
+                <div class="modal-field">
+                    <label for="client-email">Tu Email</label>
+                    <input type="email" id="client-email" placeholder="tu@email.com" required>
+                </div>
+                <button type="submit" class="modal-submit">Enviar solicitud</button>
+            </form>
+        </div>
+    </div>
+
     <script src="navigation.js"></script>
+    <script>
+        function openModal(type, price) {
+            document.getElementById('licence-type').value = type + ' — ' + price;
+            document.getElementById('licenceModal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            document.getElementById('licenceModal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('licenceModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        function submitLicenceForm(e) {
+            e.preventDefault();
+            const beat = document.getElementById('beat-name').value;
+            const licence = document.getElementById('licence-type').value;
+            const email = document.getElementById('client-email').value;
+            const subject = encodeURIComponent('Solicitud de licencia: ' + licence + ' — ' + beat);
+            const body = encodeURIComponent('Nombre del beat: ' + beat + '\nTipo de licencia: ' + licence + '\nEmail de contacto: ' + email);
+            window.location.href = 'mailto:contacto@myoozinc.com?subject=' + subject + '&body=' + body;
+            closeModal();
+        }
+    </script>
 </body>
 </html>

@@ -31,9 +31,10 @@
         .music-embed iframe{width:100%;border:none;border-radius:8px;display:block;}
         .licences-section { margin-bottom: 0; }
         .licences-intro { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.7; }
-        .licence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-        .licence-card { border: 1px solid var(--glass-border); border-radius: 12px; padding: 2rem; background: rgba(255,255,255,0.02); display: flex; flex-direction: column; gap: 1.2rem; }
-        .licence-card.featured { border-color: rgba(139,63,204,0.6); background: rgba(139,63,204,0.04); }
+        .licence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+        .licence-card { padding: 2rem 2.5rem 2rem 0; border-top: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 1.2rem; }
+        .licence-card:last-child { padding-left: 2.5rem; padding-right: 0; border-left: 1px solid var(--glass-border); border-top: 1px solid var(--glass-border); }
+        .licence-card.featured { background: none; border-color: var(--glass-border); }
         .licence-header { display: flex; flex-direction: column; gap: 0.4rem; }
         .licence-name { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-secondary); }
         .licence-price { font-size: 2.5rem; font-weight: 800; letter-spacing: -2px; background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.3) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
