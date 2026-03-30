@@ -490,7 +490,7 @@
 
                 <div class="service-item">
                     <div class="service-item-header">
-                        <h3>Producción Urbana Base</h3>
+                        <h3>Beat Exclusivo</h3>
                         <span class="service-price">$200</span>
                     </div>
                     <p class="service-desc">Creación de beat instrumental profesional, estructurado y listo para grabar tu próximo hit urbano.</p>
@@ -590,7 +590,7 @@
                         </div>
                     </div>
                     <p class="promo-item-desc">Beat Exclusivo + Mix & Master. <br><strong style="color: var(--purple-glow);">AHORRAS $150 USD</strong></p>
-                    <button class="promo-btn-select" onclick="selectPromo('Paquete Artista Independiente', 350, 'Producción Urbana Base, Mix, Master', 500)">Seleccionar →</button>
+                    <button class="promo-btn-select" onclick="selectPromo('Paquete Artista Independiente', 350, 'Beat Exclusivo, Mix, Master', 500)">Seleccionar →</button>
                 </div>
 
                 <!-- Promo EXTRA (New Request) -->
@@ -603,7 +603,7 @@
                         </div>
                     </div>
                     <p class="promo-item-desc">Producción Urbana + Mix & Master + Edición de Video. <br><strong style="color: var(--purple-glow);">AHORRAS $100 USD</strong></p>
-                    <button class="promo-btn-select" onclick="selectPromo('Paquete Audiovisual Pro', 450, 'Producción Urbana Base, Mix, Master, Edición de Videoclip', 550)">Seleccionar →</button>
+                    <button class="promo-btn-select" onclick="selectPromo('Paquete Audiovisual Pro', 450, 'Beat Exclusivo, Mix, Master, Edición de Videoclip', 550)">Seleccionar →</button>
                 </div>
 
                 <!-- Promo 3 -->
@@ -707,9 +707,9 @@
                     </label>
 
                     <label class="service-checkbox">
-                        <input type="checkbox" data-service="Producción Urbana Base" data-price="200" onchange="calculateTotal()">
+                        <input type="checkbox" data-service="Beat Exclusivo" data-price="200" onchange="calculateTotal()">
                         <div class="service-info">
-                            <span>Producción Urbana Base</span>
+                            <span>Beat Exclusivo</span>
                             <div class="sb-price">$200</div>
                         </div>
                     </label>
@@ -731,9 +731,7 @@
                     </label>
                 </div>
 
-                <div id="combination-discount-notice" style="display: none; background: rgba(139, 63, 204, 0.1); color: var(--purple-glow); padding: 0.8rem 1.25rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; border: 1px solid rgba(139, 63, 204, 0.2);">
-                    Descuento Mix+Master Aplicado: -$100 USD
-                </div>
+                <div id="smart-promo-container"></div>
 
                 <div class="total-container" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
                     <span style="font-size: 1rem; text-transform: uppercase; letter-spacing: 2px;">TOTAL</span>
@@ -902,26 +900,31 @@
 
             // Definition of available promos for the detector
             const allPromos = [
+                { id: 'artiste-indie', name: 'Paquete Artista Independiente', price: 350, original: 500, services: ['Beat Exclusivo', 'Mix', 'Master'] },
+                { id: 'audiovisual-pro', name: 'Paquete Audiovisual Pro', price: 450, original: 550, services: ['Beat Exclusivo', 'Mix', 'Master', 'Edición de Videoclip'] },
                 { id: 'upgrade-ia', name: 'Paquete Upgrade IA', price: 220, original: 300, services: ['Mix', 'Master', 'Mejora de Canción IA'] },
-                { id: 'artista-indie', name: 'Paquete Artista Independiente', price: 350, original: 500, services: ['Producción Urbana Base', 'Mix', 'Master'] },
-                { id: 'audiovisual-pro', name: 'Paquete Audiovisual Pro', price: 450, original: 550, services: ['Producción Urbana Base', 'Mix', 'Master', 'Edición de Videoclip'] },
                 { id: 'millon-vibes', name: 'Código del Millón', price: 899, original: 1300, services: ['Beat Original', 'Mix', 'Master', 'Edición de Videoclip', 'Campaña Viral 50 Reels', 'Management Estratégico'] }
             ];
 
             let bestPromo = null;
+            let highestMatchCount = 0;
             let maxSavings = 0;
 
             allPromos.forEach(promo => {
                 // Check how many services from this promo the user has already picked
                 const matches = promo.services.filter(s => selectedSet.has(s));
                 
-                // If the user has picked at least 1 service from this combo
-                // OR if picking the promo is strictly cheaper than their current selection
                 if(matches.length >= 1) {
                     const savings = currentTotalValue - promo.price;
-                    if(savings > 0 && savings > maxSavings) {
-                        maxSavings = savings;
-                        bestPromo = { ...promo, actualSavings: savings, matchedServices: matches };
+                    
+                    // Priority 1: Pick the promo that matches MORE of what the user selected
+                    // Priority 2: If match count is the same, pick the one with higher savings
+                    if(matches.length > highestMatchCount || (matches.length === highestMatchCount && savings > maxSavings)) {
+                        if(savings > 0) {
+                            highestMatchCount = matches.length;
+                            maxSavings = savings;
+                            bestPromo = { ...promo, actualSavings: savings, matchedServices: matches };
+                        }
                     }
                 }
             });
@@ -960,7 +963,7 @@
                 `;
                 
                 banner.onclick = () => selectPromo(bestPromo.name, bestPromo.price, bestPromo.services.join(', '), bestPromo.original);
-                document.getElementById('service-form').prepend(banner);
+                document.getElementById('smart-promo-container').appendChild(banner);
             }
         }
 
