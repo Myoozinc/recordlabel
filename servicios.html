@@ -260,23 +260,19 @@
         }
 
         .promo-trigger-btn {
-            background: rgba(139, 63, 204, 0.15);
+            background: #300359;
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 1rem 2.5rem;
+            border: none;
+            padding: 1rem 2.8rem;
             border-radius: 100px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            margin-bottom: 0;
             transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 0 20px rgba(139, 63, 204, 0.2);
+            justify-content: center;
         }
 
         .promo-trigger-btn:hover {
@@ -314,6 +310,20 @@
             color: #fff;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        .promo-price-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .promo-original-price {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            text-decoration: line-through;
+            opacity: 0.6;
+            font-weight: 400;
         }
 
         .promo-price-tag {
@@ -371,8 +381,8 @@
             <p class="subtitle">Audiovisuales</p>
         </div>
 
-        <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 4rem; display: flex; flex-direction: row; justify-content: flex-end; align-items: center; gap: 1rem; flex-wrap: wrap;">
-            <button class="promo-trigger-btn" onclick="openPromosModal()" style="margin-bottom: 0;">
+        <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 4rem; display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem;">
+            <button class="promo-trigger-btn" onclick="openPromosModal()">
                 Ver Paquetes Promocionales
             </button>
             <button class="btn-outline-custom" onclick="openModal()">Solicitar servicios</button>
@@ -380,9 +390,9 @@
 
         <!-- Estudio Musical -->
         <section class="service-section">
-            <div class="page-header">
+            <div class="page-header" style="text-align: center; margin-bottom: 2rem;">
                 <h1 class="purple-title">Estudio de Audio</h1>
-                <p class="subtitle">Servicios de producción musical <span style="font-size: 0.8rem; opacity: 0.6; text-transform: lowercase; font-weight: 400; letter-spacing: normal;">*precios en dolares</span></p>
+                <p class="subtitle" style="text-transform: uppercase;">Servicios de producción musical <span style="font-size: 0.8rem; opacity: 0.6; text-transform: lowercase; font-weight: 400; letter-spacing: normal;">*precios en dolares</span></p>
             </div>
 
             <div class="service-list">
@@ -422,9 +432,9 @@
 
         <!-- Estudio Visual -->
         <section class="service-section">
-            <div class="page-header">
+            <div class="page-header" style="text-align: center; margin-bottom: 2rem;">
                 <h1 class="purple-title">Estudio Visual</h1>
-                <p class="subtitle">Servicios de video e imagen</p>
+                <p class="subtitle" style="text-transform: uppercase;">Servicios Audiovisuales</p>
             </div>
             
             <div class="service-list">
@@ -448,9 +458,9 @@
 
         <!-- Agencia -->
         <section class="service-section">
-            <div class="page-header">
+            <div class="page-header" style="text-align: center; margin-bottom: 2rem;">
                 <h1 class="purple-title">Agencia</h1>
-                <p class="subtitle">Servicios de marketing digital</p>
+                <p class="subtitle" style="text-transform: uppercase;">Servicios de Marketing Digital</p>
             </div>
 
             <div class="service-list">
@@ -490,30 +500,39 @@
                 <div class="promo-list-item">
                     <div class="promo-header">
                         <h3 class="promo-name">Paquete Upgrade IA</h3>
-                        <span class="promo-price-tag">$220</span>
+                        <div class="promo-price-group">
+                            <span class="promo-original-price">$300</span>
+                            <span class="promo-price-tag">$220</span>
+                        </div>
                     </div>
-                    <p class="promo-item-desc">Si ya tienes tu idea en IA, le damos el tratamiento completo de Mix & Master para que suene profesional en todas partes. <br><strong style="color: var(--purple-glow);">AHORRAS $80 USD</strong></p>
-                    <button class="promo-btn-select" onclick="selectPromo('Paquete Upgrade IA', 220, 'Mix, Master')">Seleccionar →</button>
+                    <p class="promo-item-desc">Mix & Master para pistas IA. <br><strong style="color: var(--purple-glow);">AHORRAS $80 USD</strong></p>
+                    <button class="promo-btn-select" onclick="selectPromo('Paquete Upgrade IA', 220, 'Mix, Master', 300)">Seleccionar →</button>
                 </div>
 
                 <!-- Promo 2 -->
                 <div class="promo-list-item">
                     <div class="promo-header">
                         <h3 class="promo-name">Paquete Artista Independiente</h3>
-                        <span class="promo-price-tag">$350</span>
+                        <div class="promo-price-group">
+                            <span class="promo-original-price">$500</span>
+                            <span class="promo-price-tag">$350</span>
+                        </div>
                     </div>
-                    <p class="promo-item-desc">Beat Original Exclusivo + Mix & Master. Lo esencial para que tu próximo single suene enorme. <br><strong style="color: var(--purple-glow);">AHORRAS $50 USD</strong></p>
-                    <button class="promo-btn-select" onclick="selectPromo('Paquete Artista Independiente', 350, 'Beat Original, Mix, Master')">Seleccionar →</button>
+                    <p class="promo-item-desc">Beat Exclusivo + Mix & Master. <br><strong style="color: var(--purple-glow);">AHORRAS $150 USD</strong></p>
+                    <button class="promo-btn-select" onclick="selectPromo('Paquete Artista Independiente', 350, 'Beat Original, Mix, Master', 500)">Seleccionar →</button>
                 </div>
 
                 <!-- Promo 3 -->
                 <div class="promo-list-item">
                     <div class="promo-header">
                         <h3 class="promo-name">Paquete Emprendedor Musical</h3>
-                        <span class="promo-price-tag">$499</span>
+                        <div class="promo-price-group">
+                            <span class="promo-original-price">$700</span>
+                            <span class="promo-price-tag">$499</span>
+                        </div>
                     </div>
-                    <p class="promo-item-desc">Beat Original Exclusivo + Mix & Master + Campaña Viral de 50 Reels. Todo lo que necesitas para lanzar tu próximo hit. <br><strong style="color: var(--purple-glow);">AHORRAS $101 USD</strong></p>
-                    <button class="promo-btn-select" onclick="selectPromo('Paquete Emprendedor Musical', 499, 'Beat Original, Mix, Master, 50 Reels')">Seleccionar →</button>
+                    <p class="promo-item-desc">Beat + Mix/Master + 50 Reels. <br><strong style="color: var(--purple-glow);">AHORRAS $201 USD</strong></p>
+                    <button class="promo-btn-select" onclick="selectPromo('Paquete Emprendedor Musical', 499, 'Beat Original, Mix, Master, 50 Reels', 700)">Seleccionar →</button>
                 </div>
 
                 <!-- Promo 4 (Limited) -->
@@ -521,10 +540,13 @@
                     <div class="promo-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">Limited: Solo 2 cupos al mes</div>
                     <div class="promo-header">
                         <h3 class="promo-name">Código del Millón</h3>
-                        <span class="promo-price-tag">$899</span>
+                        <div class="promo-price-group">
+                            <span class="promo-original-price">$1300</span>
+                            <span class="promo-price-tag">$899</span>
+                        </div>
                     </div>
-                    <p class="promo-item-desc">El ecosistema completo. Beat Original, Mix, Master, Videoclip IA, Campaña 50 Reels y Management. <br><strong style="color: var(--purple-glow);">OFERTA VIP — TODO INCLUIDO</strong></p>
-                    <button class="promo-btn-select" onclick="selectPromo('Código del Millón', 899, 'Beat Original, Mix, Master, Videoclip IA, 50 Reels, Management')">Seleccionar →</button>
+                    <p class="promo-item-desc">Ecosistema completo VIP. <br><strong style="color: var(--purple-glow);">TODO INCLUIDO</strong></p>
+                    <button class="promo-btn-select" onclick="selectPromo('Código del Millón', 899, 'Beat Original, Mix, Master, Videoclip IA, 50 Reels, Management', 1300)">Seleccionar →</button>
                 </div>
             </div>
         </div>
@@ -639,6 +661,7 @@
             document.getElementById('services-checklist-group').style.display = 'block';
             resetCheckboxes();
             calculateTotal();
+            if(!paypalInited) initPayPalButton();
         }
 
         function closeModal() {
@@ -657,7 +680,7 @@
             checkboxes.forEach(cb => cb.checked = false);
         }
 
-        function selectPromo(name, price, services) {
+        function selectPromo(name, price, services, originalPrice) {
             closePromosModal();
             openModal();
             isPromoSelected = true;
@@ -672,19 +695,22 @@
             promoNotice.style.background = 'rgba(255, 255, 255, 0.05)';
             promoNotice.style.color = '#fff';
             promoNotice.style.padding = '20px';
-            promoNotice.style.borderRadius = '12px';
+            promoNotice.style.borderRadius = '4px';
             promoNotice.style.marginBottom = '20px';
             promoNotice.style.textAlign = 'left';
-            promoNotice.style.border = '1px solid var(--glass-border)';
+            promoNotice.style.border = '1px solid var(--purple-core)';
             
             let servicesListHtml = services.split(', ').map(s => `<div style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px; opacity: 0.8; font-size: 0.9rem;">
                 <span style="color: var(--purple-glow);">✓</span> ${s}
             </div>`).join('');
 
             promoNotice.innerHTML = `
-                <div style="font-weight: 800; text-align: center; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">PROMO ACTIVA: ${name}</div>
+                <div style="font-weight: 800; text-align: center; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="text-transform: uppercase;">PROMO ACTIVA: ${name}</span>
+                    <span style="color: var(--text-secondary); text-decoration: line-through; font-size: 0.9rem;">$${originalPrice}</span>
+                </div>
                 <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
-                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 1rem;">Servicios Incluidos:</div>
+                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 1rem;">Detalles del Paquete:</div>
                     ${servicesListHtml}
                 </div>
             `;
