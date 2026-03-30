@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
     <style>
         .container {
             margin-top: 120px;
@@ -257,6 +258,154 @@
             color: var(--purple-core);
             font-size: 1.5rem;
         }
+
+        /* Promo Cards */
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 6rem;
+        }
+
+        .promo-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 2.5rem;
+            color: #1a1a1a;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid transparent;
+        }
+
+        .promo-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .promo-card.featured {
+            border-color: #f59e0b;
+        }
+
+        .promo-icon {
+            width: 60px;
+            height: 60px;
+            background: #fff8eb;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .promo-tag {
+            background: #fef3c7;
+            color: #d97706;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            width: fit-content;
+            margin-bottom: 1rem;
+        }
+
+        .promo-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .promo-desc {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .promo-price-box {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .promo-price {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #d97706;
+        }
+
+        .promo-old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1.2rem;
+        }
+
+        .promo-currency {
+            color: #999;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-promo {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: #fff;
+            padding: 1.2rem;
+            border-radius: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .btn-promo:hover {
+            filter: brightness(1.1);
+        }
+
+        .promo-limit {
+            background: #fff7ed;
+            color: #c2410c;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+        }
+
+        .promo-trigger-btn {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #fff;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 100px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+            margin-bottom: 3rem;
+            transition: all 0.3s;
+        }
+
+        .promo-trigger-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4);
+        }
     </style>
 </head>
 
@@ -268,9 +417,83 @@
             <p class="subtitle">Audiovisuales</p>
         </div>
 
-        <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 2rem; justify-content: flex-end;">
-            <button class="btn-outline-custom" onclick="openModal()">Solicitar Servicio</button>
+        <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 4rem; flex-direction: column; align-items: center; gap: 1.5rem;">
+            <button class="promo-trigger-btn" onclick="document.getElementById('promos-section').scrollIntoView({behavior:'smooth'})">🔥 Ver Promociones Especiales</button>
+            <button class="btn-outline-custom" onclick="openModal()">Armar Mi Paquete</button>
         </div>
+
+        <!-- Promos Section -->
+        <section id="promos-section" class="service-section">
+            <div class="page-header">
+                <h1 class="purple-title" style="color: #f59e0b;">Promociones VIP</h1>
+                <p class="subtitle">Paquetes con descuento exclusivo</p>
+            </div>
+
+            <div class="promo-grid">
+                <!-- Promo 1 -->
+                <div class="promo-card">
+                    <div class="promo-icon">🔥</div>
+                    <h3 class="promo-title">Paquete Upgrade IA</h3>
+                    <p class="promo-desc">Si ya tienes tu idea en IA, le damos el tratamiento completo de Mix & Master para que suene profesional en todas partes.</p>
+                    <div class="promo-price-box">
+                        <span class="promo-price">$220</span>
+                        <span class="promo-currency">USD</span>
+                    </div>
+                    <button class="btn-promo" onclick="selectPromo('Paquete Upgrade IA', 220)">Cotizar Ahora →</button>
+                </div>
+
+                <!-- Promo 2 -->
+                <div class="promo-card">
+                    <div class="promo-icon">🎯</div>
+                    <h3 class="promo-title">Artista Independiente</h3>
+                    <p class="promo-desc">Beat Original Exclusivo + Mix & Master. Lo esencial para que tu próximo single suene enorme.</p>
+                    <div class="promo-price-box">
+                        <span class="promo-price">$350</span>
+                        <span class="promo-currency">USD</span>
+                    </div>
+                    <button class="btn-promo" onclick="selectPromo('Artista Independiente', 350)">Cotizar Ahora →</button>
+                </div>
+
+                <!-- Promo 3 -->
+                <div class="promo-card">
+                    <div class="promo-icon">📹</div>
+                    <h3 class="promo-title">Audiovisual Pro</h3>
+                    <p class="promo-desc">Beat Original Exclusivo + Mix & Master + Edición de Videoclip. Tu canción completa y el video listo para YouTube.</p>
+                    <div class="promo-price-box">
+                        <span class="promo-price">$450</span>
+                        <span class="promo-currency">USD</span>
+                    </div>
+                    <button class="btn-promo" onclick="selectPromo('Audiovisual Pro', 450)">Cotizar Ahora →</button>
+                </div>
+
+                <!-- Promo 4 -->
+                <div class="promo-card">
+                    <div class="promo-icon">⚡</div>
+                    <h3 class="promo-title">Emprendedor Musical</h3>
+                    <p class="promo-desc">Beat Original Exclusivo + Mix & Master + Campaña Viral de 50 Reels. Todo lo que necesitas para lanzar tu próximo hit.</p>
+                    <div class="promo-price-box">
+                        <span class="promo-price">$499</span>
+                        <span class="promo-currency">USD</span>
+                    </div>
+                    <button class="btn-promo" onclick="selectPromo('Emprendedor Musical', 499)">Cotizar Ahora →</button>
+                </div>
+
+                <!-- Promo 5 - Millon -->
+                <div class="promo-card featured">
+                    <div class="promo-tag">Más Popular</div>
+                    <div class="promo-icon">👑</div>
+                    <h3 class="promo-title">Código del Millón — VIP</h3>
+                    <p class="promo-desc">El ecosistema completo. Beat Original, Mix & Master, Videoclip IA, Campaña Viral 50 Reels y Management Estratégico. Valor real: $1300.</p>
+                    <div class="promo-limit">⚠️ Solo abro 2 cupos de este paquete al mes.</div>
+                    <div class="promo-price-box">
+                        <span class="promo-price">$899</span>
+                        <span class="promo-old-price">$1,200</span>
+                        <span class="promo-currency">USD</span>
+                    </div>
+                    <button class="btn-promo" onclick="selectPromo('Código del Millón — VIP', 899)">Cotizar Ahora →</button>
+                </div>
+            </div>
+        </section>
 
         <!-- Estudio Musical -->
         <section class="service-section">
@@ -453,7 +676,8 @@
                     <span class="total-val" id="total-display">$0</span>
                 </div>
 
-                <button type="submit" class="btn-solicitar" style="width: 100%; border: none;">Mandar Solicitud</button>
+                <div id="paypal-button-container" style="margin-bottom: 2rem; display: none;"></div>
+                <button type="submit" id="btn-submit-form" class="btn-solicitar" style="width: 100%; border: none;">Mandar Solicitud</button>
             </form>
         </div>
     </div>
@@ -464,16 +688,53 @@
         const hiddenServicesInput = document.getElementById('hidden-services');
         const checkboxes = document.querySelectorAll('.service-checkbox input[type="checkbox"]');
         const form = document.getElementById('service-form');
+        let currentTotal = 0;
+        let isPromoSelected = false;
 
         function openModal() {
             modal.classList.add('active');
+            isPromoSelected = false;
+            resetCheckboxes();
+            calculateTotal();
         }
 
         function closeModal() {
             modal.classList.remove('active');
         }
 
+        function resetCheckboxes() {
+            checkboxes.forEach(cb => cb.checked = false);
+        }
+
+        function selectPromo(name, price) {
+            openModal();
+            isPromoSelected = true;
+            hiddenServicesInput.value = `PROMO: ${name} | Total: $${price}`;
+            document.getElementById('total-display').textContent = '$' + price;
+            currentTotal = price;
+            
+            // Highlight that a promo is active
+            const promoNotice = document.createElement('div');
+            promoNotice.id = 'active-promo-notice';
+            promoNotice.style.background = '#fef3c7';
+            promoNotice.style.color = '#d97706';
+            promoNotice.style.padding = '10px';
+            promoNotice.style.borderRadius = '8px';
+            promoNotice.style.marginBottom = '20px';
+            promoNotice.style.fontWeight = '800';
+            promoNotice.style.textAlign = 'center';
+            promoNotice.innerHTML = `🌟 PROMO ACTIVA: ${name}`;
+            
+            const existingNotice = document.getElementById('active-promo-notice');
+            if(existingNotice) existingNotice.remove();
+            
+            document.getElementById('service-form').prepend(promoNotice);
+            updatePayPalVisibility();
+        }
+
         function calculateTotal() {
+            if(isPromoSelected) return; // Keep promo price if selected via promo card
+            
             let total = 0;
             let selectedNames = [];
 
@@ -485,12 +746,57 @@
             });
 
             document.getElementById('total-display').textContent = '$' + total;
+            currentTotal = total;
             
             if(selectedNames.length > 0) {
                 hiddenServicesInput.value = selectedNames.join(', ') + ' | Total: $' + total;
             } else {
                 hiddenServicesInput.value = '';
             }
+
+            // Remove promo notice if they start clicking checkboxes
+            const existingNotice = document.getElementById('active-promo-notice');
+            if(existingNotice) existingNotice.remove();
+            
+            updatePayPalVisibility();
+        }
+
+        function updatePayPalVisibility() {
+            const paypalContainer = document.getElementById('paypal-button-container');
+            const submitBtn = document.getElementById('btn-submit-form');
+
+            if(currentTotal > 0) {
+                paypalContainer.style.display = 'block';
+                submitBtn.style.display = 'none'; // Only show PayPal if there's a price
+                initPayPalButton();
+            } else {
+                paypalContainer.style.display = 'none';
+                submitBtn.style.display = 'block';
+            }
+        }
+
+        let paypalInited = false;
+        function initPayPalButton() {
+            if(paypalInited) return;
+            paypalInited = true;
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: currentTotal.toString()
+                            },
+                            description: hiddenServicesInput.value
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        alert('Pago completado por ' + details.payer.name.given_name);
+                        form.submit(); // Submit the form after payment
+                    });
+                }
+            }).render('#paypal-button-container');
         }
 
         modal.addEventListener('click', (e) => {
