@@ -259,152 +259,106 @@
             font-size: 1.5rem;
         }
 
-        /* Promo Cards */
-        .promo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 6rem;
-        }
-
-        .promo-card {
-            background: #fff;
-            border-radius: 24px;
-            padding: 2.5rem;
-            color: #1a1a1a;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
-            display: flex;
-            flex-direction: column;
-            border: 2px solid transparent;
-        }
-
-        .promo-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .promo-card.featured {
-            border-color: #f59e0b;
-        }
-
-        .promo-icon {
-            width: 60px;
-            height: 60px;
-            background: #fff8eb;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .promo-tag {
-            background: #fef3c7;
-            color: #d97706;
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 100px;
-            text-transform: uppercase;
-            width: fit-content;
-            margin-bottom: 1rem;
-        }
-
-        .promo-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            text-transform: uppercase;
-        }
-
-        .promo-desc {
-            font-size: 0.95rem;
-            color: #666;
-            line-height: 1.5;
-            margin-bottom: 2rem;
-            flex-grow: 1;
-        }
-
-        .promo-price-box {
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .promo-price {
-            font-size: 2.4rem;
-            font-weight: 800;
-            color: #d97706;
-        }
-
-        .promo-old-price {
-            text-decoration: line-through;
-            color: #999;
-            font-size: 1.2rem;
-        }
-
-        .promo-currency {
-            color: #999;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .btn-promo {
-            background: linear-gradient(135deg, #d97706, #b45309);
-            color: #fff;
-            padding: 1.2rem;
-            border-radius: 16px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
-        }
-
-        .btn-promo:hover {
-            filter: brightness(1.1);
-        }
-
-        .promo-limit {
-            background: #fff7ed;
-            color: #c2410c;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 700;
-        }
-
         .promo-trigger-btn {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+            background: rgba(139, 63, 204, 0.15);
             color: #fff;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 1rem 2.5rem;
             border-radius: 100px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
-            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 20px rgba(139, 63, 204, 0.2);
         }
 
         .promo-trigger-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4);
+            background: rgba(139, 63, 204, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(139, 63, 204, 0.4);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Promos Modal List Style */
+        .promo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .promo-list-item {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .promo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .promo-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .promo-price-tag {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--purple-glow);
+        }
+
+        .promo-item-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .promo-badge {
+            display: inline-block;
+            background: rgba(139, 63, 204, 0.1);
+            color: var(--purple-glow);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            width: fit-content;
+        }
+        
+        .promo-btn-select {
+            background: var(--purple-core);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            align-self: flex-start;
+            margin-top: 1rem;
+            transition: opacity 0.3s;
+        }
+
+        .promo-btn-select:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -417,83 +371,12 @@
             <p class="subtitle">Audiovisuales</p>
         </div>
 
-        <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 4rem; flex-direction: column; align-items: center; gap: 1.5rem;">
-            <button class="promo-trigger-btn" onclick="document.getElementById('promos-section').scrollIntoView({behavior:'smooth'})">🔥 Ver Promociones Especiales</button>
+        <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 4rem; flex-direction: column; align-items: center; gap: 1rem;">
+            <button class="promo-trigger-btn" onclick="openPromosModal()">
+                <span style="font-size: 1.2rem;">✨</span> Ver Promociones Especiales
+            </button>
             <button class="btn-outline-custom" onclick="openModal()">Armar Mi Paquete</button>
         </div>
-
-        <!-- Promos Section -->
-        <section id="promos-section" class="service-section">
-            <div class="page-header">
-                <h1 class="purple-title" style="color: #f59e0b;">Promociones VIP</h1>
-                <p class="subtitle">Paquetes con descuento exclusivo</p>
-            </div>
-
-            <div class="promo-grid">
-                <!-- Promo 1 -->
-                <div class="promo-card">
-                    <div class="promo-icon">🔥</div>
-                    <h3 class="promo-title">Paquete Upgrade IA</h3>
-                    <p class="promo-desc">Si ya tienes tu idea en IA, le damos el tratamiento completo de Mix & Master para que suene profesional en todas partes.</p>
-                    <div class="promo-price-box">
-                        <span class="promo-price">$220</span>
-                        <span class="promo-currency">USD</span>
-                    </div>
-                    <button class="btn-promo" onclick="selectPromo('Paquete Upgrade IA', 220)">Cotizar Ahora →</button>
-                </div>
-
-                <!-- Promo 2 -->
-                <div class="promo-card">
-                    <div class="promo-icon">🎯</div>
-                    <h3 class="promo-title">Artista Independiente</h3>
-                    <p class="promo-desc">Beat Original Exclusivo + Mix & Master. Lo esencial para que tu próximo single suene enorme.</p>
-                    <div class="promo-price-box">
-                        <span class="promo-price">$350</span>
-                        <span class="promo-currency">USD</span>
-                    </div>
-                    <button class="btn-promo" onclick="selectPromo('Artista Independiente', 350)">Cotizar Ahora →</button>
-                </div>
-
-                <!-- Promo 3 -->
-                <div class="promo-card">
-                    <div class="promo-icon">📹</div>
-                    <h3 class="promo-title">Audiovisual Pro</h3>
-                    <p class="promo-desc">Beat Original Exclusivo + Mix & Master + Edición de Videoclip. Tu canción completa y el video listo para YouTube.</p>
-                    <div class="promo-price-box">
-                        <span class="promo-price">$450</span>
-                        <span class="promo-currency">USD</span>
-                    </div>
-                    <button class="btn-promo" onclick="selectPromo('Audiovisual Pro', 450)">Cotizar Ahora →</button>
-                </div>
-
-                <!-- Promo 4 -->
-                <div class="promo-card">
-                    <div class="promo-icon">⚡</div>
-                    <h3 class="promo-title">Emprendedor Musical</h3>
-                    <p class="promo-desc">Beat Original Exclusivo + Mix & Master + Campaña Viral de 50 Reels. Todo lo que necesitas para lanzar tu próximo hit.</p>
-                    <div class="promo-price-box">
-                        <span class="promo-price">$499</span>
-                        <span class="promo-currency">USD</span>
-                    </div>
-                    <button class="btn-promo" onclick="selectPromo('Emprendedor Musical', 499)">Cotizar Ahora →</button>
-                </div>
-
-                <!-- Promo 5 - Millon -->
-                <div class="promo-card featured">
-                    <div class="promo-tag">Más Popular</div>
-                    <div class="promo-icon">👑</div>
-                    <h3 class="promo-title">Código del Millón — VIP</h3>
-                    <p class="promo-desc">El ecosistema completo. Beat Original, Mix & Master, Videoclip IA, Campaña Viral 50 Reels y Management Estratégico. Valor real: $1300.</p>
-                    <div class="promo-limit">⚠️ Solo abro 2 cupos de este paquete al mes.</div>
-                    <div class="promo-price-box">
-                        <span class="promo-price">$899</span>
-                        <span class="promo-old-price">$1,200</span>
-                        <span class="promo-currency">USD</span>
-                    </div>
-                    <button class="btn-promo" onclick="selectPromo('Código del Millón — VIP', 899)">Cotizar Ahora →</button>
-                </div>
-            </div>
-        </section>
 
         <!-- Estudio Musical -->
         <section class="service-section">
@@ -595,6 +478,69 @@
 
     </div>
 
+    </div>
+
+    <!-- Promos Modal -->
+    <div class="modal" id="promos-modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="close-modal" onclick="closePromosModal()">×</button>
+            <h2 style="color: var(--text-white); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px;">Promociones <span style="color: var(--purple-glow);">VIP</span></h2>
+            
+            <div class="promo-list">
+                <!-- Promo 1 -->
+                <div class="promo-list-item">
+                    <div class="promo-header">
+                        <h3 class="promo-name">Upgrade IA</h3>
+                        <span class="promo-price-tag">$220</span>
+                    </div>
+                    <p class="promo-item-desc">Tratamiento completo de Mix & Master para pistas generadas por IA.</p>
+                    <button class="promo-btn-select" onclick="selectPromo('Paquete Upgrade IA', 220)">Seleccionar →</button>
+                </div>
+
+                <!-- Promo 2 -->
+                <div class="promo-list-item">
+                    <div class="promo-header">
+                        <h3 class="promo-name">Artista Independiente</h3>
+                        <span class="promo-price-tag">$350</span>
+                    </div>
+                    <p class="promo-item-desc">Beat Exclusivo + Mix & Master Profesional.</p>
+                    <button class="promo-btn-select" onclick="selectPromo('Artista Independiente', 350)">Seleccionar →</button>
+                </div>
+
+                <!-- Promo 3 -->
+                <div class="promo-list-item">
+                    <div class="promo-header">
+                        <h3 class="promo-name">Audiovisual Pro</h3>
+                        <span class="promo-price-tag">$450</span>
+                    </div>
+                    <p class="promo-item-desc">Beat + Mix/Master + Edición de Videoclip profesional.</p>
+                    <button class="promo-btn-select" onclick="selectPromo('Audiovisual Pro', 450)">Seleccionar →</button>
+                </div>
+
+                <!-- Promo 4 -->
+                <div class="promo-list-item">
+                    <div class="promo-header">
+                        <h3 class="promo-name">Emprendedor Musical</h3>
+                        <span class="promo-price-tag">$499</span>
+                    </div>
+                    <p class="promo-item-desc">Beat + Mix/Master + Campaña Viral de 50 Reels.</p>
+                    <button class="promo-btn-select" onclick="selectPromo('Emprendedor Musical', 499)">Seleccionar →</button>
+                </div>
+
+                <!-- Promo 5 -->
+                <div class="promo-list-item" style="border-bottom: none;">
+                    <div class="promo-badge">Limitado: 2 cupos/mes</div>
+                    <div class="promo-header">
+                        <h3 class="promo-name" style="color: var(--purple-glow);">Código del Millón</h3>
+                        <span class="promo-price-tag">$899</span>
+                    </div>
+                    <p class="promo-item-desc">Pack completo: Beat, M/M, Videoclip IA, Campaña 50 Reels y Management.</p>
+                    <button class="promo-btn-select" onclick="selectPromo('Código del Millón — VIP', 899)">Seleccionar →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Form -->
     <div class="modal" id="service-modal">
         <div class="modal-content">
@@ -685,6 +631,7 @@
     <script src="navigation.js"></script>
     <script>
         const modal = document.getElementById('service-modal');
+        const promosModal = document.getElementById('promos-modal');
         const hiddenServicesInput = document.getElementById('hidden-services');
         const checkboxes = document.querySelectorAll('.service-checkbox input[type="checkbox"]');
         const form = document.getElementById('service-form');
@@ -702,11 +649,20 @@
             modal.classList.remove('active');
         }
 
+        function openPromosModal() {
+            promosModal.classList.add('active');
+        }
+
+        function closePromosModal() {
+            promosModal.classList.remove('active');
+        }
+
         function resetCheckboxes() {
             checkboxes.forEach(cb => cb.checked = false);
         }
 
         function selectPromo(name, price) {
+            closePromosModal();
             openModal();
             isPromoSelected = true;
             hiddenServicesInput.value = `PROMO: ${name} | Total: $${price}`;
@@ -716,13 +672,14 @@
             // Highlight that a promo is active
             const promoNotice = document.createElement('div');
             promoNotice.id = 'active-promo-notice';
-            promoNotice.style.background = '#fef3c7';
-            promoNotice.style.color = '#d97706';
+            promoNotice.style.background = 'rgba(139, 63, 204, 0.1)';
+            promoNotice.style.color = 'var(--purple-glow)';
             promoNotice.style.padding = '10px';
             promoNotice.style.borderRadius = '8px';
             promoNotice.style.marginBottom = '20px';
             promoNotice.style.fontWeight = '800';
             promoNotice.style.textAlign = 'center';
+            promoNotice.style.border = '1px solid var(--purple-glow)';
             promoNotice.innerHTML = `🌟 PROMO ACTIVA: ${name}`;
             
             const existingNotice = document.getElementById('active-promo-notice');
@@ -733,7 +690,7 @@
         }
 
         function calculateTotal() {
-            if(isPromoSelected) return; // Keep promo price if selected via promo card
+            if(isPromoSelected) return; // Keep promo price if selected via promo
             
             let total = 0;
             let selectedNames = [];
@@ -767,7 +724,7 @@
 
             if(currentTotal > 0) {
                 paypalContainer.style.display = 'block';
-                submitBtn.style.display = 'none'; // Only show PayPal if there's a price
+                submitBtn.style.display = 'none';
                 initPayPalButton();
             } else {
                 paypalContainer.style.display = 'none';
@@ -793,17 +750,16 @@
                 onApprove: function(data, actions) {
                     return actions.order.capture().then(function(details) {
                         alert('Pago completado por ' + details.payer.name.given_name);
-                        form.submit(); // Submit the form after payment
+                        form.submit();
                     });
                 }
             }).render('#paypal-button-container');
         }
 
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
+        window.onclick = function(event) {
+            if (event.target == modal) closeModal();
+            if (event.target == promosModal) closePromosModal();
+        }
     </script>
 </body>
 </html>
