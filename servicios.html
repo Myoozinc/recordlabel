@@ -159,16 +159,18 @@
         }
 
         .modal-content {
-            background: rgba(13, 13, 13, 0.95);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2.5rem;
-            max-width: 600px;
+            background: rgba(13, 13, 13, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 650px;
             width: 100%;
             position: relative;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
         }
 
         .close-modal {
@@ -223,19 +225,15 @@
         .service-checkbox {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
         }
 
         .service-checkbox:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.1);
+            opacity: 0.8;
         }
 
         .service-checkbox input[type="checkbox"] {
@@ -339,11 +337,11 @@
         }
 
         .promo-name {
-            font-size: 1.4rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: #fff;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         .promo-price-group {
@@ -361,9 +359,13 @@
         }
 
         .promo-price-tag {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--purple-glow);
+            background: #300359;
+            color: #fff;
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            font-size: 1rem;
+            font-weight: 900;
+            text-align: center;
         }
 
         .promo-item-desc {
@@ -692,9 +694,13 @@
                     </label>
                 </div>
 
-                <div class="total-container">
-                    <span>Total Estimado</span>
-                    <span class="total-val" id="total-display">$0</span>
+                <div id="combination-discount-notice" style="display: none; background: rgba(139, 63, 204, 0.1); color: var(--purple-glow); padding: 0.8rem 1.25rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; border: 1px solid rgba(139, 63, 204, 0.2);">
+                    Descuento Mix+Master Aplicado: -$100 USD
+                </div>
+
+                <div class="total-container" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
+                    <span style="font-size: 1rem; text-transform: uppercase; letter-spacing: 2px;">TOTAL</span>
+                    <span class="total-val" id="total-display" style="font-size: 2rem; color: #fff;">$0</span>
                 </div>
 
                 <div id="paypal-button-container" style="margin-bottom: 2rem; display: none;"></div>
@@ -763,13 +769,17 @@
             </div>`).join('');
 
             promoNotice.innerHTML = `
-                <div style="font-weight: 800; text-align: center; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-                    <span style="text-transform: uppercase;">PROMO ACTIVA: ${name}</span>
+                <div style="font-weight: 800; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: baseline;">
+                    <span style="text-transform: uppercase; letter-spacing: 1px;">PAQUETE: ${name}</span>
                     <span style="color: var(--text-secondary); text-decoration: line-through; font-size: 0.9rem;">$${originalPrice}</span>
                 </div>
-                <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
-                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 1rem;">Detalles del Paquete:</div>
+                <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; margin-bottom: 1.5rem;">
+                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 1rem;">Servicios Incluidos:</div>
                     ${servicesListHtml}
+                </div>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button type="button" onclick="openPromosModal()" style="background: transparent; color: var(--purple-glow); border: 1px solid var(--purple-glow); padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: 0.3s;">← Volver a Promos</button>
+                    <button type="button" onclick="showChecklistFromPromo()" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: 0.3s;">+ Agregar más servicios</button>
                 </div>
             `;
             
@@ -778,6 +788,15 @@
             
             document.getElementById('service-form').prepend(promoNotice);
             updatePayPalVisibility();
+        }
+
+        function showChecklistFromPromo() {
+            isPromoSelected = false; // Allow manual additions
+            document.getElementById('services-checklist-group').style.display = 'block';
+            const notice = document.getElementById('active-promo-notice');
+            if(notice) notice.style.opacity = '0.5'; // Visual feedback that it's now manual
+            // We don't reset checkboxes; the user might want to see what they had (though promos don't check boxes currently)
+            // For now, let's just show the list and let them add.
         }
 
         function calculateTotal() {
@@ -798,8 +817,12 @@
             });
 
             // Base Mix + Master Discount ($100 off if both are selected)
+            const discountNotice = document.getElementById('combination-discount-notice');
             if(selectedSet.has('Mix') && selectedSet.has('Master')) {
                 total -= 100;
+                discountNotice.style.display = 'block';
+            } else {
+                discountNotice.style.display = 'none';
             }
 
             document.getElementById('total-display').textContent = '$' + total;
@@ -842,9 +865,9 @@
                 banner.style.transition = 'all 0.3s';
                 
                 banner.innerHTML = `
-                    <div style="color: #fff; font-weight: 800; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;">🔥 TE CONVIENE ESTA PROMO</div>
+                    <div style="color: #fff; font-weight: 800; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;">TE CONVIENE ESTA PROMO</div>
                     <div style="color: #fff; font-weight: 900; font-size: 1rem; margin: 0.3rem 0;">${promo.name} — $${promo.price} USD</div>
-                    <div style="color: var(--purple-glow); font-weight: 700; font-size: 0.8rem;">AHORRAS $${promo.savings} USD EXTRA</div>
+                    <div style="color: var(--purple-glow); font-weight: 700; font-size: 0.8rem; text-transform: uppercase;">AHORRAS $${promo.savings} USD EXTRA</div>
                 `;
                 
                 banner.onclick = () => selectPromo(promo.name, promo.price, promo.services, promo.original);
