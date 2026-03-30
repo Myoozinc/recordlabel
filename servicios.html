@@ -283,14 +283,15 @@
         }
 
         .service-info .sb-price {
-            color: var(--purple-glow);
-            font-weight: 700;
-            font-size: 0.9rem;
+            color: #300359;
+            font-weight: 800;
+            font-size: 1.1rem;
         }
 
         .total-val {
-            color: var(--purple-core);
+            color: #300359;
             font-size: 1.5rem;
+            font-weight: 900;
         }
 
         .promo-trigger-btn {
@@ -532,7 +533,10 @@
     <div class="modal" id="promos-modal">
         <div class="modal-content">
             <button class="close-modal" onclick="closePromosModal()">&times;</button>
-            <h2 style="color: var(--text-white); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px;">Promociones</h2>
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <h2 style="color: #300359; font-size: 2.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -1px; margin-bottom: 0.5rem;">PROMOCIONES</h2>
+                <p style="color: #fff; text-transform: uppercase; letter-spacing: 3px; font-size: 0.75rem; font-weight: 400; opacity: 0.9;">Precios Especiales</p>
+            </div>
             
             <div class="promo-list">
                 <!-- Promo 1 -->
@@ -608,7 +612,10 @@
     <div class="modal" id="service-modal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">&times;</button>
-            <h2 style="color: var(--text-white); margin-bottom: 2rem;">Solicitud de Servicios</h2>
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <h2 style="color: #300359; font-size: 2.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: -1px; margin-bottom: 0.5rem;">SOLICITUD</h2>
+                <p style="color: #fff; text-transform: uppercase; letter-spacing: 3px; font-size: 0.75rem; font-weight: 400; opacity: 0.9;">Servicios Profesionales</p>
+            </div>
             
             <form id="service-form" action="https://api.web3forms.com/submit" method="POST">
                 <!-- Using the same default access key that the label normally uses -->
