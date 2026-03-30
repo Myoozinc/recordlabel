@@ -861,8 +861,18 @@
                 }
             });
 
-            // Mix + Master manual combination discount logic is now handled by the Smart Promo system
-            // which offers much better savings/bundle transparency.
+            // Apply the immediate $100 Discount if Mix + Master are selected
+            if(selectedSet.has('Mix') && selectedSet.has('Master')) {
+                total -= 100;
+                const noticeHtml = `<div id="mix-master-discount-tag" style="color: #00ff88; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; text-align: right;">Descuento Mix+Master Aplicado: -$100 USD</div>`;
+                const container = document.getElementById('smart-promo-container');
+                if(container) {
+                    container.innerHTML = noticeHtml;
+                }
+            } else {
+                const tag = document.getElementById('mix-master-discount-tag');
+                if(tag) tag.remove();
+            }
 
             document.getElementById('total-display').textContent = '$' + total;
             currentTotal = total;
