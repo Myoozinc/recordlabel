@@ -371,11 +371,11 @@
             <p class="subtitle">Audiovisuales</p>
         </div>
 
-        <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 4rem; flex-direction: column; align-items: center; gap: 1rem;">
+        <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 4rem; justify-content: flex-end; align-items: center; gap: 1rem; flex-wrap: wrap;">
             <button class="promo-trigger-btn" onclick="openPromosModal()">
                 Ver Paquetes Promocionales
             </button>
-            <button class="btn-outline-custom" onclick="openModal()">Armar Mi Paquete</button>
+            <button class="btn-outline-custom" onclick="openModal()">Solicitar servicios</button>
         </div>
 
         <!-- Estudio Musical -->
@@ -412,10 +412,10 @@
 
                 <div class="service-item">
                     <div class="service-item-header">
-                        <h3>Remake IA con Instrumentos Reales</h3>
+                        <h3>Producción Urbana Base</h3>
                         <span class="service-price">$200</span>
                     </div>
-                    <p class="service-desc">Tomo la idea de tu IA y la vuelvo a producir desde cero con instrumentos y sintetizadores reales para que deje de sonar a plástico.</p>
+                    <p class="service-desc">Creación de beat instrumental profesional, estructurado y listo para grabar tu próximo hit urbano.</p>
                 </div>
             </div>
         </section>
@@ -489,51 +489,41 @@
                 <!-- Promo 1 -->
                 <div class="promo-list-item">
                     <div class="promo-header">
-                        <h3 class="promo-name">Upgrade IA</h3>
+                        <h3 class="promo-name">Paquete Upgrade IA</h3>
                         <span class="promo-price-tag">$220</span>
                     </div>
-                    <p class="promo-item-desc">Tratamiento completo de Mix & Master para pistas generadas por IA.</p>
+                    <p class="promo-item-desc">Si ya tienes tu idea en IA, le damos el tratamiento completo de Mix & Master para que suene profesional en todas partes. <br><strong style="color: var(--purple-glow);">AHORRAS $80 USD</strong></p>
                     <button class="promo-btn-select" onclick="selectPromo('Paquete Upgrade IA', 220)">Seleccionar →</button>
                 </div>
 
                 <!-- Promo 2 -->
                 <div class="promo-list-item">
                     <div class="promo-header">
-                        <h3 class="promo-name">Artista Independiente</h3>
+                        <h3 class="promo-name">Paquete Artista Independiente</h3>
                         <span class="promo-price-tag">$350</span>
                     </div>
-                    <p class="promo-item-desc">Beat Exclusivo + Mix & Master Profesional.</p>
-                    <button class="promo-btn-select" onclick="selectPromo('Artista Independiente', 350)">Seleccionar →</button>
+                    <p class="promo-item-desc">Beat Original Exclusivo + Mix & Master. Lo esencial para que tu próximo single suene enorme. <br><strong style="color: var(--purple-glow);">AHORRAS $50 USD</strong></p>
+                    <button class="promo-btn-select" onclick="selectPromo('Paquete Artista Independiente', 350)">Seleccionar →</button>
                 </div>
 
                 <!-- Promo 3 -->
                 <div class="promo-list-item">
                     <div class="promo-header">
-                        <h3 class="promo-name">Audiovisual Pro</h3>
-                        <span class="promo-price-tag">$450</span>
-                    </div>
-                    <p class="promo-item-desc">Beat + Mix/Master + Edición de Videoclip profesional.</p>
-                    <button class="promo-btn-select" onclick="selectPromo('Audiovisual Pro', 450)">Seleccionar →</button>
-                </div>
-
-                <!-- Promo 4 -->
-                <div class="promo-list-item">
-                    <div class="promo-header">
-                        <h3 class="promo-name">Emprendedor Musical</h3>
+                        <h3 class="promo-name">Paquete Emprendedor Musical</h3>
                         <span class="promo-price-tag">$499</span>
                     </div>
-                    <p class="promo-item-desc">Beat + Mix/Master + Campaña Viral de 50 Reels.</p>
-                    <button class="promo-btn-select" onclick="selectPromo('Emprendedor Musical', 499)">Seleccionar →</button>
+                    <p class="promo-item-desc">Beat Original Exclusivo + Mix & Master + Campaña Viral de 50 Reels. Todo lo que necesitas para lanzar tu próximo hit. <br><strong style="color: var(--purple-glow);">AHORRAS $101 USD</strong></p>
+                    <button class="promo-btn-select" onclick="selectPromo('Paquete Emprendedor Musical', 499)">Seleccionar →</button>
                 </div>
 
-                <!-- Promo 5 -->
+                <!-- Promo 4 (Limited) -->
                 <div class="promo-list-item" style="border-bottom: none;">
-                    <div class="promo-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">Limitado: 2 cupos/mes</div>
+                    <div class="promo-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">Limited: Solo 2 cupos al mes</div>
                     <div class="promo-header">
                         <h3 class="promo-name">Código del Millón</h3>
                         <span class="promo-price-tag">$899</span>
                     </div>
-                    <p class="promo-item-desc">Pack completo: Beat, M/M, Videoclip IA, Campaña 50 Reels y Management.</p>
+                    <p class="promo-item-desc">El ecosistema completo. Beat Original, Mix, Master, Videoclip IA, Campaña 50 Reels y Management. <br><strong style="color: var(--purple-glow);">OFERTA VIP — TODO INCLUIDO</strong></p>
                     <button class="promo-btn-select" onclick="selectPromo('Código del Millón', 899)">Seleccionar →</button>
                 </div>
             </div>
@@ -564,7 +554,7 @@
                     <input type="email" name="email" id="client-email" placeholder="tu@email.com" required>
                 </div>
 
-                <div class="form-group" style="margin-top: 2rem;">
+                <div id="services-checklist-group" class="form-group" style="margin-top: 2rem;">
                     <label>Selecciona los servicios:</label>
                     
                     <label class="service-checkbox">
@@ -604,6 +594,12 @@
                     </label>
 
                     <label class="service-checkbox">
+                        <input type="checkbox" data-service="Producción Urbana Base" data-price="200" onchange="calculateTotal()">
+                        <span>Producción Urbana Base</span>
+                        <div class="sb-price">$200</div>
+                    </label>
+
+                    <label class="service-checkbox">
                         <input type="checkbox" data-service="Campaña Viral 50 Reels" data-price="200" onchange="calculateTotal()">
                         <span>Campaña Viral 50 Reels</span>
                         <div class="sb-price">$200</div>
@@ -640,6 +636,7 @@
         function openModal() {
             modal.classList.add('active');
             isPromoSelected = false;
+            document.getElementById('services-checklist-group').style.display = 'block';
             resetCheckboxes();
             calculateTotal();
         }
@@ -664,6 +661,7 @@
             closePromosModal();
             openModal();
             isPromoSelected = true;
+            document.getElementById('services-checklist-group').style.display = 'none';
             hiddenServicesInput.value = `PROMO: ${name} | Total: $${price}`;
             document.getElementById('total-display').textContent = '$' + price;
             currentTotal = price;
