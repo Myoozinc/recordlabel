@@ -227,11 +227,12 @@
         .service-checkbox {
             display: flex;
             align-items: center;
-            padding: 0.8rem 0;
+            padding: 1.2rem 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
+            gap: 1.5rem;
         }
 
         .service-checkbox:hover {
@@ -241,12 +242,11 @@
         .service-checkbox input[type="checkbox"] {
             appearance: none;
             -webkit-appearance: none;
-            width: 24px;
-            height: 24px;
-            border: 2px solid #fff;
-            border-radius: 4px;
+            width: 20px;
+            height: 20px;
+            border: 1.5px solid #fff;
+            border-radius: 2px;
             background: transparent;
-            margin-right: 1.5rem;
             cursor: pointer;
             position: relative;
             flex-shrink: 0;
@@ -269,14 +269,15 @@
 
         .service-info {
             display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
             flex-grow: 1;
         }
 
         .service-info span {
             color: #fff;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -742,6 +743,7 @@
         }
 
         function openPromosModal() {
+            closeModal(); // Close the service modal if it's open
             promosModal.classList.add('active');
         }
 
@@ -753,10 +755,14 @@
             checkboxes.forEach(cb => cb.checked = false);
         }
 
+        let currentActivePromoServices = [];
+
         function selectPromo(name, price, services, originalPrice) {
             closePromosModal();
             openModal();
             isPromoSelected = true;
+            currentActivePromoServices = services.split(', ');
+            
             document.getElementById('services-checklist-group').style.display = 'none';
             hiddenServicesInput.value = `PROMO: ${name} (${services}) | Total: $${price}`;
             document.getElementById('total-display').textContent = '$' + price;
@@ -765,15 +771,13 @@
             // Highlight that a promo is active and list services
             const promoNotice = document.createElement('div');
             promoNotice.id = 'active-promo-notice';
-            promoNotice.style.background = 'rgba(255, 255, 255, 0.05)';
-            promoNotice.style.color = '#fff';
-            promoNotice.style.padding = '20px';
-            promoNotice.style.borderRadius = '4px';
-            promoNotice.style.marginBottom = '20px';
-            promoNotice.style.textAlign = 'left';
-            promoNotice.style.border = '1px solid var(--purple-core)';
+            promoNotice.style.background = 'rgba(255, 255, 255, 0.04)';
+            promoNotice.style.border = '1px solid #300359';
+            promoNotice.style.borderRadius = '12px';
+            promoNotice.style.padding = '2rem';
+            promoNotice.style.marginBottom = '2rem';
             
-            let servicesListHtml = services.split(', ').map(s => `<div style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px; opacity: 0.8; font-size: 0.9rem;">
+            let servicesListHtml = currentActivePromoServices.map(s => `<div style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px; opacity: 0.8; font-size: 0.9rem; color: #fff;">
                 <span style="color: var(--purple-glow);">✓</span> ${s}
             </div>`).join('');
 
@@ -800,12 +804,22 @@
         }
 
         function showChecklistFromPromo() {
-            isPromoSelected = false; // Allow manual additions
+            isPromoSelected = false; 
             document.getElementById('services-checklist-group').style.display = 'block';
+            
+            // Hide services that are already in the promo
+            const labels = document.querySelectorAll('.service-checkbox');
+            labels.forEach(label => {
+                const serviceName = label.querySelector('input').getAttribute('data-service');
+                if(currentActivePromoServices.includes(serviceName)) {
+                    label.style.display = 'none';
+                } else {
+                    label.style.display = 'flex';
+                }
+            });
+
             const notice = document.getElementById('active-promo-notice');
-            if(notice) notice.style.opacity = '0.5'; // Visual feedback that it's now manual
-            // We don't reset checkboxes; the user might want to see what they had (though promos don't check boxes currently)
-            // For now, let's just show the list and let them add.
+            if(notice) notice.style.opacity = '0.4';
         }
 
         function calculateTotal() {
