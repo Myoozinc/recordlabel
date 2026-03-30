@@ -13,7 +13,7 @@
     <style>
         body { overflow-x: hidden; }
         .container { margin-top: 0; padding-top: 0; }
-        .hero-section { position: relative; width: 100%; min-height: 60vh; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; padding-bottom: 5rem; text-align: center; }
+        .hero-section { position: relative; width: 100%; min-height: 50vh; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; padding-bottom: 3.5rem; text-align: center; }
         .hero-bg { position: absolute; inset: 0; background: #050505; display: flex; align-items: center; justify-content: center; z-index: 0; }
         .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; opacity: 0.35; filter: saturate(0.8); }
         .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,0.6) 60%, rgba(5,5,5,1) 100%); z-index: 1; }
@@ -28,15 +28,15 @@
         }
         @keyframes nameReveal { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
         .hero-socials { display: flex; gap: 1.5rem; justify-content: center; animation: nameReveal 0.8s ease 0.7s both; padding-top: 1rem; }
-        .talent-content { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 8rem; position: relative; z-index: 3; }
-        .content-section { margin-bottom: 5rem; }
+        .talent-content { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 5rem; position: relative; z-index: 3; }
+        .content-section { margin-bottom: 3rem; }
         .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
         .section-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 4px; color: rgba(255,255,255,0.4); margin: 0; }
         
-        .video-grid { display: flex; gap: 1.5rem; overflow-x: auto; scrollbar-width: none; padding-bottom: 1rem; scroll-snap-type: x mandatory; }
+        .video-grid { display: flex; gap: 1.25rem; overflow-x: auto; scrollbar-width: none; padding: 1rem 0; scroll-snap-type: x mandatory; }
         .video-grid::-webkit-scrollbar { display: none; }
-        .video-item { flex: 0 0 clamp(280px, 80vw, 560px); scroll-snap-align: start; aspect-ratio: 16/9; border-radius: 16px; overflow: hidden; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s ease; }
-        .video-item:hover { border-color: #8B3FCC; transform: translateY(-4px); }
+        .video-item { flex: 0 0 350px; scroll-snap-align: start; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: scale(0.96); }
+        .video-item:hover { border-color: #8B3FCC; transform: scale(1.05); z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .video-item iframe { width: 100%; height: 100%; border: none; display: block; }
         
         .music-embed { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
