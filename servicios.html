@@ -861,17 +861,8 @@
                 }
             });
 
-            // Base Mix + Master Discount ($100 off if both are selected)
-            const discountNotice = document.getElementById('combination-discount-notice');
-            if(selectedSet.has('Mix') && selectedSet.has('Master')) {
-                // If they are in a promo that already applies a package price, 
-                // total is already the promo price or calculated manually.
-                // We only apply this $100 if it hasn't been capped by a promo yet.
-                total -= 100;
-                discountNotice.style.display = 'block';
-            } else {
-                discountNotice.style.display = 'none';
-            }
+            // Mix + Master manual combination discount logic is now handled by the Smart Promo system
+            // which offers much better savings/bundle transparency.
 
             document.getElementById('total-display').textContent = '$' + total;
             currentTotal = total;
