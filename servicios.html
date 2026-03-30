@@ -192,21 +192,20 @@
         }
 
         #btn-submit-form {
-            background: #ffc439 !important;
-            color: #003087 !important;
-            border: none;
+            background: rgba(255, 255, 255, 0.05) !important;
+            color: var(--text-secondary) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
             border-radius: 100px;
             padding: 1.1rem 2rem;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            font-weight: 800;
-            cursor: pointer;
+            font-weight: 700;
+            cursor: not-allowed;
             width: 100%;
             transition: all 0.3s;
             letter-spacing: 2px;
             display: block;
-            font-family: 'Outfit', sans-serif;
-            text-align: center;
+            opacity: 0.5;
         }
 
         #btn-submit-form:hover {
@@ -741,7 +740,7 @@
                 </div>
 
                 <div id="paypal-button-container" style="margin-bottom: 2rem; display: none;"></div>
-                <button type="submit" id="btn-submit-form" style="width: 100%; border: none;">SOLICITAR / PAYPAL</button>
+                <button type="button" id="btn-submit-form" disabled style="width: 100%; border: none;">Selecciona un servicio para comenzar</button>
             </form>
         </div>
     </div>
@@ -939,6 +938,7 @@
             } else {
                 paypalContainer.style.display = 'none';
                 submitBtn.style.display = 'block';
+                // We'll style the submitBtn as a premium secondary solicitation but clear about selection
             }
         }
 
