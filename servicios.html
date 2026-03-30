@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD&disable-funding=credit,paylater"></script>
     <style>
         .container {
             margin-top: 120px;
@@ -373,7 +373,7 @@
 
         <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 4rem; flex-direction: column; align-items: center; gap: 1rem;">
             <button class="promo-trigger-btn" onclick="openPromosModal()">
-                <span style="font-size: 1.2rem;">✨</span> Ver Promociones Especiales
+                Ver Paquetes Promocionales
             </button>
             <button class="btn-outline-custom" onclick="openModal()">Armar Mi Paquete</button>
         </div>
@@ -472,7 +472,7 @@
             </div>
         </section>
 
-        <div class="action-btn-container" style="margin-bottom: 4rem;">
+        <div class="action-btn-container" style="margin-bottom: 4rem; justify-content: flex-end;">
             <button class="btn-solid-custom" onclick="openModal()">Solicitar Servicio</button>
         </div>
 
@@ -480,11 +480,10 @@
 
     </div>
 
-    <!-- Promos Modal -->
     <div class="modal" id="promos-modal">
         <div class="modal-content" style="max-width: 600px;">
             <button class="close-modal" onclick="closePromosModal()">×</button>
-            <h2 style="color: var(--text-white); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px;">Promociones <span style="color: var(--purple-glow);">VIP</span></h2>
+            <h2 style="color: var(--text-white); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px;">Promociones</h2>
             
             <div class="promo-list">
                 <!-- Promo 1 -->
@@ -529,9 +528,9 @@
 
                 <!-- Promo 5 -->
                 <div class="promo-list-item" style="border-bottom: none;">
-                    <div class="promo-badge">Limitado: 2 cupos/mes</div>
+                    <div class="promo-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">Limitado: 2 cupos/mes</div>
                     <div class="promo-header">
-                        <h3 class="promo-name" style="color: var(--purple-glow);">Código del Millón</h3>
+                        <h3 class="promo-name">Código del Millón</h3>
                         <span class="promo-price-tag">$899</span>
                     </div>
                     <p class="promo-item-desc">Pack completo: Beat, M/M, Videoclip IA, Campaña 50 Reels y Management.</p>
@@ -672,15 +671,15 @@
             // Highlight that a promo is active
             const promoNotice = document.createElement('div');
             promoNotice.id = 'active-promo-notice';
-            promoNotice.style.background = 'rgba(139, 63, 204, 0.1)';
-            promoNotice.style.color = 'var(--purple-glow)';
+            promoNotice.style.background = 'rgba(255, 255, 255, 0.05)';
+            promoNotice.style.color = '#fff';
             promoNotice.style.padding = '10px';
             promoNotice.style.borderRadius = '8px';
             promoNotice.style.marginBottom = '20px';
             promoNotice.style.fontWeight = '800';
             promoNotice.style.textAlign = 'center';
-            promoNotice.style.border = '1px solid var(--purple-glow)';
-            promoNotice.innerHTML = `🌟 PROMO ACTIVA: ${name}`;
+            promoNotice.style.border = '1px solid var(--glass-border)';
+            promoNotice.innerHTML = `PROMO ACTIVA: ${name}`;
             
             const existingNotice = document.getElementById('active-promo-notice');
             if(existingNotice) existingNotice.remove();
