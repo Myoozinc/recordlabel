@@ -159,15 +159,16 @@
         }
 
         .modal-content {
-            background: #0d0d0d;
+            background: rgba(13, 13, 13, 0.95);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 2.5rem;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             position: relative;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         .close-modal {
@@ -192,66 +193,99 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            color: #fff;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-weight: 800;
         }
 
         .form-group input[type="text"],
         .form-group input[type="email"] {
             width: 100%;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 8px;
-            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 1.25rem 2rem;
             color: var(--text-white);
             font-family: inherit;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--purple-glow);
+            background: rgba(255, 255, 255, 0.08);
         }
         
         .service-checkbox {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
             margin-bottom: 1rem;
             cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 8px;
-            transition: background 0.2s;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .service-checkbox:hover {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
         .service-checkbox input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--purple-core);
+            appearance: none;
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #fff;
+            border-radius: 4px;
+            background: transparent;
+            margin-right: 1.5rem;
             cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
         }
 
-        .service-checkbox span {
-            color: var(--text-white);
-            font-size: 1rem;
+        .service-checkbox input[type="checkbox"]:checked {
+            background: #fff;
+        }
+
+        .service-checkbox input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-weight: 900;
+            font-size: 14px;
+        }
+
+        .service-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
             flex-grow: 1;
         }
 
-        .service-checkbox .sb-price {
-            color: var(--purple-core);
-            font-weight: 700;
+        .service-info span {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .total-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--glass-border);
-            margin-bottom: 2rem;
-            font-size: 1.25rem;
-            font-weight: 800;
+        .service-info .sb-price {
+            color: var(--purple-glow);
+            font-weight: 700;
+            font-size: 0.9rem;
         }
 
         .total-val {
@@ -352,23 +386,24 @@
         }
         
         .promo-btn-select {
-            background: var(--purple-core);
-            color: white;
+            background: #300359;
+            color: #fff;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 800;
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             cursor: pointer;
             font-size: 0.8rem;
             align-self: flex-start;
             margin-top: 1rem;
-            transition: opacity 0.3s;
+            transition: all 0.3s ease;
         }
 
         .promo-btn-select:hover {
-            opacity: 0.8;
+            background: #4a0e8f;
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -594,56 +629,66 @@
                     
                     <label class="service-checkbox">
                         <input type="checkbox" data-service="Mix" data-price="150" onchange="calculateTotal()">
-                        <span>Mix</span>
-                        <div class="sb-price">$150</div>
+                        <div class="service-info">
+                            <span>Mix</span>
+                            <div class="sb-price">$150</div>
+                        </div>
                     </label>
 
                     <label class="service-checkbox">
                         <input type="checkbox" data-service="Master" data-price="150" onchange="calculateTotal()">
-                        <span>Master</span>
-                        <div class="sb-price">$150</div>
+                        <div class="service-info">
+                            <span>Master</span>
+                            <div class="sb-price">$150</div>
+                        </div>
                     </label>
 
                     <label class="service-checkbox">
                         <input type="checkbox" data-service="Mejora de Canción IA" data-price="100" onchange="calculateTotal()">
-                        <span>Mejora de Canción IA</span>
-                        <div class="sb-price">$100</div>
+                        <div class="service-info">
+                            <span>Mejora de Canción IA</span>
+                            <div class="sb-price">$100</div>
+                        </div>
                     </label>
 
                     <label class="service-checkbox">
                         <input type="checkbox" data-service="Edición de Videoclip" data-price="150" onchange="calculateTotal()">
-                        <span>Edición de Videoclip</span>
-                        <div class="sb-price">$150</div>
-                    </label>
-
-                    <label class="service-checkbox">
-                        <input type="checkbox" data-service="Edición de Videoclip" data-price="150" onchange="calculateTotal()">
-                        <span>Edición de Videoclip</span>
-                        <div class="sb-price">$150</div>
+                        <div class="service-info">
+                            <span>Edición de Videoclip</span>
+                            <div class="sb-price">$150</div>
+                        </div>
                     </label>
 
                     <label class="service-checkbox">
                         <input type="checkbox" data-service="Producción de Videoclip IA" data-price="350" onchange="calculateTotal()">
-                        <span>Producción de Videoclip IA</span>
-                        <div class="sb-price">$350</div>
+                        <div class="service-info">
+                            <span>Producción de Videoclip IA</span>
+                            <div class="sb-price">$350</div>
+                        </div>
                     </label>
 
                     <label class="service-checkbox">
                         <input type="checkbox" data-service="Producción Urbana Base" data-price="200" onchange="calculateTotal()">
-                        <span>Producción Urbana Base</span>
-                        <div class="sb-price">$200</div>
+                        <div class="service-info">
+                            <span>Producción Urbana Base</span>
+                            <div class="sb-price">$200</div>
+                        </div>
                     </label>
 
                     <label class="service-checkbox">
                         <input type="checkbox" data-service="Campaña Viral 50 Reels" data-price="200" onchange="calculateTotal()">
-                        <span>Campaña Viral 50 Reels</span>
-                        <div class="sb-price">$200</div>
+                        <div class="service-info">
+                            <span>Campaña Viral 50 Reels</span>
+                            <div class="sb-price">$200</div>
+                        </div>
                     </label>
 
                     <label class="service-checkbox">
                         <input type="checkbox" data-service="Management Estratégico" data-price="250" onchange="calculateTotal()">
-                        <span>Management Estratégico</span>
-                        <div class="sb-price">$250</div>
+                        <div class="service-info">
+                            <span>Management Estratégico</span>
+                            <div class="sb-price">$250</div>
+                        </div>
                     </label>
                 </div>
 
