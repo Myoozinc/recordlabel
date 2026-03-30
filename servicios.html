@@ -175,9 +175,11 @@
 
         .close-modal {
             position: absolute;
-            top: 1rem;
+            top: 1.25rem;
             right: 1.5rem;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 300;
+            line-height: 1;
             color: var(--text-secondary);
             cursor: pointer;
             border: none;
@@ -528,8 +530,8 @@
     </div>
 
     <div class="modal" id="promos-modal">
-        <div class="modal-content" style="max-width: 600px;">
-            <button class="close-modal" onclick="closePromosModal()">X</button>
+        <div class="modal-content">
+            <button class="close-modal" onclick="closePromosModal()">&times;</button>
             <h2 style="color: var(--text-white); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px;">Promociones</h2>
             
             <div class="promo-list">
@@ -605,7 +607,7 @@
     <!-- Modal Form -->
     <div class="modal" id="service-modal">
         <div class="modal-content">
-            <button class="close-modal" onclick="closeModal()">X</button>
+            <button class="close-modal" onclick="closeModal()">&times;</button>
             <h2 style="color: var(--text-white); margin-bottom: 2rem;">Solicitud de Servicios</h2>
             
             <form id="service-form" action="https://api.web3forms.com/submit" method="POST">
