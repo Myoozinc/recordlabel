@@ -191,6 +191,27 @@
             color: var(--text-white);
         }
 
+        #btn-submit-form {
+            background: #ffc439 !important;
+            color: #003087 !important;
+            border: none;
+            border-radius: 100px;
+            padding: 1.1rem 2rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            letter-spacing: 2px;
+            display: block;
+        }
+
+        #btn-submit-form:hover {
+            background: #f2ba36 !important;
+            transform: scale(1.01);
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -284,14 +305,20 @@
         }
 
         .service-info .sb-price {
-            color: #300359;
-            font-weight: 800;
+            background: linear-gradient(0deg, #300359, #8B3FCC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
             font-size: 1.1rem;
         }
 
         .total-val {
-            color: #300359;
-            font-size: 1.5rem;
+            background: linear-gradient(0deg, #300359, #8B3FCC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.2rem;
             font-weight: 900;
         }
 
@@ -363,13 +390,13 @@
         }
 
         .promo-price-tag {
-            background: #300359;
-            color: #fff;
-            padding: 0.5rem 1.25rem;
-            border-radius: 100px;
-            font-size: 1rem;
+            background: linear-gradient(0deg, #300359, #8B3FCC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.4rem;
             font-weight: 900;
-            text-align: center;
+            text-align: right;
         }
 
         .promo-item-desc {
@@ -614,7 +641,7 @@
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">&times;</button>
             <div style="text-align: center; margin-bottom: 2.5rem;">
-                <h2 style="color: #300359; font-size: 2.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: -1px; margin-bottom: 0.5rem;">SOLICITUD</h2>
+                <h2 style="background: linear-gradient(0deg, #300359, #8B3FCC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 2.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: -1px; margin-bottom: 0.5rem;">SOLICITUD</h2>
                 <p style="color: #fff; text-transform: uppercase; letter-spacing: 3px; font-size: 0.75rem; font-weight: 400; opacity: 0.9;">Servicios Profesionales</p>
             </div>
             
@@ -714,7 +741,7 @@
                 </div>
 
                 <div id="paypal-button-container" style="margin-bottom: 2rem; display: none;"></div>
-                <button type="submit" id="btn-submit-form" class="btn-solicitar" style="width: 100%; border: none;">Mandar Solicitud</button>
+                <button type="submit" id="btn-submit-form" style="width: 100%; border: none;">SOLICITAR SERVICIOS</button>
             </form>
         </div>
     </div>
