@@ -895,34 +895,70 @@
         }
 
         function checkForSmartPromos(selectedSet, currentTotalValue) {
-            let promo = null;
+            // Remove any existing smart banners before checking
+            const existingBanners = document.querySelectorAll('.smart-promo-banner');
+            existingBanners.forEach(b => b.remove());
 
-            if(selectedSet.has('Mix') && selectedSet.has('Master') && selectedSet.has('Mejora de Canción IA')) {
-                if(currentTotalValue > 220) promo = { name: 'Paquete Upgrade IA', price: 220, services: 'Mejora de Canción IA, Mix, Master', original: 300, savings: currentTotalValue - 220 };
-            } else if(selectedSet.has('Producción Urbana Base') && selectedSet.has('Mix') && selectedSet.has('Master') && selectedSet.has('Edición de Videoclip')) {
-                 if(currentTotalValue > 450) promo = { name: 'Paquete Audiovisual Pro', price: 450, services: 'Producción Urbana Base, Mix, Master, Edición de Videoclip', original: 550, savings: currentTotalValue - 450 };
-            } else if(selectedSet.has('Producción Urbana Base') && selectedSet.has('Mix') && selectedSet.has('Master')) {
-                if(currentTotalValue > 350) promo = { name: 'Paquete Artista Independiente', price: 350, services: 'Producción Urbana Base, Mix, Master', original: 500, savings: currentTotalValue - 350 };
-            }
+            // Definition of available promos for the detector
+            const allPromos = [
+                { id: 'upgrade-ia', name: 'Paquete Upgrade IA', price: 220, original: 300, services: ['Mix', 'Master', 'Mejora de Canción IA'] },
+                { id: 'artista-indie', name: 'Paquete Artista Independiente', price: 350, original: 500, services: ['Producción Urbana Base', 'Mix', 'Master'] },
+                { id: 'audiovisual-pro', name: 'Paquete Audiovisual Pro', price: 450, original: 550, services: ['Producción Urbana Base', 'Mix', 'Master', 'Edición de Videoclip'] },
+                { id: 'millon-vibes', name: 'Código del Millón', price: 899, original: 1300, services: ['Beat Original', 'Mix', 'Master', 'Edición de Videoclip', 'Campaña Viral 50 Reels', 'Management Estratégico'] }
+            ];
 
-            if(promo) {
+            let bestPromo = null;
+            let maxSavings = 0;
+
+            allPromos.forEach(promo => {
+                // Check how many services from this promo the user has already picked
+                const matches = promo.services.filter(s => selectedSet.has(s));
+                
+                // If the user has picked at least 1 service from this combo
+                // OR if picking the promo is strictly cheaper than their current selection
+                if(matches.length >= 1) {
+                    const savings = currentTotalValue - promo.price;
+                    if(savings > 0 && savings > maxSavings) {
+                        maxSavings = savings;
+                        bestPromo = { ...promo, actualSavings: savings, matchedServices: matches };
+                    }
+                }
+            });
+
+            if(bestPromo) {
                 const banner = document.createElement('div');
-                banner.id = 'active-promo-notice';
-                banner.style.background = 'rgba(255, 255, 255, 0.03)';
-                banner.style.border = '1px solid var(--purple-glow)';
+                banner.className = 'smart-promo-banner';
+                banner.style.background = 'rgba(255, 255, 255, 0.04)';
+                banner.style.border = '1px solid #300359';
                 banner.style.borderRadius = '12px';
-                banner.style.padding = '1.25rem';
+                banner.style.padding = '1.5rem';
                 banner.style.marginBottom = '2rem';
                 banner.style.cursor = 'pointer';
                 banner.style.transition = 'all 0.3s';
+                banner.style.position = 'relative';
                 
+                const extraServices = bestPromo.services.filter(s => !selectedSet.has(s));
+                const extraServicesHtml = extraServices.length > 0 
+                    ? `<div style="font-size: 0.75rem; color: #fff; opacity: 0.7; margin-top: 0.8rem;">
+                        <strong style="color: var(--purple-glow);">TE LLEVAS EXTRA:</strong> ${extraServices.join(', ')}
+                       </div>`
+                    : '';
+
                 banner.innerHTML = `
-                    <div style="color: #fff; font-weight: 800; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;">TE CONVIENE ESTA PROMO</div>
-                    <div style="color: #fff; font-weight: 900; font-size: 1rem; margin: 0.3rem 0;">${promo.name} — $${promo.price} USD</div>
-                    <div style="color: var(--purple-glow); font-weight: 700; font-size: 0.8rem; text-transform: uppercase;">AHORRAS $${promo.savings} USD EXTRA</div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <div style="color: var(--purple-glow); font-weight: 800; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.3rem;">TE CONVIENE ESTA PROMO</div>
+                            <div style="color: #fff; font-weight: 900; font-size: 1.1rem; text-transform: uppercase;">${bestPromo.name}</div>
+                            ${extraServicesHtml}
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #fff; font-weight: 800; font-size: 1.2rem;">$${bestPromo.price}</div>
+                            <div style="color: #00ff88; font-weight: 700; font-size: 0.7rem; text-transform: uppercase;">AHORRAS $${bestPromo.actualSavings}</div>
+                        </div>
+                    </div>
                 `;
                 
-                banner.onclick = () => selectPromo(promo.name, promo.price, promo.services, promo.original);
+                banner.onclick = () => selectPromo(bestPromo.name, bestPromo.price, bestPromo.services.join(', '), bestPromo.original);
                 document.getElementById('service-form').prepend(banner);
             }
         }
