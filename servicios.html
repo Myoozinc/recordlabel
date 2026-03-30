@@ -95,17 +95,17 @@
         .btn-outline-custom {
             display: inline-block;
             background: transparent;
-            color: #fff; 
-            padding: 1rem 2.5rem;
-            border-radius: 100px;
+            color: #300359; 
+            padding: 0.75rem 2.2rem;
+            border-radius: 4px;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-weight: 800;
+            font-weight: 700;
             text-align: center;
             text-decoration: none;
             cursor: pointer;
-            border: 2px solid var(--purple-glow);
+            border: 1px solid #300359;
             transition: all 0.3s ease;
         }
 
@@ -493,7 +493,7 @@
                         <span class="promo-price-tag">$220</span>
                     </div>
                     <p class="promo-item-desc">Si ya tienes tu idea en IA, le damos el tratamiento completo de Mix & Master para que suene profesional en todas partes. <br><strong style="color: var(--purple-glow);">AHORRAS $80 USD</strong></p>
-                    <button class="promo-btn-select" onclick="selectPromo('Paquete Upgrade IA', 220)">Seleccionar →</button>
+                    <button class="promo-btn-select" onclick="selectPromo('Paquete Upgrade IA', 220, 'Mix, Master')">Seleccionar →</button>
                 </div>
 
                 <!-- Promo 2 -->
@@ -503,7 +503,7 @@
                         <span class="promo-price-tag">$350</span>
                     </div>
                     <p class="promo-item-desc">Beat Original Exclusivo + Mix & Master. Lo esencial para que tu próximo single suene enorme. <br><strong style="color: var(--purple-glow);">AHORRAS $50 USD</strong></p>
-                    <button class="promo-btn-select" onclick="selectPromo('Paquete Artista Independiente', 350)">Seleccionar →</button>
+                    <button class="promo-btn-select" onclick="selectPromo('Paquete Artista Independiente', 350, 'Beat Original, Mix, Master')">Seleccionar →</button>
                 </div>
 
                 <!-- Promo 3 -->
@@ -513,7 +513,7 @@
                         <span class="promo-price-tag">$499</span>
                     </div>
                     <p class="promo-item-desc">Beat Original Exclusivo + Mix & Master + Campaña Viral de 50 Reels. Todo lo que necesitas para lanzar tu próximo hit. <br><strong style="color: var(--purple-glow);">AHORRAS $101 USD</strong></p>
-                    <button class="promo-btn-select" onclick="selectPromo('Paquete Emprendedor Musical', 499)">Seleccionar →</button>
+                    <button class="promo-btn-select" onclick="selectPromo('Paquete Emprendedor Musical', 499, 'Beat Original, Mix, Master, 50 Reels')">Seleccionar →</button>
                 </div>
 
                 <!-- Promo 4 (Limited) -->
@@ -524,7 +524,7 @@
                         <span class="promo-price-tag">$899</span>
                     </div>
                     <p class="promo-item-desc">El ecosistema completo. Beat Original, Mix, Master, Videoclip IA, Campaña 50 Reels y Management. <br><strong style="color: var(--purple-glow);">OFERTA VIP — TODO INCLUIDO</strong></p>
-                    <button class="promo-btn-select" onclick="selectPromo('Código del Millón', 899)">Seleccionar →</button>
+                    <button class="promo-btn-select" onclick="selectPromo('Código del Millón', 899, 'Beat Original, Mix, Master, Videoclip IA, 50 Reels, Management')">Seleccionar →</button>
                 </div>
             </div>
         </div>
@@ -545,12 +545,12 @@
                 <input type="hidden" name="Servicios_Elegidos" id="hidden-services" value="">
                 
                 <div class="form-group">
-                    <label>Tu Nombre</label>
+                    <label>TU NOMBRE</label>
                     <input type="text" name="name" id="client-name" placeholder="Nombre completo" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Tu Email</label>
+                    <label>TU EMAIL</label>
                     <input type="email" name="email" id="client-email" placeholder="tu@email.com" required>
                 </div>
 
@@ -576,9 +576,9 @@
                     </label>
 
                     <label class="service-checkbox">
-                        <input type="checkbox" data-service="Remake IA con Instrumentos Reales" data-price="200" onchange="calculateTotal()">
-                        <span>Remake IA con Instrumentos Reales</span>
-                        <div class="sb-price">$200</div>
+                        <input type="checkbox" data-service="Edición de Videoclip" data-price="150" onchange="calculateTotal()">
+                        <span>Edición de Videoclip</span>
+                        <div class="sb-price">$150</div>
                     </label>
 
                     <label class="service-checkbox">
@@ -657,27 +657,37 @@
             checkboxes.forEach(cb => cb.checked = false);
         }
 
-        function selectPromo(name, price) {
+        function selectPromo(name, price, services) {
             closePromosModal();
             openModal();
             isPromoSelected = true;
             document.getElementById('services-checklist-group').style.display = 'none';
-            hiddenServicesInput.value = `PROMO: ${name} | Total: $${price}`;
+            hiddenServicesInput.value = `PROMO: ${name} (${services}) | Total: $${price}`;
             document.getElementById('total-display').textContent = '$' + price;
             currentTotal = price;
             
-            // Highlight that a promo is active
+            // Highlight that a promo is active and list services
             const promoNotice = document.createElement('div');
             promoNotice.id = 'active-promo-notice';
             promoNotice.style.background = 'rgba(255, 255, 255, 0.05)';
             promoNotice.style.color = '#fff';
-            promoNotice.style.padding = '10px';
-            promoNotice.style.borderRadius = '8px';
+            promoNotice.style.padding = '20px';
+            promoNotice.style.borderRadius = '12px';
             promoNotice.style.marginBottom = '20px';
-            promoNotice.style.fontWeight = '800';
-            promoNotice.style.textAlign = 'center';
+            promoNotice.style.textAlign = 'left';
             promoNotice.style.border = '1px solid var(--glass-border)';
-            promoNotice.innerHTML = `PROMO ACTIVA: ${name}`;
+            
+            let servicesListHtml = services.split(', ').map(s => `<div style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px; opacity: 0.8; font-size: 0.9rem;">
+                <span style="color: var(--purple-glow);">✓</span> ${s}
+            </div>`).join('');
+
+            promoNotice.innerHTML = `
+                <div style="font-weight: 800; text-align: center; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">PROMO ACTIVA: ${name}</div>
+                <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
+                    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 1rem;">Servicios Incluidos:</div>
+                    ${servicesListHtml}
+                </div>
+            `;
             
             const existingNotice = document.getElementById('active-promo-notice');
             if(existingNotice) existingNotice.remove();
