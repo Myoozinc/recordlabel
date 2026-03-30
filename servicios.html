@@ -205,6 +205,8 @@
             transition: all 0.3s;
             letter-spacing: 2px;
             display: block;
+            font-family: 'Outfit', sans-serif;
+            text-align: center;
         }
 
         #btn-submit-form:hover {
@@ -741,7 +743,7 @@
                 </div>
 
                 <div id="paypal-button-container" style="margin-bottom: 2rem; display: none;"></div>
-                <button type="submit" id="btn-submit-form" style="width: 100%; border: none;">SOLICITAR SERVICIOS</button>
+                <button type="submit" id="btn-submit-form" style="width: 100%; border: none;">SOLICITAR / PAYPAL</button>
             </form>
         </div>
     </div>
@@ -759,7 +761,17 @@
         function openModal() {
             modal.classList.add('active');
             isPromoSelected = false;
+            currentActivePromoServices = []; // Clear current promo items
             document.getElementById('services-checklist-group').style.display = 'block';
+
+            // Remove any old promo summaries
+            const existingNotice = document.getElementById('active-promo-notice');
+            if(existingNotice) existingNotice.remove();
+            
+            // Show all services again
+            const labels = document.querySelectorAll('.service-checkbox');
+            labels.forEach(label => label.style.display = 'flex');
+
             resetCheckboxes();
             calculateTotal();
             if(!paypalInited) initPayPalButton();
@@ -767,6 +779,7 @@
 
         function closeModal() {
             modal.classList.remove('active');
+            currentActivePromoServices = []; // Also clear here
         }
 
         function openPromosModal() {
@@ -856,6 +869,11 @@
             const selectedSet = new Set();
             let selectedNames = [];
 
+            // Add services already in the active promo to the set for calculation logic
+            if(currentActivePromoServices.length > 0) {
+                currentActivePromoServices.forEach(s => selectedSet.add(s));
+            }
+
             checkboxes.forEach(cb => {
                 if(cb.checked) {
                     const price = parseInt(cb.getAttribute('data-price'), 10);
@@ -869,6 +887,9 @@
             // Base Mix + Master Discount ($100 off if both are selected)
             const discountNotice = document.getElementById('combination-discount-notice');
             if(selectedSet.has('Mix') && selectedSet.has('Master')) {
+                // If they are in a promo that already applies a package price, 
+                // total is already the promo price or calculated manually.
+                // We only apply this $100 if it hasn't been capped by a promo yet.
                 total -= 100;
                 discountNotice.style.display = 'block';
             } else {
@@ -878,15 +899,18 @@
             document.getElementById('total-display').textContent = '$' + total;
             currentTotal = total;
             
-            if(selectedNames.length > 0) {
-                hiddenServicesInput.value = selectedNames.join(', ') + ' | Total: $' + total;
+            if(selectedNames.length > 0 || currentActivePromoServices.length > 0) {
+                const allServices = [...selectedNames, ...currentActivePromoServices];
+                hiddenServicesInput.value = allServices.join(', ') + ' | Total: $' + total;
             } else {
                 hiddenServicesInput.value = '';
             }
 
             // Remove existing notices before checking again
             const existingNotice = document.getElementById('active-promo-notice');
-            if(existingNotice) existingNotice.remove();
+            if(existingNotice) {
+                // Keep the notice if it's the active promo summary, but allow banner to appear above it
+            }
             
             checkForSmartPromos(selectedSet, total);
             updatePayPalVisibility();
