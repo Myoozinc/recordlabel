@@ -830,7 +830,6 @@
                 </div>
                 <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
                     <button type="button" onclick="openPromosModal()" style="background: transparent; color: var(--purple-glow); border: 1px solid var(--purple-glow); padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: 0.3s;">← Volver a Promos</button>
-                    <button type="button" onclick="showChecklistFromPromo()" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: 0.3s;">+ Agregar más servicios</button>
                 </div>
             `;
             
@@ -841,24 +840,6 @@
             updatePayPalVisibility();
         }
 
-        function showChecklistFromPromo() {
-            isPromoSelected = false; 
-            document.getElementById('services-checklist-group').style.display = 'block';
-            
-            // Hide services that are already in the promo
-            const labels = document.querySelectorAll('.service-checkbox');
-            labels.forEach(label => {
-                const serviceName = label.querySelector('input').getAttribute('data-service');
-                if(currentActivePromoServices.includes(serviceName)) {
-                    label.style.display = 'none';
-                } else {
-                    label.style.display = 'flex';
-                }
-            });
-
-            const notice = document.getElementById('active-promo-notice');
-            if(notice) notice.style.opacity = '0.4';
-        }
 
         function calculateTotal() {
             if(isPromoSelected) return;
