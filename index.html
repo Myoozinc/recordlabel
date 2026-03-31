@@ -159,9 +159,9 @@
             border-color: var(--purple-glow);
             box-shadow: 0 0 30px rgba(48, 3, 89, 0.6);
         }
-        /* Specific alignment for GGB Beats logo */
+        /* Specific alignment for GGB Beats logo to look centered */
         .talent-item[href="ggbbeats.html"] img {
-            object-position: center 5%;
+            object-position: center 55%;
         }
         .talent-item span {
             font-size: 1.2rem;
@@ -353,12 +353,15 @@
             startX = e.pageX - talentSection.offsetLeft;
             scrollLeft = talentSection.scrollLeft;
             talentSection.style.cursor = 'grabbing';
+            talentSection.style.scrollBehavior = 'auto'; // Disable smooth scroll while dragging
         });
 
         const resumeMovement = () => {
+            if (!isDragging) return;
             isDragging = false;
             talentSection.style.cursor = 'grab';
-            isMoving = true; // Resume immediately
+            talentSection.style.scrollBehavior = 'smooth';
+            isMoving = true; 
         };
 
         talentSection.addEventListener('mouseleave', resumeMovement);
@@ -372,15 +375,26 @@
             talentSection.scrollLeft = scrollLeft - walk;
         });
 
-        // Touch events for mobile
-        talentSection.addEventListener('touchstart', () => { 
+        // Touch events for mobile interactivity
+        talentSection.addEventListener('touchstart', (e) => { 
             isMoving = false; 
             isDragging = true;
+            startX = e.touches[0].pageX - talentSection.offsetLeft;
+            scrollLeft = talentSection.scrollLeft;
+            talentSection.style.scrollBehavior = 'auto';
         }, {passive: true});
 
         talentSection.addEventListener('touchend', () => { 
             isDragging = false;
-            isMoving = true; // Resume immediately
+            isMoving = true;
+            talentSection.style.scrollBehavior = 'smooth';
+        }, {passive: true});
+
+        talentSection.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const x = e.touches[0].pageX - talentSection.offsetLeft;
+            const walk = (x - startX) * 2;
+            talentSection.scrollLeft = scrollLeft - walk;
         }, {passive: true});
 
         // Start the loop
