@@ -1,216 +1,413 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Política de Privacidad | MYOOZ InC</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        .legal-container {
-            max-width: 900px;
-            margin: 120px auto 80px;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .legal-header {
-            margin-bottom: 4rem;
-            text-align: left;
-        }
-        
-        .legal-header h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            margin-bottom: 1rem;
-            background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.4) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .legal-content {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 1.05rem;
-        }
-        
-        .legal-content h2 {
-            color: var(--text-white);
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 3rem 0 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--glass-border);
-            display: inline-block;
-        }
-        
-        .legal-content p {
-            margin-bottom: 1.5rem;
-        }
-        
-        .legal-content ul {
-            margin-bottom: 2rem;
-            padding-left: 1.5rem;
-        }
-        
-        .legal-content li {
-            margin-bottom: 0.8rem;
-            position: relative;
-            list-style: none;
-        }
-        
-        .legal-content li::before {
-            content: '•';
-            color: var(--purple-glow);
-            position: absolute;
-            left: -1.5rem;
-            font-weight: bold;
-        }
-        
-        .highlight-box {
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid var(--purple-glow);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 0 15px 15px 0;
-        }
-        
-        .highlight-box strong {
-            color: var(--text-white);
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        
-        .contact-link {
-            color: var(--purple-glow);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        .contact-link:hover {
-            text-decoration: underline;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy | MYOOZ InC</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #222222;
+      --accent: #c8f000;
+      --accent2: #ff3c3c;
+      --text: #e8e8e8;
+      --muted: #666666;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.8;
+      min-height: 100vh;
+    }
 
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            transition: color 0.3s;
-        }
-        
-        .back-btn:hover {
-            color: var(--text-white);
-        }
-    </style>
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.03em;
+    }
+    .nav-back {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.4rem 1rem;
+      transition: all 0.2s;
+    }
+    .nav-back:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 3rem 3rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .doc-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero-meta {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+    }
+    .hero-meta strong { color: var(--text); }
+
+    /* LAYOUT */
+    .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 3rem 5rem;
+    }
+    @media (max-width: 700px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      nav, .hero, .layout { padding-left: 1.5rem; padding-right: 1.5rem; }
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      padding-top: 3rem;
+      padding-right: 2rem;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .sidebar-inner {
+      position: sticky;
+      top: 6rem;
+    }
+    .sidebar h3 {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .sidebar a {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.4rem 0;
+      border-left: 2px solid transparent;
+      padding-left: 0.75rem;
+      transition: all 0.15s;
+      line-height: 1.4;
+    }
+    .sidebar a:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* CONTENT */
+    .content {
+      padding: 3rem 0 0 3rem;
+    }
+    .section {
+      margin-bottom: 3.5rem;
+      padding-bottom: 3.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-child { border-bottom: none; }
+    .section-num {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .section h2 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+    .section p { color: #bbb; margin-bottom: 1rem; }
+    .section p:last-child { margin-bottom: 0; }
+    .highlight-box {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: 1.25rem 1.5rem;
+      margin: 1.25rem 0;
+      font-size: 0.85rem;
+    }
+    .highlight-box.red { border-color: var(--accent2); }
+    ul.policy-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    ul.policy-list li {
+      padding: 0.4rem 0 0.4rem 1.5rem;
+      position: relative;
+      color: #bbb;
+      font-size: 0.88rem;
+    }
+    ul.policy-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    .contact-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin-top: 1.25rem;
+    }
+    .contact-block a { color: var(--accent); text-decoration: none; }
+    .contact-block a:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
 </head>
 <body>
-    <!-- Header will be loaded here by navigation.js -->
 
-    <div class="legal-container">
-        <a href="index.html" class="back-btn">← Volver al inicio</a>
-        
-        <header class="legal-header">
-            <span class="subtitle">Documento Legal</span>
-            <h1>Política de <span>Privacidad</span></h1>
-            <p class="subtitle">Última actualización: 30 de marzo, 2025</p>
-        </header>
+<nav>
+  <a class="nav-logo" href="index.html">MYOOZ InC</a>
+  <a class="nav-back" href="index.html">← Back to site</a>
+</nav>
 
-        <section class="legal-content">
-            <h2>01. Quiénes Somos</h2>
-            <p>MYOOZ InC ("nosotros", "nuestro/a") es un sello discográfico musical que opera en <strong>myoozinc.github.io/recordlabel</strong>. Representamos artistas, ofrecemos servicios de producción musical y de sello, y vendemos mercancía oficial.</p>
-            <p>Esta Política de Privacidad explica cómo recopilamos, usamos y protegemos su información personal cuando visita nuestro sitio web, envía un formulario de contacto o realiza un pedido de mercancía o servicios.</p>
-            
-            <div class="highlight-box">
-                <strong>Contacto del responsable de datos:</strong>
-                MYOOZ InC · <a href="mailto:info@myoozinc.com" class="contact-link">info@myoozinc.com</a>
-            </div>
+<div class="hero">
+  <div class="doc-tag">Legal Document</div>
+  <h1>Privacy <span>Policy</span></h1>
+  <div class="hero-meta">
+    <div><strong>Last updated:</strong> March 30, 2025</div>
+    <div><strong>Applies to:</strong> myoozinc.github.io/recordlabel</div>
+    <div><strong>Jurisdiction:</strong> Global</div>
+  </div>
+</div>
 
-            <h2>02. Datos que Recopilamos</h2>
-            <p>Solo recopilamos la información necesaria para proporcionar nuestros servicios.</p>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <h3>Contents</h3>
+      <a href="#s1">1. Who We Are</a>
+      <a href="#s2">2. Data We Collect</a>
+      <a href="#s3">3. How We Use It</a>
+      <a href="#s4">4. Who We Share It With</a>
+      <a href="#s5">5. Cookies</a>
+      <a href="#s6">6. Data Retention</a>
+      <a href="#s7">7. Your Rights</a>
+      <a href="#s8">8. GDPR (EU)</a>
+      <a href="#s9">9. CCPA (California)</a>
+      <a href="#s10">10. Children</a>
+      <a href="#s11">11. Changes</a>
+      <a href="#s12">12. Contact</a>
+    </div>
+  </aside>
 
-            <div class="highlight-box">
-                <strong>Formulario de Contacto</strong>
-                Nombre, dirección de correo electrónico y cualquier contenido de mensaje que envíe voluntariamente.
-            </div>
-            <div class="highlight-box">
-                <strong>Pedidos de Mercancía</strong>
-                Nombre, dirección de correo electrónico, dirección de envío y detalles del pedido. El pago se procesa externamente; no almacenamos información de tarjetas de pago.
-            </div>
-            <div class="highlight-box">
-                <strong>Consultas de Servicios</strong>
-                Nombre, correo electrónico y detalles del proyecto que comparta al solicitar servicios de sello o producción.
-            </div>
-            <div class="highlight-box">
-                <strong>Datos Técnicos / de Navegación</strong>
-                Dirección IP, tipo de navegador, páginas visitadas y hora de la visita, recopilados automáticamente por la infraestructura de alojamiento (GitHub Pages).
-            </div>
+  <main class="content">
 
-            <h2>03. Cómo Usamos sus Datos</h2>
-            <ul>
-                <li>Para responder a sus envíos de formularios de contacto y consultas.</li>
-                <li>Para procesar y cumplir con los pedidos de mercancía, incluyendo la coordinación del envío.</li>
-                <li>Para comunicar actualizaciones sobre su pedido o solicitud de servicio.</li>
-                <li>Para mejorar el rendimiento del sitio web y la experiencia del usuario.</li>
-                <li>Para cumplir con las obligaciones legales.</li>
-            </ul>
-            <p><strong>No</strong> vendemos sus datos personales a terceros. No utilizamos sus datos para la toma de decisiones automatizada o la elaboración de perfiles.</p>
-
-            <h2>04. Con quién compartimos sus datos</h2>
-            <p>Podemos compartir sus datos solo con terceros de confianza que nos ayudan a operar el sitio y cumplir con los pedidos:</p>
-            <ul>
-                <li><strong>Proveedores de envío/logística</strong> — para entregar la mercancía (solo nombre + dirección).</li>
-                <li><strong>Procesadores de pago</strong> — para el manejo seguro de pagos.</li>
-                <li><strong>Proveedores de servicios de correo electrónico</strong> — para enviar confirmaciones de pedidos y respuestas.</li>
-                <li><strong>GitHub Pages (alojamiento)</strong> — nuestro proveedor de alojamiento puede recopilar registros de acceso básicos.</li>
-            </ul>
-
-            <h2>05. Cookies y Seguimiento</h2>
-            <p>Nuestro sitio puede utilizar cookies o tecnologías similares para la funcionalidad básica y el análisis. Estas pueden incluir:</p>
-            <ul>
-                <li><strong>Cookies esenciales</strong> — requeridas para que el sitio funcione correctamente.</li>
-                <li><strong>Cookies de análisis</strong> — para entender cómo los visitantes usan el sitio (por ejemplo, visitas a páginas, duración de la sesión).</li>
-            </ul>
-            <p>Puede desactivar las cookies en la configuración de su navegador. Tenga en cuenta que desactivar las cookies esenciales puede afectar la funcionalidad del sitio.</p>
-
-            <h2>06. Retención de Datos</h2>
-            <p>Retenemos los datos personales solo el tiempo que sea necesario:</p>
-            <ul>
-                <li>Mensajes del formulario de contacto: hasta 12 meses después de la última comunicación.</li>
-                <li>Registros de pedidos: hasta 5 años para el cumplimiento contable y legal.</li>
-                <li>Datos analíticos/técnicos: típicamente agregados y anonimizados en un plazo de 90 días.</li>
-            </ul>
-
-            <h2>07. Sus Derechos</h2>
-            <p>Independientemente de su ubicación, tiene derecho a:</p>
-            <ul>
-                <li><strong>Acceso</strong> — solicitar una copia de los datos personales que tenemos sobre usted.</li>
-                <li><strong>Corrección</strong> — pedirnos que corrijamos datos inexactos.</li>
-                <li><strong>Eliminación</strong> — solicitar que eliminemos sus datos ("derecho al olvido").</li>
-                <li><strong>Portabilidad</strong> — recibir sus datos en un formato estructurado y legible por máquina.</li>
-                <li><strong>Objeción</strong> — oponerse a ciertos tipos de procesamiento.</li>
-                <li><strong>Exclusión</strong> — de cualquier comunicación de marketing en cualquier momento.</li>
-            </ul>
-            <p>Para ejercer cualquiera de estos derechos, contáctenos en <a href="mailto:info@myoozinc.com" class="contact-link">info@myoozinc.com</a>.</p>
-
-            <h2>08. Contacto</h2>
-            <div class="highlight-box">
-                <strong>MYOOZ InC</strong><br>
-                Email: <a href="mailto:info@myoozinc.com" class="contact-link">info@myoozinc.com</a><br>
-                Web: <a href="https://myoozinc.github.io/recordlabel/" class="contact-link">myoozinc.github.io/recordlabel</a>
-            </div>
-        </section>
+    <div class="section" id="s1">
+      <div class="section-num">01</div>
+      <h2>Who We Are</h2>
+      <p>MYOOZ InC ("we", "us", "our") is a music record label operating at <strong>myoozinc.github.io/recordlabel</strong>. We represent artists, offer music production and label services, and sell official merchandise.</p>
+      <p>This Privacy Policy explains how we collect, use, and protect your personal information when you visit our website, submit a contact form, or place a merchandise or service order.</p>
+      <div class="contact-block">
+        <strong>Data controller contact:</strong><br/>
+        MYOOZ InC · <a href="mailto:info@myoozinc.com">info@myoozinc.com</a>
+      </div>
     </div>
 
-    <!-- Footer will be loaded here by navigation.js -->
+    <div class="section" id="s2">
+      <div class="section-num">02</div>
+      <h2>Data We Collect</h2>
+      <p>We only collect information that is necessary to provide our services.</p>
 
-    <script src="navigation.js"></script>
+      <div class="highlight-box">
+        <strong>Contact Form</strong><br/>
+        Name, email address, and any message content you voluntarily submit.
+      </div>
+      <div class="highlight-box">
+        <strong>Merchandise Orders</strong><br/>
+        Name, email address, shipping address, and order details. Payment is processed externally — we do not store payment card information.
+      </div>
+      <div class="highlight-box">
+        <strong>Service Inquiries</strong><br/>
+        Name, email, and project details you share when requesting label or production services.
+      </div>
+      <div class="highlight-box">
+        <strong>Technical / Browsing Data</strong><br/>
+        IP address, browser type, pages visited, and time of visit — collected automatically by hosting infrastructure (GitHub Pages). We may also use analytics tools for aggregate traffic insights.
+      </div>
+    </div>
+
+    <div class="section" id="s3">
+      <div class="section-num">03</div>
+      <h2>How We Use Your Data</h2>
+      <ul class="policy-list">
+        <li>To respond to your contact form submissions and inquiries</li>
+        <li>To process and fulfill merchandise orders, including shipping coordination</li>
+        <li>To communicate updates about your order or service request</li>
+        <li>To improve website performance and user experience</li>
+        <li>To comply with legal obligations</li>
+      </ul>
+      <p>We do <strong>not</strong> sell your personal data to third parties. We do not use your data for automated decision-making or profiling.</p>
+    </div>
+
+    <div class="section" id="s4">
+      <div class="section-num">04</div>
+      <h2>Who We Share Your Data With</h2>
+      <p>We may share your data only with trusted third parties who assist us in operating the site and fulfilling orders:</p>
+      <ul class="policy-list">
+        <li><strong>Shipping/logistics providers</strong> — to deliver merchandise (name + address only)</li>
+        <li><strong>Payment processors</strong> — when applicable, for secure payment handling</li>
+        <li><strong>Email service providers</strong> — to send order confirmations and replies</li>
+        <li><strong>GitHub Pages (hosting)</strong> — our hosting provider may collect basic access logs</li>
+      </ul>
+      <p>All third parties are contractually obligated to handle your data securely and only for the purposes we specify.</p>
+    </div>
+
+    <div class="section" id="s5">
+      <div class="section-num">05</div>
+      <h2>Cookies &amp; Tracking</h2>
+      <p>Our site may use cookies or similar technologies for basic functionality and analytics. These may include:</p>
+      <ul class="policy-list">
+        <li><strong>Essential cookies</strong> — required for the site to function properly</li>
+        <li><strong>Analytics cookies</strong> — to understand how visitors use the site (e.g., page views, session duration)</li>
+      </ul>
+      <p>You can disable cookies in your browser settings. Note that disabling essential cookies may affect site functionality.</p>
+    </div>
+
+    <div class="section" id="s6">
+      <div class="section-num">06</div>
+      <h2>Data Retention</h2>
+      <p>We retain personal data only as long as necessary:</p>
+      <ul class="policy-list">
+        <li>Contact form messages: up to 12 months after the last communication</li>
+        <li>Order records: up to 5 years for accounting and legal compliance</li>
+        <li>Analytics/technical data: typically aggregated and anonymized within 90 days</li>
+      </ul>
+      <p>You may request deletion of your data at any time (see Your Rights below).</p>
+    </div>
+
+    <div class="section" id="s7">
+      <div class="section-num">07</div>
+      <h2>Your Rights</h2>
+      <p>Regardless of where you are located, you have the right to:</p>
+      <ul class="policy-list">
+        <li><strong>Access</strong> — request a copy of the personal data we hold about you</li>
+        <li><strong>Correction</strong> — ask us to correct inaccurate data</li>
+        <li><strong>Deletion</strong> — request that we delete your data ("right to be forgotten")</li>
+        <li><strong>Portability</strong> — receive your data in a structured, machine-readable format</li>
+        <li><strong>Objection</strong> — object to certain types of processing</li>
+        <li><strong>Opt-out</strong> — of any marketing communications at any time</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <a href="mailto:info@myoozinc.com" style="color:var(--accent);">info@myoozinc.com</a>. We will respond within 30 days.</p>
+    </div>
+
+    <div class="section" id="s8">
+      <div class="section-num">08</div>
+      <h2>GDPR — EU Users</h2>
+      <p>If you are located in the European Union or European Economic Area, the General Data Protection Regulation (GDPR) applies. Our legal bases for processing are:</p>
+      <ul class="policy-list">
+        <li><strong>Consent</strong> — for contact form submissions and optional communications</li>
+        <li><strong>Contract</strong> — to fulfill merchandise orders and service agreements</li>
+        <li><strong>Legitimate interest</strong> — for basic analytics and site security</li>
+        <li><strong>Legal obligation</strong> — to comply with applicable law</li>
+      </ul>
+      <p>You have the right to lodge a complaint with your local data protection authority (DPA) if you believe your rights have been violated.</p>
+    </div>
+
+    <div class="section" id="s9">
+      <div class="section-num">09</div>
+      <h2>CCPA — California Users</h2>
+      <p>If you are a California resident, the California Consumer Privacy Act (CCPA) grants you additional rights:</p>
+      <ul class="policy-list">
+        <li>The right to know what personal information we collect and how it is used</li>
+        <li>The right to delete your personal information</li>
+        <li>The right to opt-out of the sale of personal information — <strong>we do not sell personal information</strong></li>
+        <li>The right to non-discrimination for exercising your privacy rights</li>
+      </ul>
+      <p>To submit a CCPA request, email us at <a href="mailto:info@myoozinc.com" style="color:var(--accent);">info@myoozinc.com</a>.</p>
+    </div>
+
+    <div class="section" id="s10">
+      <div class="section-num">10</div>
+      <h2>Children's Privacy</h2>
+      <div class="highlight-box red">
+        Our site is not directed at children under the age of 13 (or 16 in the EU). We do not knowingly collect personal data from minors. If you believe a child has submitted information to us, please contact us immediately and we will delete it.
+      </div>
+    </div>
+
+    <div class="section" id="s11">
+      <div class="section-num">11</div>
+      <h2>Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Changes will be reflected by updating the "Last updated" date at the top of this page. Continued use of the site after changes constitutes acceptance of the updated policy.</p>
+      <p>For significant changes, we will make reasonable efforts to notify you via the contact information we hold on file.</p>
+    </div>
+
+    <div class="section" id="s12">
+      <div class="section-num">12</div>
+      <h2>Contact Us</h2>
+      <p>For any privacy-related questions, requests, or concerns:</p>
+      <div class="contact-block">
+        <strong>MYOOZ InC</strong><br/>
+        Email: <a href="mailto:info@myoozinc.com">info@myoozinc.com</a><br/>
+        Website: <a href="https://myoozinc.github.io/recordlabel/">myoozinc.github.io/recordlabel</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <span>© 2025 MYOOZ InC. All rights reserved.</span>
+  <span><a href="terms.html">Terms &amp; Conditions</a> · <a href="privacy.html">Privacy Policy</a></span>
+</footer>
+
 </body>
 </html>
