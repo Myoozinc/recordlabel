@@ -159,9 +159,15 @@
             border-color: var(--purple-glow);
             box-shadow: 0 0 30px rgba(48, 3, 89, 0.6);
         }
-        /* Specific alignment for GGB Beats logo to look centered */
         .talent-item[href="ggbbeats.html"] img {
-            object-position: center 55%;
+            object-position: center;
+            transform: translateY(12px) scale(1.1);
+        }
+
+        /* Disable link pointer events while dragging for smoother navigation */
+        .talent-section.is-dragging .talent-item {
+            pointer-events: none;
+            cursor: grabbing;
         }
         .talent-item span {
             font-size: 1.2rem;
@@ -330,7 +336,6 @@
         // Talent Carousel Logic: Auto-scroll + Drag to navigate
         const talentSection = document.querySelector('.talent-section');
         const glidingStream = document.querySelector('.gliding-stream');
-        let scrollAmount = 0;
         let isMoving = true;
         let isDragging = false;
         let startX;
@@ -338,8 +343,7 @@
 
         function autoScroll() {
             if (isMoving && !isDragging) {
-                talentSection.scrollLeft += 0.35; // Much slower speed
-                // Infinite illusion: if scrolled deep, reset slightly (since we have duplicates)
+                talentSection.scrollLeft += 0.4;
                 if (talentSection.scrollLeft >= glidingStream.offsetWidth / 2) {
                      talentSection.scrollLeft = 0;
                 }
@@ -350,18 +354,18 @@
         talentSection.addEventListener('mousedown', (e) => {
             isDragging = true;
             isMoving = false;
+            talentSection.classList.add('is-dragging');
             startX = e.pageX - talentSection.offsetLeft;
             scrollLeft = talentSection.scrollLeft;
-            talentSection.style.cursor = 'grabbing';
-            talentSection.style.scrollBehavior = 'auto'; // Disable smooth scroll while dragging
+            talentSection.style.scrollBehavior = 'auto';
         });
 
         const resumeMovement = () => {
             if (!isDragging) return;
             isDragging = false;
-            talentSection.style.cursor = 'grab';
+            isMoving = true;
+            talentSection.classList.remove('is-dragging');
             talentSection.style.scrollBehavior = 'smooth';
-            isMoving = true; 
         };
 
         talentSection.addEventListener('mouseleave', resumeMovement);
@@ -371,7 +375,7 @@
             if (!isDragging) return;
             e.preventDefault();
             const x = e.pageX - talentSection.offsetLeft;
-            const walk = (x - startX) * 2;
+            const walk = (x - startX) * 2.5; // Increased sensitivity
             talentSection.scrollLeft = scrollLeft - walk;
         });
 
@@ -379,6 +383,7 @@
         talentSection.addEventListener('touchstart', (e) => { 
             isMoving = false; 
             isDragging = true;
+            talentSection.classList.add('is-dragging');
             startX = e.touches[0].pageX - talentSection.offsetLeft;
             scrollLeft = talentSection.scrollLeft;
             talentSection.style.scrollBehavior = 'auto';
@@ -387,13 +392,14 @@
         talentSection.addEventListener('touchend', () => { 
             isDragging = false;
             isMoving = true;
+            talentSection.classList.remove('is-dragging');
             talentSection.style.scrollBehavior = 'smooth';
         }, {passive: true});
 
         talentSection.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
             const x = e.touches[0].pageX - talentSection.offsetLeft;
-            const walk = (x - startX) * 2;
+            const walk = (x - startX) * 2.5; // Increased sensitivity
             talentSection.scrollLeft = scrollLeft - walk;
         }, {passive: true});
 
