@@ -99,21 +99,29 @@
         }
 
         /* Gliding Stream */
-        .talent-section {
-            padding: 3rem 0;
-            overflow: hidden;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-        }
         .gliding-stream {
             display: flex;
-            gap: 4rem;
-            padding: 2rem 0;
+            gap: 2rem;
+            padding: 2rem;
             width: max-content;
-            animation: glideLeft 40s linear infinite;
         }
-        .gliding-stream:hover {
-            animation-play-state: paused;
+        .talent-section {
+            padding: 3rem 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+            cursor: grab;
+            user-select: none;
+            scroll-behavior: auto;
+        }
+        .talent-section::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
+        .talent-section:active {
+            cursor: grabbing;
         }
         @keyframes glideLeft {
             0% { transform: translateX(0); }
@@ -148,7 +156,7 @@
         }
         /* Specific alignment for GGB Beats logo */
         .talent-item[href="ggbbeats.html"] img {
-            object-position: center 30%;
+            object-position: center 5%;
         }
         .talent-item span {
             font-size: 1.2rem;
@@ -313,7 +321,57 @@
              currentRotation += 1080;
              mandalaImg.style.transform = `rotate(${currentRotation}deg)`;
         });
+        // Talent Carousel Logic: Auto-scroll + Drag to navigate
+        const talentSection = document.querySelector('.talent-section');
+        const glidingStream = document.querySelector('.gliding-stream');
+        let scrollAmount = 0;
+        let isMoving = true;
+        let isDragging = false;
+        let startX;
+        let scrollLeft;
+
+        function autoScroll() {
+            if (isMoving && !isDragging) {
+                talentSection.scrollLeft += 1;
+                // Infinite illusion: if scrolled deep, reset slightly (since we have duplicates)
+                if (talentSection.scrollLeft >= glidingStream.offsetWidth / 2) {
+                     talentSection.scrollLeft = 1;
+                }
+            }
+            requestAnimationFrame(autoScroll);
+        }
+
+        talentSection.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            isMoving = false;
+            startX = e.pageX - talentSection.offsetLeft;
+            scrollLeft = talentSection.scrollLeft;
+        });
+
+        talentSection.addEventListener('mouseleave', () => {
+            isDragging = false;
+            isMoving = true;
+        });
+
+        talentSection.addEventListener('mouseup', () => {
+            isDragging = false;
+            isMoving = true;
+        });
+
+        talentSection.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - talentSection.offsetLeft;
+            const walk = (x - startX) * 2;
+            talentSection.scrollLeft = scrollLeft - walk;
+        });
+
+        // Touch events
+        talentSection.addEventListener('touchstart', () => { isMoving = false; }, {passive: true});
+        talentSection.addEventListener('touchend', () => { isMoving = true; }, {passive: true});
+
+        // Start the loop
+        requestAnimationFrame(autoScroll);
     </script>
 </body>
-
 </html>

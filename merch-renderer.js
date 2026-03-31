@@ -1,3 +1,6 @@
+// Selection tracking
+const selectedVariants = {};
+
 // Merch Rendering Logic for MYOOZ InC Label
 function renderMerchGrid(containerId, filterCategory = 'all', isCompact = false) {
     const grid = document.getElementById(containerId);
@@ -25,7 +28,13 @@ function renderMerchGrid(containerId, filterCategory = 'all', isCompact = false)
     }
 
     grid.innerHTML = filtered.map(p => {
-        const activeVariant = p.variants[0];
+        // Initialize selection if not exists
+        if (!selectedVariants[p.id]) {
+            selectedVariants[p.id] = p.variants[0];
+        }
+        
+        const activeVariant = selectedVariants[p.id];
+
         return `
             <div class="product-card" data-category="${p.category}">
                 <div class="product-image-wrapper">
@@ -41,57 +50,54 @@ function renderMerchGrid(containerId, filterCategory = 'all', isCompact = false)
                     ${p.variants.length > 1 ? `
                         <div class="variant-selector">
                             ${p.variants.map((v, idx) => `
-                                <div class="variant-dot ${idx === 0 ? 'active' : ''}" 
+                                <div class="variant-dot ${activeVariant.id === v.id ? 'active' : ''}" 
                                      style="background-color: ${v.color}" 
-                                     onclick="switchProductVariant('${p.id}', '${v.image}', this)">
+                                     onclick="switchProductVariant('${p.id}', '${v.id}', this)">
                                 </div>
                             `).join('')}
                         </div>
                     ` : ''}
 
-                    <div id="paypal-button-${p.id}" class="paypal-button-container"></div>
+                    <button class="add-to-cart-btn" onclick="addToCart('${p.id}')">
+                        AÑADIR AL CARRITO
+                    </button>
                 </div>
             </div>
         `;
     }).join('');
-
-    // Initialize PayPal Buttons
-    filtered.forEach(p => {
-        const btnContainer = document.getElementById(`paypal-button-${p.id}`);
-        if (btnContainer) {
-            btnContainer.innerHTML = '';
-            paypal.Buttons({
-                style: { shape: 'pill', color: 'blue', layout: 'horizontal', label: 'buynow', tagline: false, height: 48 },
-                createOrder: (data, actions) => {
-                    return actions.order.create({
-                        purchase_units: [{ amount: { value: p.price.toString() }, description: `${p.name} (${p.category})` }]
-                    });
-                },
-                onApprove: (data, actions) => {
-                    return actions.order.capture().then(details => {
-                        if (typeof showModal === 'function') {
-                            showModal(`¡Pedido Recibido, ${details.payer.name.given_name}!`, `Tu merch de ${p.name} está en camino.`);
-                        } else {
-                            alert(`¡Gracias por tu compra, ${details.payer.name.given_name}! Hemos recibido tu pedido.`);
-                        }
-                    });
-                }
-            }).render(`#paypal-button-${p.id}`);
-        }
-    });
 }
 
-function switchProductVariant(productId, imageSrc, dotEl) {
+function switchProductVariant(productId, variantId, dotEl) {
+    const product = merchProducts.find(p => p.id === productId);
+    const variant = product.variants.find(v => v.id === variantId);
+    
+    // Store selection
+    selectedVariants[productId] = variant;
+
+    // Update image
     const img = document.getElementById(`img-${productId}`);
     if (img) {
         img.style.opacity = '0';
         setTimeout(() => {
-            img.src = imageSrc;
+            img.src = variant.image;
             img.style.opacity = '1';
         }, 300);
     }
 
+    // Update dots
     const dots = dotEl.parentElement.querySelectorAll('.variant-dot');
     dots.forEach(d => d.classList.remove('active'));
     dotEl.classList.add('active');
+}
+
+function addToCart(productId) {
+    const product = merchProducts.find(p => p.id === productId);
+    const variant = selectedVariants[productId] || product.variants[0];
+    
+    // Global cart logic (assumed to be in tienda.html or global)
+    if (window.addItemToCart) {
+        window.addItemToCart(product, variant);
+    } else {
+        console.warn('Cart logic not initialized');
+    }
 }

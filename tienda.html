@@ -169,6 +169,44 @@
         </section>
     </div>
 
+    <!-- Floating Cart Button -->
+    <button class="floating-cart-btn" onclick="toggleCart()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#fff;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <div id="cart-count" class="cart-count">0</div>
+    </button>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="cart-drawer">
+        <div class="cart-header">
+            <h2 style="font-size:1.5rem; font-weight:800; text-transform:uppercase;">Tu Carrito</h2>
+            <button onclick="toggleCart()" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        
+        <div id="cart-items" class="cart-items">
+            <!-- Cart items injected here -->
+        </div>
+
+        <div class="cart-footer">
+            <div id="shipping-form" class="shipping-form">
+                <h3>Información de Envío</h3>
+                <div class="address-grid">
+                    <input type="text" id="ship-name" class="cart-input full" placeholder="Nombre Completo">
+                    <input type="text" id="ship-address" class="cart-input full" placeholder="Dirección (Calle y Número)">
+                    <input type="text" id="ship-city" class="cart-input" placeholder="Ciudad">
+                    <input type="text" id="ship-zip" class="cart-input" placeholder="Código Postal">
+                </div>
+            </div>
+
+            <div class="cart-total">
+                <span>TOTAL</span>
+                <span id="cart-total-display">$0.00</span>
+            </div>
+
+            <div id="cart-paypal-container" style="min-height: 150px; margin-top: 1rem; display: none;"></div>
+            <div id="address-warning" style="color:#ff3e3e; font-size:0.75rem; text-align:center; margin-top:1rem; font-weight:700;">Completa tus datos de envío para pagar</div>
+        </div>
+    </div>
+
     <!-- Modal Success -->
     <div id="payment-modal">
         <div class="modal-content">
@@ -183,11 +221,136 @@
     <script src="merch-renderer.js"></script>
     <script>
         let currentCategory = 'all';
+        let cart = JSON.parse(localStorage.getItem('myooz_cart')) || [];
+
+        function toggleCart() {
+            document.getElementById('cart-drawer').classList.toggle('open');
+            renderCart();
+        }
+
+        window.addItemToCart = function(product, variant) {
+            cart.push({
+                uniqueId: Date.now() + Math.random(),
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                variantName: variant.label,
+                image: variant.image
+            });
+            saveCart();
+            updateCartUI();
+            
+            // Show feedback
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = '¡AÑADIDO!';
+            btn.style.background = '#00ff88';
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = '';
+            }, 1000);
+        };
+
+        function removeFromCart(uniqueId) {
+            cart = cart.filter(item => item.uniqueId !== uniqueId);
+            saveCart();
+            renderCart();
+            updateCartUI();
+        }
+
+        function saveCart() {
+            localStorage.setItem('myooz_cart', JSON.stringify(cart));
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            const totalDisplay = document.getElementById('cart-total-display');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center; opacity:0.5; margin-top:3rem;">Tu carrito está vacío</p>';
+                totalDisplay.innerText = '$0.00';
+                document.getElementById('cart-paypal-container').style.display = 'none';
+                document.getElementById('address-warning').style.display = 'none';
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" class="cart-item-img">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-variant">${item.variantName}</div>
+                        <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                    </div>
+                    <div class="remove-item" onclick="removeFromCart(${item.uniqueId})">Eliminar</div>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            totalDisplay.innerText = '$' + total.toFixed(2);
+            
+            checkAddressAndInitPaypal(total);
+        }
+
+        function checkAddressAndInitPaypal(total) {
+            const inputs = ['ship-name', 'ship-address', 'ship-city', 'ship-zip'];
+            const allFilled = inputs.every(id => document.getElementById(id).value.trim() !== '');
+            
+            if (allFilled) {
+                document.getElementById('cart-paypal-container').style.display = 'block';
+                document.getElementById('address-warning').style.display = 'none';
+                initCartPaypal(total);
+            } else {
+                document.getElementById('cart-paypal-container').style.display = 'none';
+                document.getElementById('address-warning').style.display = 'block';
+            }
+        }
+
+        // Listen for address input changes to show paypal
+        ['ship-name', 'ship-address', 'ship-city', 'ship-zip'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                const total = cart.reduce((sum, item) => sum + item.price, 0);
+                if (total > 0) checkAddressAndInitPaypal(total);
+            });
+        });
+
+        let cartPaypalInited = false;
+        function initCartPaypal(total) {
+            const container = document.getElementById('cart-paypal-container');
+            container.innerHTML = ''; // Fresh render
+            
+            paypal.Buttons({
+                disableFunding: 'paylater',
+                style: { layout: 'vertical', color: 'blue', shape: 'pill', label: 'checkout' },
+                createOrder: (data, actions) => {
+                    const desc = cart.map(i => `${i.name} (${i.variantName})`).join(', ');
+                    const address = `${document.getElementById('ship-name').value} | ${document.getElementById('ship-address').value}, ${document.getElementById('ship-city').value} (${document.getElementById('ship-zip').value})`;
+                    
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: { value: total.toFixed(2) },
+                            description: `Pedido Merch: ${desc} | Envío a: ${address}`
+                        }]
+                    });
+                },
+                onApprove: (data, actions) => {
+                    return actions.order.capture().then(details => {
+                        cart = [];
+                        saveCart();
+                        updateCartUI();
+                        toggleCart();
+                        showModal(`¡Gracias, ${details.payer.name.given_name}!`, `Tu pedido ha sido recibido y será enviado a la dirección proporcionada.`);
+                    });
+                }
+            }).render('#cart-paypal-container');
+        }
 
         function filterProducts(category) {
             currentCategory = category;
-            
-            // Update buttons
             const btns = document.querySelectorAll('.filter-btn');
             btns.forEach(b => {
                 const label = b.innerText.trim();
@@ -195,7 +358,6 @@
                 if (label === expected) b.classList.add('active');
                 else b.classList.remove('active');
             });
-
             renderMerchGrid('products-grid', category);
         }
 
@@ -211,8 +373,8 @@
 
         window.addEventListener('load', () => {
             renderMerchGrid('products-grid', 'all');
+            updateCartUI();
         });
     </script>
 </body>
-
 </html>
