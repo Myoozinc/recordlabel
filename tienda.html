@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_LIVE_CLIENT_ID&currency=USD&disable-funding=credit,paylater"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD&disable-funding=credit,paylater"></script>
 
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="merch.css">
@@ -203,6 +203,7 @@
                 <span id="cart-total-display">$0.00</span>
             </div>
 
+            <button id="checkout-continue-btn" class="add-to-cart-btn" style="margin-top: 1rem;" onclick="validateAndShowPayment()">PROCEDER AL PAGO</button>
             <div id="cart-paypal-container" style="min-height: 150px; margin-top: 1rem; display: none;"></div>
             <div id="address-warning" style="color:#ff3e3e; font-size:0.75rem; text-align:center; margin-top:1rem; font-weight:700;">Completa tus datos de envío para pagar</div>
         </div>
@@ -297,17 +298,31 @@
             checkAddressAndInitPaypal(total);
         }
 
+        function validateAndShowPayment() {
+            const inputs = ['ship-name', 'ship-address', 'ship-city', 'ship-zip', 'ship-country'];
+            const allFilled = inputs.every(id => document.getElementById(id).value.trim() !== '');
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+            if (allFilled && total > 0) {
+                document.getElementById('checkout-continue-btn').style.display = 'none';
+                document.getElementById('cart-paypal-container').style.display = 'block';
+                document.getElementById('address-warning').style.display = 'none';
+                initCartPaypal(total);
+            } else {
+                document.getElementById('address-warning').style.display = 'block';
+                document.getElementById('address-warning').innerText = total > 0 ? "Por favor, completa todos los campos de envío" : "Tu carrito está vacío";
+            }
+        }
+
         function checkAddressAndInitPaypal(total) {
             const inputs = ['ship-name', 'ship-address', 'ship-city', 'ship-zip', 'ship-country'];
             const allFilled = inputs.every(id => document.getElementById(id).value.trim() !== '');
             
             if (allFilled) {
-                document.getElementById('cart-paypal-container').style.display = 'block';
                 document.getElementById('address-warning').style.display = 'none';
-                initCartPaypal(total);
             } else {
                 document.getElementById('cart-paypal-container').style.display = 'none';
-                document.getElementById('address-warning').style.display = 'block';
+                document.getElementById('checkout-continue-btn').style.display = 'block';
             }
         }
 

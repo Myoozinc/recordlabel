@@ -224,20 +224,20 @@
     width: 70px;
     height: 70px;
     background: #300359;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: none;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 15000;
     cursor: pointer;
-    box-shadow: 0 15px 40px rgba(139, 63, 204, 0.4);
-    border: none;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: none;
+    transition: all 0.3s;
 }
 
 .floating-cart-btn:hover {
-    transform: scale(1.1);
+    background: #8B3FCC;
+    transform: scale(1.02);
 }
 
 .cart-count {
