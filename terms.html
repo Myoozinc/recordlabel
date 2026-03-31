@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos y Condiciones | MYOOZ InC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .legal-container {
+            max-width: 900px;
+            margin: 120px auto 80px;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .legal-header {
+            margin-bottom: 4rem;
+            text-align: left;
+        }
+        
+        .legal-header h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.4) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .legal-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        
+        .legal-content h2 {
+            color: var(--text-white);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            display: inline-block;
+        }
+        
+        .legal-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .legal-content ul {
+            margin-bottom: 2rem;
+            padding-left: 1.5rem;
+        }
+        
+        .legal-content li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            list-style: none;
+        }
+        
+        .legal-content li::before {
+            content: '•';
+            color: var(--purple-glow);
+            position: absolute;
+            left: -1.5rem;
+            font-weight: bold;
+        }
+        
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--purple-glow);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 15px 15px 0;
+        }
+        
+        .highlight-box.red {
+            border-left-color: #ff3c3c;
+        }
+        
+        .highlight-box strong {
+            color: var(--text-white);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-link {
+            color: var(--purple-glow);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        
+        .back-btn:hover {
+            color: var(--text-white);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header will be loaded here by navigation.js -->
+
+    <div class="legal-container">
+        <a href="index.html" class="back-btn">← Volver al inicio</a>
+        
+        <header class="legal-header">
+            <span class="subtitle">Documento Legal</span>
+            <h1>Términos y <span>Condiciones</span></h1>
+            <p class="subtitle">Última actualización: 30 de marzo, 2025</p>
+        </header>
+
+        <section class="legal-content">
+            <h2>01. Aceptación</h2>
+            <p>Al acceder o utilizar el sitio web de MYOOZ InC en <strong>myoozinc.github.io/recordlabel</strong> (el "Sitio"), comprar mercancía o contratar nuestros servicios de sello, usted acepta cumplir con estos Términos y Condiciones ("Términos").</p>
+            <p>Si no está de acuerdo con estos Términos, no utilice este Sitio. Estos Términos son aplicables a todos los visitantes, clientes y cualquier persona que acceda o utilice nuestros servicios.</p>
+
+            <h2>02. Acerca de MYOOZ InC</h2>
+            <p>MYOOZ InC es un sello discográfico musical independiente que representa y promociona artistas como Rasta Mia, JOSS, Prodbycarrot, GGB Beats, Pata Negra y Mnimal Beats, entre otros.</p>
+
+            <h2>03. Compras de Mercancía</h2>
+            <p>Toda la mercancía vendida a través de nuestra tienda (tienda.html) es producto oficial de MYOOZ InC. Al realizar un pedido, usted acepta lo siguiente:</p>
+            <ul>
+                <li>Los pedidos son procesados manualmente por nuestro equipo para garantizar un servicio de calidad.</li>
+                <li>Recibirá una confirmación por correo electrónico con los detalles del pedido y del envío.</li>
+                <li>Los precios están sujetos a cambios sin previo aviso.</li>
+                <li>Nos reservamos el derecho de cancelar o rechazar cualquier pedido a nuestra entera discreción.</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <strong>Consultas y soporte de pedidos:</strong> <a href="mailto:info@myoozinc.com" class="contact-link">info@myoozinc.com</a>
+            </div>
+
+            <h2>04. Servicios de Sello y Producción</h2>
+            <p>MYOOZ InC ofrece servicios de sello discográfico y producción musical a artistas. Al enviar una consulta de servicio a través de nuestro formulario de contacto, reconoce que:</p>
+            <ul>
+                <li>El envío de una consulta no constituye un acuerdo vinculante.</li>
+                <li>Todos los acuerdos requieren un contrato escrito por separado.</li>
+                <li>Las tarifas, entregables y plazos se negocian por proyecto.</li>
+            </ul>
+
+            <h2>05. Pagos</h2>
+            <p>Los pagos de mercancía y servicios se manejan de forma segura. Al enviar un pago, confirma que:</p>
+            <ul>
+                <li>Está autorizado a utilizar el método de pago proporcionado.</li>
+                <li>Toda la información de facturación es precisa y completa.</li>
+            </ul>
+            <p>Utilizamos procesadores de pago de terceros. MYOOZ InC no almacena información de tarjetas de crédito ni información de pago sensible.</p>
+
+            <h2>06. Envío, Devoluciones y Reembolsos</h2>
+            <div class="highlight-box">
+                <strong>Envío:</strong> Realizamos envíos internacionales. Los plazos de entrega varían según el destino. MYOOZ InC no se hace responsable de los retrasos causados por aduanas o transportistas.
+            </div>
+            <div class="highlight-box red">
+                <strong>Devoluciones:</strong> Debido a la naturaleza personalizada y limitada de nuestra mercancía, todas las ventas son finales a menos que el artículo llegue dañado o defectuoso. Contacte con nosotros en un plazo de 7 días tras la recepción si hay algún problema.
+            </div>
+
+            <h2>07. Propiedad Intelectual</h2>
+            <p>Todo el contenido de este Sitio —nombres de artistas, logotipos, imágenes, música, arte e identidad de marca— es propiedad exclusiva de MYOOZ InC y/o sus respectivos artistas y licenciantes.</p>
+            <ul>
+                <li>No puede reproducir, distribuir ni utilizar ningún contenido de este Sitio sin permiso previo por escrito.</li>
+                <li>Los nombres y la imagen de los artistas están protegidos por ley.</li>
+            </ul>
+
+            <h2>08. Contacto</h2>
+            <div class="highlight-box">
+                <strong>MYOOZ InC</strong><br>
+                Email: <a href="mailto:info@myoozinc.com" class="contact-link">info@myoozinc.com</a><br>
+                Sitio: <a href="https://myoozinc.github.io/recordlabel/" class="contact-link">myoozinc.github.io/recordlabel</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer will be loaded here by navigation.js -->
+
+    <script src="navigation.js"></script>
+</body>
+</html>
