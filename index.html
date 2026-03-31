@@ -26,32 +26,19 @@
            align-items: center;
            justify-content: center;
            position: relative;
+           filter: drop-shadow(0 0 50px rgba(139, 63, 204, 0.8));
            animation: float 3s ease-in-out infinite;
-           will-change: transform;
+           will-change: transform, filter;
            -webkit-transform: translateZ(0);
            transform: translateZ(0);
      }
 
-     /* Soft circular glow for mobile & desktop */
-     .hero-image::before {
-         content: '';
-         position: absolute;
-         inset: -10px;
-         background: radial-gradient(circle, rgba(139, 63, 204, 0.45) 0%, transparent 70%);
-         z-index: -1;
-         border-radius: 50%;
-         filter: blur(20px);
-     }
-
      @media (max-width: 600px) {
          .hero-image {
-             width: 180px;
-             height: 180px;
+             width: 220px;
+             height: 220px;
              margin: 1.5rem auto;
-         }
-         .hero-image::before {
-             inset: -5px;
-             filter: blur(15px);
+             filter: drop-shadow(0 0 40px rgba(139, 63, 204, 0.85));
          }
      }
 
@@ -351,7 +338,7 @@
 
         function autoScroll() {
             if (isMoving && !isDragging) {
-                talentSection.scrollLeft += 0.8; // Slower speed
+                talentSection.scrollLeft += 0.35; // Much slower speed
                 // Infinite illusion: if scrolled deep, reset slightly (since we have duplicates)
                 if (talentSection.scrollLeft >= glidingStream.offsetWidth / 2) {
                      talentSection.scrollLeft = 0;
@@ -368,15 +355,14 @@
             talentSection.style.cursor = 'grabbing';
         });
 
-        const stopDragging = () => {
+        const resumeMovement = () => {
             isDragging = false;
             talentSection.style.cursor = 'grab';
-            // Slight delay before resuming auto-scroll for smoother feel
-            setTimeout(() => { if (!isDragging) isMoving = true; }, 100);
+            isMoving = true; // Resume immediately
         };
 
-        talentSection.addEventListener('mouseleave', stopDragging);
-        talentSection.addEventListener('mouseup', stopDragging);
+        talentSection.addEventListener('mouseleave', resumeMovement);
+        talentSection.addEventListener('mouseup', resumeMovement);
 
         talentSection.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
@@ -389,10 +375,12 @@
         // Touch events for mobile
         talentSection.addEventListener('touchstart', () => { 
             isMoving = false; 
+            isDragging = true;
         }, {passive: true});
 
         talentSection.addEventListener('touchend', () => { 
-            setTimeout(() => { if (!isDragging) isMoving = true; }, 1000); 
+            isDragging = false;
+            isMoving = true; // Resume immediately
         }, {passive: true});
 
         // Start the loop
