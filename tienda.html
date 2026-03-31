@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda Oficial | MYOOZ InC</title>
+    <title>MERCH | MYOOZ InC</title>
     <meta name="description" content="Merchandising exclusivo de MYOOZ InC. Jerseys, hoodies y accesorios de edición limitada.">
     
     <!-- Fonts -->
@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="merch.css">
     <style>
         .tienda-hero {
-            padding: 180px 0 40px;
+            padding: 120px 0 40px;
             text-align: center;
             position: relative;
         }
@@ -70,12 +70,19 @@
 
         @media (max-width: 768px) {
             .category-filter {
-                width: 95%;
+                width: 90%;
                 overflow-x: auto;
                 justify-content: flex-start;
-                padding: 10px 20px;
-                border-radius: 20px;
+                padding: 10px 15px;
+                border-radius: 100px;
                 top: 90px;
+                flex-wrap: nowrap;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            .filter-btn {
+                padding: 8px 20px;
+                flex: 0 0 auto;
             }
         }
 
@@ -89,7 +96,7 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(15px);
-            z-index: 2000;
+            z-index: 20000;
             justify-content: center;
             align-items: center;
         }
@@ -137,7 +144,7 @@
 
     <div class="container">
         <section class="tienda-hero">
-            <h1>Merch Store</h1>
+            <h1>MERCH</h1>
             <p class="subtitle">Colección Oficial MYOOZ InC</p>
         </section>
 

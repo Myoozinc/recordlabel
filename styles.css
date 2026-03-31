@@ -58,7 +58,7 @@ nav.custom-header {
     align-items: center;
     justify-content: space-between;
     padding: 0 2rem;
-    z-index: 1000;
+    z-index: 10000;
     border-radius: 40px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
@@ -352,5 +352,3 @@ body {
     0% { opacity: 0; }
     100% { opacity: 1; }
 }
-
-

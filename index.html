@@ -25,9 +25,19 @@
            display: flex;
            align-items: center;
            justify-content: center;
-           font-size: 8rem;
-           filter: drop-shadow(0 0 60px rgba(48, 3, 89, 0.8)) drop-shadow(0 20px 40px rgba(48, 3, 89, 0.5));
+           position: relative;
+           filter: drop-shadow(0 0 40px rgba(139, 63, 204, 0.7));
            animation: float 3s ease-in-out infinite;
+           will-change: transform, filter;
+           -webkit-transform: translateZ(0);
+           transform: translateZ(0);
+     }
+
+     @media (max-width: 600px) {
+         .hero-image {
+             width: 220px;
+             height: 220px;
+         }
      }
 
         .description {
@@ -291,6 +301,11 @@
         });
 
         document.getElementById('mandala-container').addEventListener('mouseenter', () => {
+             currentRotation += 1080;
+             mandalaImg.style.transform = `rotate(${currentRotation}deg)`;
+        });
+        
+        document.getElementById('mandala-container').addEventListener('touchstart', () => {
              currentRotation += 1080;
              mandalaImg.style.transform = `rotate(${currentRotation}deg)`;
         });
