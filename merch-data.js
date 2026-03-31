@@ -83,18 +83,7 @@ const merchProducts = [
             { id: 'deep', color: '#0b132b', label: 'Deep', image: 'images/merch/ggbbeats-children-deephoodie.png' }
         ]
     },
-    {
-        id: 'ggb-children-gameplay',
-        name: 'Gameplay M Children Hoodie',
-        price: 39.99,
-        category: 'GGB Beats',
-        tag: 'Kids Collection',
-        variants: [
-            { id: 'blue', color: '#0047ab', label: 'Blue', image: 'images/merch/ggbbeatsgameplaym-children-bluehoodie.png' },
-            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsgameplaym-children-blackhoodie.png' },
-            { id: 'deep', color: '#0b132b', label: 'Deep', image: 'images/merch/ggbeatsgameplaym-children-deephoodie.png' }
-        ]
-    },
+
 
     // --- 3. JOSS & RASTA MIA ---
     {
@@ -243,6 +232,18 @@ const merchProducts = [
         variants: [
             { id: 'blackwhite', color: '#000000', label: 'B/W', image: 'images/merch/ggbbeats90s-bwtarganshirt.png' },
             { id: 'whiteblack', color: '#ffffff', label: 'W/B', image: 'images/merch/ggbbeats90s-wbtarganshirt.png' }
+        ]
+    },
+    {
+        id: 'ggb-children-gameplay',
+        name: 'Gameplay M Children Hoodie',
+        price: 39.99,
+        category: 'GGB Beats',
+        tag: 'Kids Collection',
+        variants: [
+            { id: 'blue', color: '#0047ab', label: 'Blue', image: 'images/merch/ggbbeatsgameplaym-children-bluehoodie.png' },
+            { id: 'black', color: '#000000', label: 'Black', image: 'images/merch/ggbbeatsgameplaym-children-blackhoodie.png' },
+            { id: 'deep', color: '#0b132b', label: 'Deep', image: 'images/merch/ggbeatsgameplaym-children-deephoodie.png' }
         ]
     }
 ];
