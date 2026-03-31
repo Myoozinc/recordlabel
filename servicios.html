@@ -901,15 +901,16 @@
 
             // Definition of available promos for the detector
             const allPromos = [
-                { id: 'artiste-indie', name: 'Paquete Artista Independiente', price: 350, original: 500, services: ['Beat Exclusivo', 'Mix', 'Master'] },
-                { id: 'audiovisual-pro', name: 'Paquete Audiovisual Pro', price: 450, original: 550, services: ['Beat Exclusivo', 'Mix', 'Master', 'Edición de Videoclip'] },
-                { id: 'upgrade-ia', name: 'Paquete Upgrade IA', price: 220, original: 300, services: ['Mix', 'Master', 'Mejora de Canción IA'] },
-                { id: 'millon-vibes', name: 'Código del Millón', price: 899, original: 1300, services: ['Beat Original', 'Mix', 'Master', 'Edición de Videoclip', 'Campaña Viral 50 Reels', 'Management Estratégico'] }
+                { id: 'upgrade-ia', name: 'Paquete Upgrade IA', price: 120, original: 200, services: ['Mix', 'Master', 'Mejora de Canción IA'] },
+                { id: 'artiste-indie', name: 'Paquete Artista Independiente', price: 250, original: 400, services: ['Beat Exclusivo', 'Mix', 'Master'] },
+                { id: 'audiovisual-pro', name: 'Paquete Audiovisual Pro', price: 350, original: 450, services: ['Beat Exclusivo', 'Mix', 'Master', 'Edición de Videoclip'] },
+                { id: 'emprendedor-musical', name: 'Paquete Emprendedor Musical', price: 399, original: 600, services: ['Beat Exclusivo', 'Mix', 'Master', 'Campaña Viral 50 Reels'] },
+                { id: 'millon-vibes', name: 'Código del Millón', price: 799, original: 1200, services: ['Beat Exclusivo', 'Mix', 'Master', 'Producción de Videoclip IA', 'Campaña Viral 50 Reels', 'Management Estratégico'] }
             ];
 
             let bestPromo = null;
             let highestMatchCount = 0;
-            let maxSavings = 0;
+            let maxSavings = -9999;
 
             allPromos.forEach(promo => {
                 // Check how many services from this promo the user has already picked
@@ -918,14 +919,15 @@
                 if(matches.length >= 1) {
                     const savings = currentTotalValue - promo.price;
                     
-                    // Priority 1: Pick the promo that matches MORE of what the user selected
-                    // Priority 2: If match count is the same, pick the one with higher savings
-                    if(matches.length > highestMatchCount || (matches.length === highestMatchCount && savings > maxSavings)) {
-                        if(savings > 0) {
-                            highestMatchCount = matches.length;
-                            maxSavings = savings;
-                            bestPromo = { ...promo, actualSavings: savings, matchedServices: matches };
-                        }
+                    // Priority 1: Pick the promo that matches MORE of what the user selected (Completeness)
+                    // Priority 2: If match count is the same, pick the one with higher savings (Value)
+                    if(matches.length > highestMatchCount) {
+                        highestMatchCount = matches.length;
+                        maxSavings = savings;
+                        bestPromo = { ...promo, actualSavings: savings, matchedServices: matches };
+                    } else if (matches.length === highestMatchCount && savings > maxSavings) {
+                        maxSavings = savings;
+                        bestPromo = { ...promo, actualSavings: savings, matchedServices: matches };
                     }
                 }
             });
