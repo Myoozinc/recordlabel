@@ -194,6 +194,7 @@
                     <input type="text" id="ship-address" class="cart-input full" placeholder="Dirección (Calle y Número)">
                     <input type="text" id="ship-city" class="cart-input" placeholder="Ciudad">
                     <input type="text" id="ship-zip" class="cart-input" placeholder="Código Postal">
+                    <input type="text" id="ship-country" class="cart-input full" placeholder="País">
                 </div>
             </div>
 
@@ -297,7 +298,7 @@
         }
 
         function checkAddressAndInitPaypal(total) {
-            const inputs = ['ship-name', 'ship-address', 'ship-city', 'ship-zip'];
+            const inputs = ['ship-name', 'ship-address', 'ship-city', 'ship-zip', 'ship-country'];
             const allFilled = inputs.every(id => document.getElementById(id).value.trim() !== '');
             
             if (allFilled) {
@@ -311,7 +312,7 @@
         }
 
         // Listen for address input changes to show paypal
-        ['ship-name', 'ship-address', 'ship-city', 'ship-zip'].forEach(id => {
+        ['ship-name', 'ship-address', 'ship-city', 'ship-zip', 'ship-country'].forEach(id => {
             document.getElementById(id).addEventListener('input', () => {
                 const total = cart.reduce((sum, item) => sum + item.price, 0);
                 if (total > 0) checkAddressAndInitPaypal(total);
@@ -338,7 +339,31 @@
                     });
                 },
                 onApprove: (data, actions) => {
-                    return actions.order.capture().then(details => {
+                    return actions.order.capture().then(async details => {
+                        // Gather order data for the notification
+                        const orderData = {
+                            access_key: "b91241a6-e5bd-482b-b19b-7d1f707121fa",
+                            subject: "¡NUEVO PEDIDO DE MERCH! — " + document.getElementById('ship-name').value,
+                            name: document.getElementById('ship-name').value,
+                            address: document.getElementById('ship-address').value,
+                            city: document.getElementById('ship-city').value,
+                            zip: document.getElementById('ship-zip').value,
+                            country: document.getElementById('ship-country').value,
+                            order_summary: cart.map(i => `${i.name} (${i.variantName}) - $${i.price}`).join('\n'),
+                            total: '$' + total.toFixed(2),
+                            paypal_details: details.id + " | " + details.payer.email_address
+                        };
+
+                        // Send order info to Forms Manager (Web3Forms)
+                        try {
+                            await fetch('https://api.web3forms.com/submit', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(orderData)
+                            });
+                        } catch (err) { console.error('Form notification failed', err); }
+
+                        // Cleanup and success feedback
                         cart = [];
                         saveCart();
                         updateCartUI();
