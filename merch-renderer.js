@@ -144,13 +144,51 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
             shopifyProducts = await fetchAllProducts();
         }
 
-        const filtered = filterCategory === 'all'
-            ? shopifyProducts
-            : shopifyProducts.filter(p => {
-                const vendor = (p.vendor || '').toLowerCase();
-                const target = filterCategory.toLowerCase();
-                return vendor.includes(target) || (p.productType || '').toLowerCase().includes(target);
+        // Exclude the services bridge product from the merch grid
+        const merchProducts = shopifyProducts.filter(p =>
+            !p.title.toLowerCase().includes('servicios myooz')
+        );
+
+        // Custom sort order for "all" view
+        const brandOrder = ['myooz inc', 'ggb beats', 'joss', 'rasta mia'];
+
+        function getProductBrand(product) {
+            const title = product.title.toLowerCase();
+            const vendor = (product.vendor || '').toLowerCase();
+            const pType = (product.productType || '').toLowerCase();
+            // Check title first (most reliable since vendor may all be "myooz inc")
+            for (const brand of brandOrder) {
+                if (title.includes(brand.replace(/\s/g, ' '))) return brand;
+            }
+            // Then check vendor
+            for (const brand of brandOrder) {
+                if (vendor.includes(brand)) return brand;
+            }
+            // Then check productType
+            for (const brand of brandOrder) {
+                if (pType.includes(brand)) return brand;
+            }
+            return 'zzz'; // unknown goes last
+        }
+
+        function matchesFilter(product, target) {
+            const t = target.toLowerCase().trim();
+            const title = product.title.toLowerCase();
+            const vendor = (product.vendor || '').toLowerCase();
+            const pType = (product.productType || '').toLowerCase();
+            return title.includes(t) || vendor.includes(t) || pType.includes(t);
+        }
+
+        let filtered;
+        if (filterCategory === 'all') {
+            filtered = [...merchProducts].sort((a, b) => {
+                const aIdx = brandOrder.indexOf(getProductBrand(a));
+                const bIdx = brandOrder.indexOf(getProductBrand(b));
+                return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
             });
+        } else {
+            filtered = merchProducts.filter(p => matchesFilter(p, filterCategory));
+        }
 
         if (filtered.length === 0) {
             grid.innerHTML = `
