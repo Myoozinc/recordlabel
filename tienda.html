@@ -43,6 +43,7 @@
             border: 1px solid var(--glass-border);
         }
 
+
         .filter-slider {
             position: absolute;
             top: 6px;
@@ -405,11 +406,8 @@
 
         function moveSlider(activeBtn) {
             const slider = document.getElementById('filter-slider');
-            const container = document.getElementById('category-filter');
-            const containerRect = container.getBoundingClientRect();
-            const btnRect = activeBtn.getBoundingClientRect();
-            slider.style.left = (btnRect.left - containerRect.left) + 'px';
-            slider.style.width = btnRect.width + 'px';
+            slider.style.left = activeBtn.offsetLeft + 'px';
+            slider.style.width = activeBtn.offsetWidth + 'px';
         }
 
         function filterProducts(category) {
