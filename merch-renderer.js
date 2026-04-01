@@ -53,6 +53,7 @@ async function fetchAllProducts() {
                     title
                     vendor
                     productType
+                    tags
                     options {
                         name
                         values
@@ -156,27 +157,37 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
             const title = product.title.toLowerCase();
             const vendor = (product.vendor || '').toLowerCase();
             const pType = (product.productType || '').toLowerCase();
-            // Check title first (most reliable since vendor may all be "myooz inc")
+            const tags = (product.tags || []).map(t => t.toLowerCase());
+            
             for (const brand of brandOrder) {
-                if (title.includes(brand.replace(/\s/g, ' '))) return brand;
-            }
-            // Then check vendor
-            for (const brand of brandOrder) {
-                if (vendor.includes(brand)) return brand;
-            }
-            // Then check productType
-            for (const brand of brandOrder) {
-                if (pType.includes(brand)) return brand;
+                const normalizedBrand = brand.replace(/\s/g, ' ');
+                if (
+                    tags.some(t => t.includes(normalizedBrand)) ||
+                    title.includes(normalizedBrand) ||
+                    vendor.includes(brand) ||
+                    pType.includes(brand)
+                ) {
+                    return brand;
+                }
             }
             return 'zzz'; // unknown goes last
         }
 
         function matchesFilter(product, target) {
             const t = target.toLowerCase().trim();
+            if (t === 'myooz inc' || t === 'myooz') {
+                // EXCLUSIVE rule for MYOOZ INC: Only show items that actually belong to MYOOZ INC
+                // and NOT to other artists, because vendor='MYOOZ INC' defaults everywhere.
+                const brand = getProductBrand(product);
+                return brand === 'myooz inc';
+            }
+            
             const title = product.title.toLowerCase();
             const vendor = (product.vendor || '').toLowerCase();
             const pType = (product.productType || '').toLowerCase();
-            return title.includes(t) || vendor.includes(t) || pType.includes(t);
+            const tags = (product.tags || []).map(tg => tg.toLowerCase());
+            
+            return tags.some(tg => tg.includes(t)) || title.includes(t) || vendor.includes(t) || pType.includes(t);
         }
 
         let filtered;
@@ -204,13 +215,18 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
         grid.innerHTML = filtered.map(p => {
             if (!activeOptions[p.id]) {
                 activeOptions[p.id] = {};
-                p.options.forEach(opt => {
-                    activeOptions[p.id][opt.name] = opt.values[0];
-                });
-                let initialVariant = p.variants.find(v =>
-                    v.selectedOptions.every(so => activeOptions[p.id][so.name] === so.value)
-                );
-                selectedVariants[p.id] = initialVariant || p.variants[0];
+                // Force sync with the very first variant to ensure image matches the selection dots
+                const firstVariant = p.variants[0];
+                if (firstVariant && firstVariant.selectedOptions) {
+                    firstVariant.selectedOptions.forEach(so => {
+                        activeOptions[p.id][so.name] = so.value;
+                    });
+                } else {
+                    p.options.forEach(opt => {
+                        activeOptions[p.id][opt.name] = opt.values[0];
+                    });
+                }
+                selectedVariants[p.id] = firstVariant;
             }
 
             const variant = selectedVariants[p.id];
