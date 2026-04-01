@@ -215,18 +215,16 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
         grid.innerHTML = filtered.map(p => {
             if (!activeOptions[p.id]) {
                 activeOptions[p.id] = {};
-                // Force sync with the very first variant to ensure image matches the selection dots
-                const firstVariant = p.variants[0];
-                if (firstVariant && firstVariant.selectedOptions) {
-                    firstVariant.selectedOptions.forEach(so => {
-                        activeOptions[p.id][so.name] = so.value;
-                    });
-                } else {
-                    p.options.forEach(opt => {
-                        activeOptions[p.id][opt.name] = opt.values[0];
-                    });
-                }
-                selectedVariants[p.id] = firstVariant;
+                // Use the explicit option order defined in Shopify (which respects the user's manual sorting)
+                p.options.forEach(opt => {
+                    activeOptions[p.id][opt.name] = opt.values[0];
+                });
+
+                // Find the specific variant that matches these default options
+                let initialVariant = p.variants.find(v =>
+                    v.selectedOptions.every(so => activeOptions[p.id][so.name] === so.value)
+                );
+                selectedVariants[p.id] = initialVariant || p.variants[0];
             }
 
             const variant = selectedVariants[p.id];
