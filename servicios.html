@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_LIVE_CLIENT_ID&currency=USD&disable-funding=credit,paylater"></script>
     <style>
         .container {
             margin-top: 120px;
@@ -740,27 +739,29 @@
                     <span class="total-val" id="total-display" style="font-size: 2rem; color: #fff;">$0</span>
                 </div>
 
-                <div id="paypal-button-container" style="margin-bottom: 2rem; display: none;"></div>
-                <button type="button" id="btn-submit-form" disabled style="width: 100%; border: none;">Selecciona un servicio para comenzar</button>
+
+                <button type="button" id="btn-submit-form" disabled style="width: 100%; border: none; border-radius: 100px; padding: 16px; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;">Selecciona un servicio para comenzar</button>
             </form>
         </div>
     </div>
 
     <script src="navigation.js"></script>
-    <script src="https://sdks.shopifycdn.com/js-buy-sdk/v2/latest/index.umd.min.js"></script>
     <script>
-        // Inicializar cliente de Shopify
-        let shopifyClient;
-        try {
-            if (typeof ShopifyBuy !== 'undefined') {
-                shopifyClient = ShopifyBuy.buildClient({
-                    domain: 'myooz-inc.myshopify.com',
-                    storefrontAccessToken: 'acd24150be762dc32d5801dbdf47b973'
-                });
-            } else {
-                console.error("Shopify no se cargó");
-            }
-        } catch(e) { console.error(e); }
+        // Shopify Cart API (direct GraphQL)
+        const SHOPIFY_DOMAIN = 'myooz-inc.myshopify.com';
+        const SHOPIFY_TOKEN = 'acd24150be762dc32d5801dbdf47b973';
+        const STOREFRONT_API_URL = `https://${SHOPIFY_DOMAIN}/api/2024-10/graphql.json`;
+
+        async function shopifyFetch(query, variables = {}) {
+            const res = await fetch(STOREFRONT_API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-Shopify-Storefront-Access-Token': SHOPIFY_TOKEN },
+                body: JSON.stringify({ query, variables })
+            });
+            const json = await res.json();
+            if (json.errors) { console.error('Shopify Errors:', json.errors); throw new Error(json.errors[0].message); }
+            return json.data;
+        }
 
         const modal = document.getElementById('service-modal');
         const promosModal = document.getElementById('promos-modal');
@@ -995,31 +996,40 @@
             btn.style.opacity = '0.5';
 
             try {
-                if (!shopifyClient) throw new Error("Shopify Client JS failed to load.");
+                // 1. Fetch products to find the bridge product
+                const productsQuery = `{ products(first: 50) { edges { node { id title variants(first: 5) { edges { node { id } } } } } } }`;
+                const productsData = await shopifyFetch(productsQuery);
+                const allProducts = productsData.products.edges.map(e => e.node);
+                const serviceProduct = allProducts.find(p => p.title.toLowerCase().includes('servicios myooz'));
 
-                const products = await shopifyClient.product.fetchAll();
-                const serviceProduct = products.find(p => p.title.toLowerCase().includes('servicios myooz'));
-                
                 if (!serviceProduct) {
-                    alert('Error: Producto de facturación "Servicios MYOOZ InC" no encontrado en Shopify. Verifica que esté Activo y publicado en Headless.');
-                    throw new Error("Bridge product missing");
+                    alert('Error: Producto "Servicios MYOOZ InC" no encontrado. Verifica que esté Activo y publicado en Headless.');
+                    throw new Error('Bridge product not found');
                 }
 
-                const trackingDetails = `Servicios del Cliente: ${hiddenServicesInput.value} | Total Calculado: $${currentTotal}`;
+                const variantId = serviceProduct.variants.edges[0].node.id;
+                const trackingDetails = `Servicios: ${hiddenServicesInput.value} | Total: $${currentTotal}`;
 
-                const checkout = await shopifyClient.checkout.create({
-                    customAttributes: [{ key: "Detalle de Servicios Contratados", value: trackingDetails }]
-                });
+                // 2. Create cart with the bridge product x total quantity
+                const cartQuery = `mutation {
+                    cartCreate(input: {
+                        lines: [{merchandiseId: "${variantId}", quantity: ${currentTotal}}]
+                        attributes: [{key: "Detalle de Servicios Contratados", value: "${trackingDetails.replace(/"/g, '\\"')}"}]
+                    }) {
+                        cart { id checkoutUrl }
+                        userErrors { field message }
+                    }
+                }`;
 
-                const updatedCheckout = await shopifyClient.checkout.addLineItems(checkout.id, [{
-                    variantId: serviceProduct.variants[0].id,
-                    quantity: currentTotal
-                }]);
+                const cartData = await shopifyFetch(cartQuery);
+                if (cartData.cartCreate.userErrors.length > 0) {
+                    throw new Error(cartData.cartCreate.userErrors[0].message);
+                }
 
-                window.location.href = updatedCheckout.webUrl;
+                window.location.href = cartData.cartCreate.cart.checkoutUrl;
             } catch(e) {
-                console.error("Shopify Services Error:", e);
-                alert("Error comunicando con Shopify. Intenta de nuevo.");
+                console.error('Shopify Services Error:', e);
+                alert('Error comunicando con Shopify: ' + e.message);
                 btn.innerText = 'PROCEDER A PAGAR (PAGO SEGURO)';
                 btn.disabled = false;
                 btn.style.opacity = '1';

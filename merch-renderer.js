@@ -1,36 +1,135 @@
-// Configuración de Cliente Headless de Shopify
-let shopifyClient;
-try {
-    if (typeof ShopifyBuy !== 'undefined') {
-        shopifyClient = ShopifyBuy.buildClient({
-            domain: 'myooz-inc.myshopify.com',
-            storefrontAccessToken: 'acd24150be762dc32d5801dbdf47b973'
-        });
-    } else {
-        console.error("El SDK de ShopifyBuy no se cargó correctamente.");
+// Configuración de Cliente Headless de Shopify (Cart API)
+const SHOPIFY_DOMAIN = 'myooz-inc.myshopify.com';
+const SHOPIFY_TOKEN = 'acd24150be762dc32d5801dbdf47b973';
+const STOREFRONT_API_URL = `https://${SHOPIFY_DOMAIN}/api/2024-10/graphql.json`;
+
+// Helper para hacer peticiones GraphQL directas
+async function shopifyFetch(query, variables = {}) {
+    const res = await fetch(STOREFRONT_API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Shopify-Storefront-Access-Token': SHOPIFY_TOKEN
+        },
+        body: JSON.stringify({ query, variables })
+    });
+    const json = await res.json();
+    if (json.errors) {
+        console.error('Shopify GraphQL Errors:', json.errors);
+        throw new Error(json.errors[0].message);
     }
-} catch(e) {
-    console.error("Error inicializando Shopify Client", e);
+    return json.data;
 }
 
 // Estado Global
 let shopifyProducts = [];
 const selectedVariants = {};
-const activeOptions = {}; // Tracks { productId: { Color: 'Black', Size: 'M' } }
+const activeOptions = {};
 
 const colorMap = {
-    'black': '#000', 'negro': '#000', 'white': '#fff', 'blanco': '#fff',
+    'black': '#111', 'negro': '#111', 'white': '#f0f0f0', 'blanco': '#f0f0f0',
     'blue': '#0047ab', 'azul': '#0047ab', 'deep blue': '#0b132b', 'deep': '#0b132b',
-    'grey': '#555', 'gris': '#555', 'purple': '#8B3FCC', 'morado': '#8B3FCC', 
-    'beige': '#f5f5dc', 'olive': '#3d3d22', 'wine': '#722f37', 'vino': '#722f37',
-    'green': '#004b23', 'verde': '#004b23', 'red': '#8b0000', 'rojo': '#8b0000'
+    'grey': '#555', 'gris': '#555', 'gray': '#555',
+    'purple': '#8B3FCC', 'morado': '#8B3FCC',
+    'beige': '#f5f5dc', 'olive': '#3d3d22',
+    'wine': '#722f37', 'vino': '#722f37',
+    'green': '#004b23', 'verde': '#004b23',
+    'red': '#8b0000', 'rojo': '#8b0000',
+    'navy': '#001f3f', 'navy blazer': '#1c2541'
 };
 
 function getColorHex(name) {
-    return colorMap[name.toLowerCase().trim()] || name.toLowerCase().replace(/\s/g, '');
+    const key = name.toLowerCase().trim();
+    return colorMap[key] || '#888';
 }
 
-// Renderizado Dinámico
+// ========== FETCH PRODUCTS ==========
+async function fetchAllProducts() {
+    const query = `{
+        products(first: 50) {
+            edges {
+                node {
+                    id
+                    title
+                    vendor
+                    productType
+                    options {
+                        name
+                        values
+                    }
+                    images(first: 10) {
+                        edges {
+                            node {
+                                src
+                            }
+                        }
+                    }
+                    variants(first: 50) {
+                        edges {
+                            node {
+                                id
+                                title
+                                price {
+                                    amount
+                                    currencyCode
+                                }
+                                selectedOptions {
+                                    name
+                                    value
+                                }
+                                image {
+                                    src
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }`;
+    const data = await shopifyFetch(query);
+    return data.products.edges.map(e => {
+        const p = e.node;
+        p.images = p.images.edges.map(ie => ie.node);
+        p.variants = p.variants.edges.map(ve => ve.node);
+        return p;
+    });
+}
+
+// ========== CART API ==========
+async function createCart(lineItems, customAttributes = []) {
+    const lines = lineItems.map(li => ({
+        merchandiseId: li.variantId,
+        quantity: li.quantity
+    }));
+
+    const attrsInput = customAttributes.map(a => `{key: "${a.key}", value: "${a.value}"}`).join(', ');
+
+    const query = `mutation {
+        cartCreate(input: {
+            lines: [${lines.map(l => `{merchandiseId: "${l.merchandiseId}", quantity: ${l.quantity}}`).join(', ')}]
+            ${customAttributes.length > 0 ? `, attributes: [${attrsInput}]` : ''}
+        }) {
+            cart {
+                id
+                checkoutUrl
+            }
+            userErrors {
+                field
+                message
+            }
+        }
+    }`;
+
+    const data = await shopifyFetch(query);
+    if (data.cartCreate.userErrors.length > 0) {
+        console.error('Cart errors:', data.cartCreate.userErrors);
+        throw new Error(data.cartCreate.userErrors[0].message);
+    }
+    return data.cartCreate.cart;
+}
+
+// ========== RENDER ==========
 async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = false) {
     const grid = document.getElementById(containerId);
     if (!grid) return;
@@ -40,20 +139,13 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
 
     grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.5); padding: 5rem;">Conectando con Shopify...</div>';
 
-    if (!shopifyClient) {
-        grid.innerHTML = `<p style="color:red; text-align:center; grid-column: 1/-1; padding: 5rem;">
-            No se pudo conectar con Shopify. Desactiva tu AdBlocker o intenta en otro navegador.
-        </p>`;
-        return;
-    }
-
     try {
         if (shopifyProducts.length === 0) {
-            shopifyProducts = await shopifyClient.product.fetchAll();
+            shopifyProducts = await fetchAllProducts();
         }
 
-        const filtered = filterCategory === 'all' 
-            ? shopifyProducts 
+        const filtered = filterCategory === 'all'
+            ? shopifyProducts
             : shopifyProducts.filter(p => {
                 const vendor = (p.vendor || '').toLowerCase();
                 const target = filterCategory.toLowerCase();
@@ -72,52 +164,48 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
         }
 
         grid.innerHTML = filtered.map(p => {
-            // Inicializar estado del producto
             if (!activeOptions[p.id]) {
                 activeOptions[p.id] = {};
                 p.options.forEach(opt => {
-                    activeOptions[p.id][opt.name] = opt.values[0].value;
+                    activeOptions[p.id][opt.name] = opt.values[0];
                 });
-                
-                // Buscar variante inicial que coincida
-                let initialVariant = p.variants.find(v => {
-                    return v.selectedOptions.every(so => activeOptions[p.id][so.name] === so.value);
-                });
+                let initialVariant = p.variants.find(v =>
+                    v.selectedOptions.every(so => activeOptions[p.id][so.name] === so.value)
+                );
                 selectedVariants[p.id] = initialVariant || p.variants[0];
             }
-            
+
             const variant = selectedVariants[p.id];
             const price = variant.price.amount;
             const imageUrl = variant.image ? variant.image.src : (p.images[0] ? p.images[0].src : 'https://placehold.co/400x400/050505/8b3fcc?text=No+Image');
 
-            // Renderizar Opciones (Color vs Talla)
             let optionsHTML = '';
             if (p.options.length > 0 && p.options[0].name !== 'Title') {
                 optionsHTML = `<div class="options-container" style="margin: 15px 0; display: flex; flex-direction: column; gap: 10px;">`;
-                
+
                 p.options.forEach(opt => {
                     const isColor = opt.name.toLowerCase().includes('color');
-                    
+
                     optionsHTML += `<div class="option-group">
                         <span style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px;">${opt.name}</span>
                         <div class="option-values" style="display:flex; gap:8px; margin-top:5px; flex-wrap:wrap;">`;
-                    
+
                     opt.values.forEach(val => {
-                        const isActive = activeOptions[p.id][opt.name] === val.value;
+                        const isActive = activeOptions[p.id][opt.name] === val;
                         if (isColor) {
-                            optionsHTML += `<div class="variant-dot ${isActive ? 'active' : ''}" 
-                                style="background-color: ${getColorHex(val.value)}; cursor:pointer;"
-                                onclick="updateShopifyOption('${p.id}', '${opt.name}', '${val.value.replace(/'/g, "\\'")}')"
-                                title="${val.value}"></div>`;
+                            optionsHTML += `<div class="variant-dot ${isActive ? 'active' : ''}"
+                                style="background-color: ${getColorHex(val)}; cursor:pointer;"
+                                onclick="updateShopifyOption('${p.id}', '${opt.name}', '${val.replace(/'/g, "\\'")}')"
+                                title="${val}"></div>`;
                         } else {
-                            optionsHTML += `<button class="size-pill ${isActive ? 'active' : ''}" 
+                            optionsHTML += `<button class="size-pill ${isActive ? 'active' : ''}"
                                 style="padding:4px 12px; border:1px solid ${isActive ? '#8B3FCC' : 'rgba(255,255,255,0.1)'}; background:${isActive ? 'rgba(139,63,204,0.1)' : 'transparent'}; color:#fff; border-radius:4px; cursor:pointer; font-size:0.8rem;"
-                                onclick="updateShopifyOption('${p.id}', '${opt.name}', '${val.value.replace(/'/g, "\\'")}')">
-                                ${val.value}
+                                onclick="updateShopifyOption('${p.id}', '${opt.name}', '${val.replace(/'/g, "\\'")}')">
+                                ${val}
                             </button>`;
                         }
                     });
-                    
+
                     optionsHTML += `</div></div>`;
                 });
                 optionsHTML += `</div>`;
@@ -126,7 +214,7 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
             return `
                 <div class="product-card" data-category="${p.vendor}">
                     <div class="product-image-wrapper">
-                        <img id="img-${p.id}" src="${imageUrl}" alt="${p.title}">
+                        <img id="img-${p.id}" src="${imageUrl}" alt="${p.title}" style="transition: opacity 0.2s;">
                     </div>
                     <div class="product-meta">
                         <span class="product-tag">${p.productType || p.vendor || 'MYOOZ'}</span>
@@ -134,9 +222,7 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
                         <div class="product-price" id="price-${p.id}">
                             <small>USD</small> $${parseFloat(price).toFixed(2)}
                         </div>
-                        
                         ${optionsHTML}
-
                         <button class="add-to-cart-btn" onclick="addShopifyToCart('${p.id}')" style="margin-top:auto;">
                             AÑADIR AL CARRITO
                         </button>
@@ -146,29 +232,26 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
         }).join('');
     } catch(err) {
         console.error('Error fetching Shopify products:', err);
-        grid.innerHTML = `<p style="color:red; text-align:center;">Error cargando catálogo.</p>`;
+        grid.innerHTML = `<p style="color:red; text-align:center; grid-column: 1/-1; padding: 3rem;">Error cargando catálogo: ${err.message}</p>`;
     }
 }
 
+// ========== OPTION SWITCHING ==========
 function updateShopifyOption(productId, optionName, optionValue) {
-    // 1. Actualizar estado de opciones seleccionadas
     activeOptions[productId][optionName] = optionValue;
-    
-    // 2. Encontrar variante que coincide con TODAS las opciones
+
     const product = shopifyProducts.find(p => p.id === productId);
-    const newVariant = product.variants.find(v => {
-        return v.selectedOptions.every(opt => activeOptions[productId][opt.name] === opt.value);
-    });
+    const newVariant = product.variants.find(v =>
+        v.selectedOptions.every(opt => activeOptions[productId][opt.name] === opt.value)
+    );
 
     if (newVariant) {
         selectedVariants[productId] = newVariant;
-        
-        // Actualizar precio
-        const priceEl = document.getElementById(`price-${productId}`);
-        if(priceEl) priceEl.innerHTML = `<small>USD</small> $${parseFloat(newVariant.price.amount).toFixed(2)}`;
 
-        // Actualizar imagen suavemente
-        if(newVariant.image) {
+        const priceEl = document.getElementById(`price-${productId}`);
+        if (priceEl) priceEl.innerHTML = `<small>USD</small> $${parseFloat(newVariant.price.amount).toFixed(2)}`;
+
+        if (newVariant.image) {
             const img = document.getElementById(`img-${productId}`);
             if (img && img.src !== newVariant.image.src) {
                 img.style.opacity = '0';
@@ -180,44 +263,43 @@ function updateShopifyOption(productId, optionName, optionValue) {
         }
     }
 
-    // 3. Actualizar UI de botones y puntos manualmente (para no recargar toda la grilla)
-    const card = document.querySelector(`.product-card img[id="img-${productId}"]`).closest('.product-card');
-    if (card) {
-        const isColor = optionName.toLowerCase().includes('color');
-        
-        // Encontrar el grupo de opciones específico que fue clickeado
-        // Usamos title o textContent para encontrar el correcto y actualizar 'active'
-        const optionGroups = card.querySelectorAll('.option-group');
-        optionGroups.forEach(group => {
-            const groupName = group.querySelector('span').innerText;
-            if (groupName.toLowerCase() === optionName.toLowerCase()) {
-                const buttons = group.querySelectorAll(isColor ? '.variant-dot' : '.size-pill');
-                buttons.forEach(btn => {
-                    btn.classList.remove('active');
-                    
-                    if (isColor) {
-                        if (btn.title === optionValue) btn.classList.add('active');
+    // Update active states in DOM
+    const imgEl = document.getElementById(`img-${productId}`);
+    if (!imgEl) return;
+    const card = imgEl.closest('.product-card');
+    if (!card) return;
+
+    const isColor = optionName.toLowerCase().includes('color');
+    const optionGroups = card.querySelectorAll('.option-group');
+    optionGroups.forEach(group => {
+        const groupName = group.querySelector('span').innerText;
+        if (groupName.toLowerCase() === optionName.toLowerCase()) {
+            const buttons = group.querySelectorAll(isColor ? '.variant-dot' : '.size-pill');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (isColor) {
+                    if (btn.title === optionValue) btn.classList.add('active');
+                } else {
+                    if (btn.innerText.trim() === optionValue) {
+                        btn.classList.add('active');
+                        btn.style.borderColor = '#8B3FCC';
+                        btn.style.background = 'rgba(139,63,204,0.1)';
                     } else {
-                        if (btn.innerText.trim() === optionValue) {
-                            btn.classList.add('active');
-                            btn.style.borderColor = '#8B3FCC';
-                            btn.style.background = 'rgba(139,63,204,0.1)';
-                        } else {
-                            btn.style.borderColor = 'rgba(255,255,255,0.1)';
-                            btn.style.background = 'transparent';
-                        }
+                        btn.style.borderColor = 'rgba(255,255,255,0.1)';
+                        btn.style.background = 'transparent';
                     }
-                });
-            }
-        });
-    }
+                }
+            });
+        }
+    });
 }
 
+// ========== ADD TO CART ==========
 async function addShopifyToCart(productId) {
     const product = shopifyProducts.find(p => p.id === productId);
     const variant = selectedVariants[productId] || product.variants[0];
-    
-    // Mapeo hacia nuestro carrito global (tienda.html)
+
+    // If global cart exists (tienda.html), use it
     if (window.addItemToCart) {
         window.addItemToCart({
             id: product.id,
@@ -225,13 +307,13 @@ async function addShopifyToCart(productId) {
             price: parseFloat(variant.price.amount),
             image: variant.image ? variant.image.src : (product.images[0] ? product.images[0].src : ''),
         }, {
-            id: variant.id, 
+            id: variant.id,
             label: variant.title
         });
         return;
-    } 
+    }
 
-    // Si no hay carrito global (páginas de artistas), hacemos Compra Rápida
+    // Quick Checkout for artist pages
     try {
         const btn = event.target || document.querySelector(`[onclick="addShopifyToCart('${productId}')"]`);
         const origText = btn.innerText;
@@ -239,14 +321,8 @@ async function addShopifyToCart(productId) {
         btn.style.opacity = '0.5';
         btn.disabled = true;
 
-        const checkout = await shopifyClient.checkout.create();
-        const updatedCheckout = await shopifyClient.checkout.addLineItems(checkout.id, [{
-            variantId: variant.id,
-            quantity: 1
-        }]);
-        
-        // Redirigir seguro a Shopify
-        window.location.href = updatedCheckout.webUrl;
+        const cart = await createCart([{ variantId: variant.id, quantity: 1 }]);
+        window.location.href = cart.checkoutUrl;
     } catch(err) {
         console.error('Error Quick Checkout:', err);
         alert('Error conectando con Shopify. Intenta de nuevo.');

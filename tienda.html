@@ -208,33 +208,10 @@
     </div>
 
     <script src="navigation.js"></script>
-    <script src="https://sdks.shopifycdn.com/js-buy-sdk/v2/latest/index.umd.min.js"></script>
     <script src="merch-renderer.js"></script>
     <script>
         let currentCategory = 'all';
         let cart = JSON.parse(localStorage.getItem('myooz_cart')) || [];
-        let shopifyCheckoutId = localStorage.getItem('shopify_checkout_id');
-
-        // Inicializar Checkout de Shopify persistente
-        async function getOrCreateCheckout() {
-            if (shopifyCheckoutId) {
-                try {
-                    const checkout = await shopifyClient.checkout.fetch(shopifyCheckoutId);
-                    if (checkout.completedAt) {
-                        localStorage.removeItem('shopify_checkout_id');
-                        localStorage.removeItem('myooz_cart');
-                        cart = [];
-                        return await shopifyClient.checkout.create();
-                    }
-                    return checkout;
-                } catch(e) {
-                    return await shopifyClient.checkout.create();
-                }
-            }
-            const newCheckout = await shopifyClient.checkout.create();
-            localStorage.setItem('shopify_checkout_id', newCheckout.id);
-            return newCheckout;
-        }
 
         function toggleCart() {
             document.getElementById('cart-drawer').classList.toggle('open');
@@ -247,14 +224,13 @@
                 id: product.id,
                 name: product.name,
                 price: product.price,
-                variantId: variant.id,    // Shopify Base Variant ID
+                variantId: variant.id,
                 variantName: variant.label,
                 image: product.image
             });
             saveCart();
             updateCartUI();
-            
-            // Show feedback
+
             const btn = event.target;
             const originalText = btn.innerText;
             btn.innerText = '¡AÑADIDO!';
@@ -283,7 +259,7 @@
         function renderCart() {
             const container = document.getElementById('cart-items');
             const totalDisplay = document.getElementById('cart-total-display');
-            
+
             if (cart.length === 0) {
                 container.innerHTML = '<p style="text-align:center; opacity:0.5; margin-top:3rem;">Tu carrito está vacío</p>';
                 totalDisplay.innerText = '$0.00';
@@ -315,30 +291,21 @@
             btn.disabled = true;
 
             try {
-                const checkout = await getOrCreateCheckout();
-                
-                // Limpiar carrito en shopify si ya tenía elementos (en caso de reintento)
-                if (checkout.lineItems.length > 0) {
-                    await shopifyClient.checkout.removeLineItems(checkout.id, checkout.lineItems.map(l => l.id));
-                }
-
-                // Agrupar items por variantes (para sumar cantidades)
-                const lineItemsToAdd = [];
+                // Group cart items by variant ID
                 const variantCounts = {};
                 for (let item of cart) {
                     variantCounts[item.variantId] = (variantCounts[item.variantId] || 0) + 1;
                 }
-                
-                for (const [vId, qty] of Object.entries(variantCounts)) {
-                    lineItemsToAdd.push({ variantId: vId, quantity: qty });
-                }
 
-                const updatedCheckout = await shopifyClient.checkout.addLineItems(checkout.id, lineItemsToAdd);
-                
-                // Redirigir al cliente a pagar seguro en Shopify
-                window.location.href = updatedCheckout.webUrl;
+                const lineItems = Object.entries(variantCounts).map(([vId, qty]) => ({
+                    variantId: vId,
+                    quantity: qty
+                }));
+
+                const shopifyCart = await createCart(lineItems);
+                window.location.href = shopifyCart.checkoutUrl;
             } catch (err) {
-                console.error("Error creating Shopify checkout", err);
+                console.error("Error creating Shopify cart", err);
                 btn.innerText = 'Error. Intenta de nuevo.';
                 setTimeout(() => {
                     btn.innerText = 'PROCEDER AL PAGO (PAGO SEGURO)';
