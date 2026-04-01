@@ -747,7 +747,21 @@
     </div>
 
     <script src="navigation.js"></script>
+    <script src="https://sdks.shopifycdn.com/js-buy-sdk/v2/latest/index.umd.min.js"></script>
     <script>
+        // Inicializar cliente de Shopify
+        let shopifyClient;
+        try {
+            if (typeof ShopifyBuy !== 'undefined') {
+                shopifyClient = ShopifyBuy.buildClient({
+                    domain: 'myooz-inc.myshopify.com',
+                    storefrontAccessToken: 'acd24150be762dc32d5801dbdf47b973'
+                });
+            } else {
+                console.error("Shopify no se cargó");
+            }
+        } catch(e) { console.error(e); }
+
         const modal = document.getElementById('service-modal');
         const promosModal = document.getElementById('promos-modal');
         const hiddenServicesInput = document.getElementById('hidden-services');
@@ -766,22 +780,20 @@
             const existingNotice = document.getElementById('active-promo-notice');
             if(existingNotice) existingNotice.remove();
             
-            // Show all services again
             const labels = document.querySelectorAll('.service-checkbox');
             labels.forEach(label => label.style.display = 'flex');
 
             resetCheckboxes();
             calculateTotal();
-            if(!paypalInited) initPayPalButton();
         }
 
         function closeModal() {
             modal.classList.remove('active');
-            currentActivePromoServices = []; // Also clear here
+            currentActivePromoServices = [];
         }
 
         function openPromosModal() {
-            closeModal(); // Close the service modal if it's open
+            closeModal();
             promosModal.classList.add('active');
         }
 
@@ -802,11 +814,10 @@
             currentActivePromoServices = services.split(', ');
             
             document.getElementById('services-checklist-group').style.display = 'none';
-            hiddenServicesInput.value = `PROMO: ${name} (${services}) | Total: $${price}`;
+            hiddenServicesInput.value = `PROMO: ${name} (${services})`;
             document.getElementById('total-display').textContent = '$' + price;
             currentTotal = price;
             
-            // Highlight that a promo is active and list services
             const promoNotice = document.createElement('div');
             promoNotice.id = 'active-promo-notice';
             promoNotice.style.background = 'rgba(255, 255, 255, 0.04)';
@@ -837,9 +848,8 @@
             if(existingNotice) existingNotice.remove();
             
             document.getElementById('service-form').prepend(promoNotice);
-            updatePayPalVisibility();
+            updatePaymentVisibility();
         }
-
 
         function calculateTotal() {
             if(isPromoSelected) return;
@@ -848,7 +858,6 @@
             const selectedSet = new Set();
             let selectedNames = [];
 
-            // Add services already in the active promo to the set for calculation logic
             if(currentActivePromoServices.length > 0) {
                 currentActivePromoServices.forEach(s => selectedSet.add(s));
             }
@@ -863,14 +872,11 @@
                 }
             });
 
-            // Apply the immediate $100 Discount if Mix + Master are selected
             if(selectedSet.has('Mix') && selectedSet.has('Master')) {
                 total -= 100;
                 const noticeHtml = `<div id="mix-master-discount-tag" style="color: #00ff88; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; text-align: right;">Descuento Mix+Master Aplicado: -$100 USD</div>`;
                 const container = document.getElementById('smart-promo-container');
-                if(container) {
-                    container.innerHTML = noticeHtml;
-                }
+                if(container) container.innerHTML = noticeHtml;
             } else {
                 const tag = document.getElementById('mix-master-discount-tag');
                 if(tag) tag.remove();
@@ -879,29 +885,20 @@
             document.getElementById('total-display').textContent = '$' + total;
             currentTotal = total;
             
-            if(selectedNames.length > 0 || currentActivePromoServices.length > 0) {
-                const allServices = [...selectedNames, ...currentActivePromoServices];
-                hiddenServicesInput.value = allServices.join(', ') + ' | Total: $' + total;
+            if(selectedNames.length > 0) {
+                hiddenServicesInput.value = selectedNames.join(', ');
             } else {
                 hiddenServicesInput.value = '';
             }
-
-            // Remove existing notices before checking again
-            const existingNotice = document.getElementById('active-promo-notice');
-            if(existingNotice) {
-                // Keep the notice if it's the active promo summary, but allow banner to appear above it
-            }
             
             checkForSmartPromos(selectedSet, total);
-            updatePayPalVisibility();
+            updatePaymentVisibility();
         }
 
         function checkForSmartPromos(selectedSet, currentTotalValue) {
-            // Remove any existing smart banners before checking
             const existingBanners = document.querySelectorAll('.smart-promo-banner');
             existingBanners.forEach(b => b.remove());
 
-            // Definition of available promos for the detector
             const allPromos = [
                 { id: 'upgrade-ia', name: 'Paquete Upgrade IA', price: 120, original: 200, services: ['Mix', 'Master', 'Mejora de Canción IA'] },
                 { id: 'artiste-indie', name: 'Paquete Artista Independiente', price: 250, original: 400, services: ['Beat Exclusivo', 'Mix', 'Master'] },
@@ -915,14 +912,9 @@
             let maxSavings = -9999;
 
             allPromos.forEach(promo => {
-                // Check how many services from this promo the user has already picked
                 const matches = promo.services.filter(s => selectedSet.has(s));
-                
                 if(matches.length >= 1) {
                     const savings = currentTotalValue - promo.price;
-                    
-                    // Priority 1: Pick the promo that matches MORE of what the user selected (Completeness)
-                    // Priority 2: If match count is the same, pick the one with higher savings (Value)
                     if(matches.length > highestMatchCount) {
                         highestMatchCount = matches.length;
                         maxSavings = savings;
@@ -944,7 +936,6 @@
                 banner.style.marginBottom = '2rem';
                 banner.style.cursor = 'pointer';
                 banner.style.transition = 'all 0.3s';
-                banner.style.position = 'relative';
                 
                 const extraServices = bestPromo.services.filter(s => !selectedSet.has(s));
                 const extraServicesHtml = extraServices.length > 0 
@@ -972,43 +963,67 @@
             }
         }
 
-        function updatePayPalVisibility() {
-            const paypalContainer = document.getElementById('paypal-button-container');
+        function updatePaymentVisibility() {
             const submitBtn = document.getElementById('btn-submit-form');
 
             if(currentTotal > 0) {
-                paypalContainer.style.display = 'block';
-                submitBtn.style.display = 'none';
-                initPayPalButton();
-            } else {
-                paypalContainer.style.display = 'none';
                 submitBtn.style.display = 'block';
-                // We'll style the submitBtn as a premium secondary solicitation but clear about selection
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'PROCEDER A PAGAR (PAGO SEGURO)';
+                submitBtn.style.background = '#8B3FCC';
+                submitBtn.style.color = '#fff';
+                submitBtn.style.fontWeight = '800';
+                submitBtn.style.cursor = 'pointer';
+                submitBtn.style.padding = '16px';
+                submitBtn.onclick = processShopifyServiceCheckout;
+            } else {
+                submitBtn.style.display = 'block';
+                submitBtn.disabled = true;
+                submitBtn.innerText = 'Selecciona un servicio para comenzar';
+                submitBtn.style.background = 'transparent';
+                submitBtn.style.border = '1px solid rgba(255,255,255,0.1)';
+                submitBtn.style.color = 'rgba(255,255,255,0.5)';
+                submitBtn.style.cursor = 'not-allowed';
+                submitBtn.onclick = null;
             }
         }
 
-        let paypalInited = false;
-        function initPayPalButton() {
-            if(paypalInited) return;
-            paypalInited = true;
-            paypal.Buttons({
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: currentTotal.toString()
-                            },
-                            description: hiddenServicesInput.value
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        alert('Pago completado por ' + details.payer.name.given_name);
-                        form.submit();
-                    });
+        async function processShopifyServiceCheckout() {
+            const btn = document.getElementById('btn-submit-form');
+            btn.innerText = 'CONECTANDO CON SHOPIFY...';
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+
+            try {
+                if (!shopifyClient) throw new Error("Shopify Client JS failed to load.");
+
+                const products = await shopifyClient.product.fetchAll();
+                const serviceProduct = products.find(p => p.title.toLowerCase().includes('servicios myooz'));
+                
+                if (!serviceProduct) {
+                    alert('Error: Producto de facturación "Servicios MYOOZ InC" no encontrado en Shopify. Verifica que esté Activo y publicado en Headless.');
+                    throw new Error("Bridge product missing");
                 }
-            }).render('#paypal-button-container');
+
+                const trackingDetails = `Servicios del Cliente: ${hiddenServicesInput.value} | Total Calculado: $${currentTotal}`;
+
+                const checkout = await shopifyClient.checkout.create({
+                    customAttributes: [{ key: "Detalle de Servicios Contratados", value: trackingDetails }]
+                });
+
+                const updatedCheckout = await shopifyClient.checkout.addLineItems(checkout.id, [{
+                    variantId: serviceProduct.variants[0].id,
+                    quantity: currentTotal
+                }]);
+
+                window.location.href = updatedCheckout.webUrl;
+            } catch(e) {
+                console.error("Shopify Services Error:", e);
+                alert("Error comunicando con Shopify. Intenta de nuevo.");
+                btn.innerText = 'PROCEDER A PAGAR (PAGO SEGURO)';
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
         }
 
         window.onclick = function(event) {
