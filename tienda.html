@@ -189,25 +189,12 @@
         </div>
 
         <div class="cart-footer">
-            <div id="shipping-form" class="shipping-form">
-                <h3>Información de Envío</h3>
-                <div class="address-grid">
-                    <input type="text" id="ship-name" class="cart-input full" placeholder="Nombre Completo">
-                    <input type="text" id="ship-address" class="cart-input full" placeholder="Dirección (Calle y Número)">
-                    <input type="text" id="ship-city" class="cart-input" placeholder="Ciudad">
-                    <input type="text" id="ship-zip" class="cart-input" placeholder="Código Postal">
-                    <input type="text" id="ship-country" class="cart-input full" placeholder="País">
-                </div>
-            </div>
-
-            <div class="cart-total">
+            <div class="cart-total" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: auto;">
                 <span>TOTAL</span>
                 <span id="cart-total-display">$0.00</span>
             </div>
 
-            <button id="checkout-continue-btn" class="add-to-cart-btn" style="margin-top: 1rem;" onclick="validateAndShowPayment()">PROCEDER AL PAGO</button>
-            <div id="cart-paypal-container" style="min-height: 150px; margin-top: 1rem; display: none;"></div>
-            <div id="address-warning" style="color:#ff3e3e; font-size:0.75rem; text-align:center; margin-top:1rem; font-weight:700;">Completa tus datos de envío para pagar</div>
+            <button id="checkout-continue-btn" class="add-to-cart-btn" style="margin-top: 1.5rem; width: 100%; padding: 16px; font-size: 1rem;" onclick="processShopifyCheckout()">PROCEDER AL PAGO (PAGO SEGURO)</button>
         </div>
     </div>
 
@@ -221,11 +208,33 @@
     </div>
 
     <script src="navigation.js"></script>
-    <script src="merch-data.js"></script>
+    <script src="https://sdks.shopifycdn.com/js-buy-sdk/v2/latest/index.umd.min.js"></script>
     <script src="merch-renderer.js"></script>
     <script>
         let currentCategory = 'all';
         let cart = JSON.parse(localStorage.getItem('myooz_cart')) || [];
+        let shopifyCheckoutId = localStorage.getItem('shopify_checkout_id');
+
+        // Inicializar Checkout de Shopify persistente
+        async function getOrCreateCheckout() {
+            if (shopifyCheckoutId) {
+                try {
+                    const checkout = await shopifyClient.checkout.fetch(shopifyCheckoutId);
+                    if (checkout.completedAt) {
+                        localStorage.removeItem('shopify_checkout_id');
+                        localStorage.removeItem('myooz_cart');
+                        cart = [];
+                        return await shopifyClient.checkout.create();
+                    }
+                    return checkout;
+                } catch(e) {
+                    return await shopifyClient.checkout.create();
+                }
+            }
+            const newCheckout = await shopifyClient.checkout.create();
+            localStorage.setItem('shopify_checkout_id', newCheckout.id);
+            return newCheckout;
+        }
 
         function toggleCart() {
             document.getElementById('cart-drawer').classList.toggle('open');
@@ -238,8 +247,9 @@
                 id: product.id,
                 name: product.name,
                 price: product.price,
+                variantId: variant.id,    // Shopify Base Variant ID
                 variantName: variant.label,
-                image: variant.image
+                image: product.image
             });
             saveCart();
             updateCartUI();
@@ -277,8 +287,7 @@
             if (cart.length === 0) {
                 container.innerHTML = '<p style="text-align:center; opacity:0.5; margin-top:3rem;">Tu carrito está vacío</p>';
                 totalDisplay.innerText = '$0.00';
-                document.getElementById('cart-paypal-container').style.display = 'none';
-                document.getElementById('address-warning').style.display = 'none';
+                document.getElementById('checkout-continue-btn').style.display = 'none';
                 return;
             }
 
@@ -296,99 +305,47 @@
 
             const total = cart.reduce((sum, item) => sum + item.price, 0);
             totalDisplay.innerText = '$' + total.toFixed(2);
-            
-            checkAddressAndInitPaypal(total);
+            document.getElementById('checkout-continue-btn').style.display = 'block';
         }
 
-        function validateAndShowPayment() {
-            const inputs = ['ship-name', 'ship-address', 'ship-city', 'ship-zip', 'ship-country'];
-            const allFilled = inputs.every(id => document.getElementById(id).value.trim() !== '');
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
+        async function processShopifyCheckout() {
+            const btn = document.getElementById('checkout-continue-btn');
+            btn.innerText = 'CONECTANDO A SHOPIFY...';
+            btn.style.opacity = '0.5';
+            btn.disabled = true;
 
-            if (allFilled && total > 0) {
-                document.getElementById('checkout-continue-btn').style.display = 'none';
-                document.getElementById('cart-paypal-container').style.display = 'block';
-                document.getElementById('address-warning').style.display = 'none';
-                initCartPaypal(total);
-            } else {
-                document.getElementById('address-warning').style.display = 'block';
-                document.getElementById('address-warning').innerText = total > 0 ? "Por favor, completa todos los campos de envío" : "Tu carrito está vacío";
-            }
-        }
-
-        function checkAddressAndInitPaypal(total) {
-            const inputs = ['ship-name', 'ship-address', 'ship-city', 'ship-zip', 'ship-country'];
-            const allFilled = inputs.every(id => document.getElementById(id).value.trim() !== '');
-            
-            if (allFilled) {
-                document.getElementById('address-warning').style.display = 'none';
-            } else {
-                document.getElementById('cart-paypal-container').style.display = 'none';
-                document.getElementById('checkout-continue-btn').style.display = 'block';
-            }
-        }
-
-        // Listen for address input changes to show paypal
-        ['ship-name', 'ship-address', 'ship-city', 'ship-zip', 'ship-country'].forEach(id => {
-            document.getElementById(id).addEventListener('input', () => {
-                const total = cart.reduce((sum, item) => sum + item.price, 0);
-                if (total > 0) checkAddressAndInitPaypal(total);
-            });
-        });
-
-        let cartPaypalInited = false;
-        function initCartPaypal(total) {
-            const container = document.getElementById('cart-paypal-container');
-            container.innerHTML = ''; // Fresh render
-            
-            paypal.Buttons({
-                disableFunding: 'paylater',
-                style: { layout: 'vertical', color: 'blue', shape: 'pill', label: 'checkout' },
-                createOrder: (data, actions) => {
-                    const desc = cart.map(i => `${i.name} (${i.variantName})`).join(', ');
-                    const address = `${document.getElementById('ship-name').value} | ${document.getElementById('ship-address').value}, ${document.getElementById('ship-city').value} (${document.getElementById('ship-zip').value})`;
-                    
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: { value: total.toFixed(2) },
-                            description: `Pedido Merch: ${desc} | Envío a: ${address}`
-                        }]
-                    });
-                },
-                onApprove: (data, actions) => {
-                    return actions.order.capture().then(async details => {
-                        // Gather order data for the notification
-                        const orderData = {
-                            access_key: "b91241a6-e5bd-482b-b19b-7d1f707121fa",
-                            subject: "¡NUEVO PEDIDO DE MERCH! — " + document.getElementById('ship-name').value,
-                            name: document.getElementById('ship-name').value,
-                            address: document.getElementById('ship-address').value,
-                            city: document.getElementById('ship-city').value,
-                            zip: document.getElementById('ship-zip').value,
-                            country: document.getElementById('ship-country').value,
-                            order_summary: cart.map(i => `${i.name} (${i.variantName}) - $${i.price}`).join('\n'),
-                            total: '$' + total.toFixed(2),
-                            paypal_details: details.id + " | " + details.payer.email_address
-                        };
-
-                        // Send order info to Forms Manager (Web3Forms)
-                        try {
-                            await fetch('https://api.web3forms.com/submit', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(orderData)
-                            });
-                        } catch (err) { console.error('Form notification failed', err); }
-
-                        // Cleanup and success feedback
-                        cart = [];
-                        saveCart();
-                        updateCartUI();
-                        toggleCart();
-                        showModal(`¡Gracias, ${details.payer.name.given_name}!`, `Tu pedido ha sido recibido y será enviado a la dirección proporcionada.`);
-                    });
+            try {
+                const checkout = await getOrCreateCheckout();
+                
+                // Limpiar carrito en shopify si ya tenía elementos (en caso de reintento)
+                if (checkout.lineItems.length > 0) {
+                    await shopifyClient.checkout.removeLineItems(checkout.id, checkout.lineItems.map(l => l.id));
                 }
-            }).render('#cart-paypal-container');
+
+                // Agrupar items por variantes (para sumar cantidades)
+                const lineItemsToAdd = [];
+                const variantCounts = {};
+                for (let item of cart) {
+                    variantCounts[item.variantId] = (variantCounts[item.variantId] || 0) + 1;
+                }
+                
+                for (const [vId, qty] of Object.entries(variantCounts)) {
+                    lineItemsToAdd.push({ variantId: vId, quantity: qty });
+                }
+
+                const updatedCheckout = await shopifyClient.checkout.addLineItems(checkout.id, lineItemsToAdd);
+                
+                // Redirigir al cliente a pagar seguro en Shopify
+                window.location.href = updatedCheckout.webUrl;
+            } catch (err) {
+                console.error("Error creating Shopify checkout", err);
+                btn.innerText = 'Error. Intenta de nuevo.';
+                setTimeout(() => {
+                    btn.innerText = 'PROCEDER AL PAGO (PAGO SEGURO)';
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                }, 3000);
+            }
         }
 
 

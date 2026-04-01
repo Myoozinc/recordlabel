@@ -1,103 +1,138 @@
-// Selection tracking
+// Configuración de Cliente Headless de Shopify
+const shopifyClient = ShopifyBuy.buildClient({
+    domain: 'myooz-inc.myshopify.com',
+    storefrontAccessToken: 'acd24150be762dc32d5801dbdf47b973'
+});
+
+// Estado Global
+let shopifyProducts = [];
 const selectedVariants = {};
 
-// Merch Rendering Logic for MYOOZ InC Label
-function renderMerchGrid(containerId, filterCategory = 'all', isCompact = false) {
+// Renderizado Dinámico
+async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = false) {
     const grid = document.getElementById(containerId);
     if (!grid) return;
 
-    if (isCompact) {
-        grid.classList.add('compact');
-    } else {
-        grid.classList.remove('compact');
-    }
+    if (isCompact) grid.classList.add('compact');
+    else grid.classList.remove('compact');
 
-    const filtered = filterCategory === 'all' 
-        ? merchProducts 
-        : merchProducts.filter(p => p.category === filterCategory);
+    grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.5); padding: 5rem;">Conectando con Shopify...</div>';
 
-    if (filtered.length === 0) {
-        grid.innerHTML = `
-            <div class="no-results-state" style="grid-column: 1/-1; text-align: center; padding: 6rem 2rem; background: rgba(255,255,255,0.03); border-radius: 24px; border: 1px dashed rgba(255,255,255,0.1);">
-                <div style="font-size: 3rem; margin-bottom: 1.5rem; opacity: 0.5;">🛍️</div>
-                <h3 style="color: #fff; font-family: 'Outfit'; font-size: 1.8rem; margin-bottom: 1rem;">No se encontraron productos</h3>
-                <p style="color: rgba(255,255,255,0.5); font-size: 1.1rem; max-width: 400px; margin: 0 auto;">Estamos actualizando el inventario de esta categoría. ¡Vuelve pronto para ver las novedades!</p>
-            </div>
-        `;
-        return;
-    }
-
-    grid.innerHTML = filtered.map(p => {
-        // Initialize selection if not exists
-        if (!selectedVariants[p.id]) {
-            selectedVariants[p.id] = p.variants[0];
+    try {
+        if (shopifyProducts.length === 0) {
+            shopifyProducts = await shopifyClient.product.fetchAll();
         }
-        
-        const activeVariant = selectedVariants[p.id];
 
-        return `
-            <div class="product-card" data-category="${p.category}">
-                <div class="product-image-wrapper">
-                    <img id="img-${p.id}" src="${activeVariant.image}" alt="${p.name}" onerror="this.src='https://placehold.co/400x400/050505/8b3fcc?text=${p.name.replace(/ /g, '+')}'">
+        // Filtro por "vendor" (MYOOZ InC, GGB Beats, Joss, etc) o "productType"
+        const filtered = filterCategory === 'all' 
+            ? shopifyProducts 
+            : shopifyProducts.filter(p => {
+                const vendor = (p.vendor || '').toLowerCase();
+                const target = filterCategory.toLowerCase();
+                return vendor.includes(target) || p.productType.toLowerCase().includes(target);
+            });
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `
+                <div class="no-results-state" style="grid-column: 1/-1; text-align: center; padding: 6rem 2rem; background: rgba(255,255,255,0.03); border-radius: 24px; border: 1px dashed rgba(255,255,255,0.1);">
+                    <div style="font-size: 3rem; margin-bottom: 1.5rem; opacity: 0.5;">🛍️</div>
+                    <h3 style="color: #fff; font-family: 'Outfit'; font-size: 1.8rem; margin-bottom: 1rem;">No hay productos todavía</h3>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 1.1rem; max-width: 400px; margin: 0 auto;">Ve a tu panel de Shopify y asegúrate de publicar productos en el canal de ventas "Headless".</p>
                 </div>
-                <div class="product-meta">
-                    <span class="product-tag">${p.tag}</span>
-                    <h3 class="product-name">${p.name}</h3>
-                    <div class="product-price">
-                        <small>USD</small> $${p.price.toFixed(2)}
+            `;
+            return;
+        }
+
+        grid.innerHTML = filtered.map(p => {
+            // Variante seleccionada por defecto
+            if (!selectedVariants[p.id]) {
+                selectedVariants[p.id] = p.variants[0];
+            }
+            
+            const activeVariant = selectedVariants[p.id];
+            const price = activeVariant.price.amount;
+            const imageUrl = activeVariant.image ? activeVariant.image.src : (p.images[0] ? p.images[0].src : 'https://placehold.co/400x400/050505/8b3fcc?text=No+Image');
+
+            return `
+                <div class="product-card" data-category="${p.vendor}">
+                    <div class="product-image-wrapper">
+                        <img id="img-${p.id}" src="${imageUrl}" alt="${p.title}">
                     </div>
-                    
-                    ${p.variants.length > 1 ? `
-                        <div class="variant-selector">
-                            ${p.variants.map((v, idx) => `
-                                <div class="variant-dot ${activeVariant.id === v.id ? 'active' : ''}" 
-                                     style="background-color: ${v.color}" 
-                                     onclick="switchProductVariant('${p.id}', '${v.id}', this)">
-                                </div>
-                            `).join('')}
+                    <div class="product-meta">
+                        <span class="product-tag">${p.productType || p.vendor || 'MYOOZ'}</span>
+                        <h3 class="product-name">${p.title}</h3>
+                        <div class="product-price">
+                            <small>USD</small> $${parseFloat(price).toFixed(2)}
                         </div>
-                    ` : ''}
+                        
+                        ${p.variants.length > 1 ? `
+                            <select class="variant-select-dropdown" onchange="switchShopifyVariant('${p.id}', this.value)" style="width:100%; margin: 10px 0; padding: 8px; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                                ${p.variants.map(v => `
+                                    <option value="${v.id}" ${activeVariant.id === v.id ? 'selected' : ''}>${v.title}</option>
+                                `).join('')}
+                            </select>
+                        ` : ''}
 
-                    <button class="add-to-cart-btn" onclick="addToCart('${p.id}')">
-                        AÑADIR AL CARRITO
-                    </button>
+                        <button class="add-to-cart-btn" onclick="addShopifyToCart('${p.id}')">
+                            AÑADIR AL CARRITO
+                        </button>
+                    </div>
                 </div>
-            </div>
-        `;
-    }).join('');
+            `;
+        }).join('');
+    } catch(err) {
+        console.error('Error fetching Shopify products:', err);
+        grid.innerHTML = `<p style="color:red; text-align:center;">Error cargando catálogo.</p>`;
+    }
 }
 
-function switchProductVariant(productId, variantId, dotEl) {
-    const product = merchProducts.find(p => p.id === productId);
+function switchShopifyVariant(productId, variantId) {
+    const product = shopifyProducts.find(p => p.id === productId);
     const variant = product.variants.find(v => v.id === variantId);
-    
-    // Store selection
     selectedVariants[productId] = variant;
 
-    // Update image
-    const img = document.getElementById(`img-${productId}`);
-    if (img) {
-        img.style.opacity = '0';
-        setTimeout(() => {
-            img.src = variant.image;
-            img.style.opacity = '1';
-        }, 300);
+    if(variant.image) {
+        const img = document.getElementById(`img-${productId}`);
+        if(img) img.src = variant.image.src;
     }
-
-    // Update dots
-    const dots = dotEl.parentElement.querySelectorAll('.variant-dot');
-    dots.forEach(d => d.classList.remove('active'));
-    dotEl.classList.add('active');
 }
 
-function addToCart(productId) {
-    const product = merchProducts.find(p => p.id === productId);
+async function addShopifyToCart(productId) {
+    const product = shopifyProducts.find(p => p.id === productId);
     const variant = selectedVariants[productId] || product.variants[0];
     
-    // Global cart logic (assumed to be in tienda.html or global)
+    // Mapeo hacia nuestro carrito global (tienda.html)
     if (window.addItemToCart) {
-        window.addItemToCart(product, variant);
-    } else {
-        console.warn('Cart logic not initialized');
+        window.addItemToCart({
+            id: product.id,
+            name: product.title,
+            price: parseFloat(variant.price.amount),
+            image: variant.image ? variant.image.src : (product.images[0] ? product.images[0].src : ''),
+        }, {
+            id: variant.id, 
+            label: variant.title
+        });
+        return;
+    } 
+
+    // Si no hay carrito global (páginas de artistas), hacemos Compra Rápida
+    try {
+        const btn = event.target || document.querySelector(`[onclick="addShopifyToCart('${productId}')"]`);
+        const origText = btn.innerText;
+        btn.innerText = 'CONECTANDO...';
+        btn.style.opacity = '0.5';
+        btn.disabled = true;
+
+        const checkout = await shopifyClient.checkout.create();
+        const updatedCheckout = await shopifyClient.checkout.addLineItems(checkout.id, [{
+            variantId: variant.id,
+            quantity: 1
+        }]);
+        
+        // Redirigir seguro a Shopify
+        window.location.href = updatedCheckout.webUrl;
+    } catch(err) {
+        console.error('Error Quick Checkout:', err);
+        alert('Error conectando con Shopify. Intenta de nuevo.');
     }
 }
