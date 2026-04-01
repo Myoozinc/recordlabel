@@ -76,13 +76,13 @@
 
         .panel-cta {
             display: inline-flex; align-items: center; gap: 0.5rem;
-            font-size: 0.72rem; text-transform: uppercase; letter-spacing: 3px;
-            background: #300359; color: #fff; padding: 0.6rem 1.5rem; border-radius: 100px;
+            font-size: 0.72rem; text-transform: uppercase; letter-spacing: 3px; font-weight: 700;
+            color: #300359;
             opacity: 0; transform: translateX(-12px);
-            transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s, background 0.3s ease;
+            transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s, color 0.3s ease;
         }
         .talent-panel.reverse .panel-cta { transform: translateX(12px); }
-        .talent-panel:hover .panel-cta { opacity: 1; transform: translateX(0); background: #8B3FCC; color: #fff; }
+        .talent-panel:hover .panel-cta { opacity: 1; transform: translateX(0); color: #8B3FCC; }
 
         @media (max-width: 600px) {
             .talent-panel { height: 45vh; }
