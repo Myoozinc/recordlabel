@@ -27,13 +27,13 @@
         .category-filter {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.5rem;
             margin-bottom: 3rem;
             flex-wrap: wrap;
             position: sticky;
             top: 110px;
             z-index: 100;
-            padding: 10px;
+            padding: 6px;
             background: rgba(5, 5, 5, 0.5);
             backdrop-filter: blur(10px);
             border-radius: 100px;
@@ -41,6 +41,19 @@
             margin-left: auto;
             margin-right: auto;
             border: 1px solid var(--glass-border);
+        }
+
+        .filter-slider {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            height: calc(100% - 12px);
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .filter-btn {
@@ -55,7 +68,9 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .filter-btn:hover {
@@ -63,10 +78,7 @@
         }
 
         .filter-btn.active {
-            background: rgba(255, 255, 255, 0.12);
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
 
         @media (max-width: 768px) {
@@ -150,7 +162,8 @@
         </section>
 
         <!-- Category Filter Bar -->
-        <div class="category-filter">
+        <div class="category-filter" id="category-filter">
+            <div class="filter-slider" id="filter-slider"></div>
             <button class="filter-btn active" onclick="filterProducts('all')">Todos</button>
             <button class="filter-btn" onclick="filterProducts('MYOOZ InC')">MYOOZ InC</button>
             <button class="filter-btn" onclick="filterProducts('GGB Beats')">GGB Beats</button>
@@ -390,14 +403,27 @@
             }).render('#cart-paypal-container');
         }
 
+        function moveSlider(activeBtn) {
+            const slider = document.getElementById('filter-slider');
+            const container = document.getElementById('category-filter');
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = activeBtn.getBoundingClientRect();
+            slider.style.left = (btnRect.left - containerRect.left) + 'px';
+            slider.style.width = btnRect.width + 'px';
+        }
+
         function filterProducts(category) {
             currentCategory = category;
             const btns = document.querySelectorAll('.filter-btn');
             btns.forEach(b => {
                 const label = b.innerText.trim();
                 const expected = (category === 'all' ? 'Todos' : category);
-                if (label === expected) b.classList.add('active');
-                else b.classList.remove('active');
+                if (label === expected) {
+                    b.classList.add('active');
+                    moveSlider(b);
+                } else {
+                    b.classList.remove('active');
+                }
             });
             renderMerchGrid('products-grid', category);
         }
@@ -415,6 +441,15 @@
         window.addEventListener('load', () => {
             renderMerchGrid('products-grid', 'all');
             updateCartUI();
+            // Position slider on initial active button
+            const activeBtn = document.querySelector('.filter-btn.active');
+            if (activeBtn) moveSlider(activeBtn);
+        });
+
+        // Reposition slider on window resize
+        window.addEventListener('resize', () => {
+            const activeBtn = document.querySelector('.filter-btn.active');
+            if (activeBtn) moveSlider(activeBtn);
         });
     </script>
 </body>
