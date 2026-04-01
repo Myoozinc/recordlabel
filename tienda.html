@@ -44,18 +44,6 @@
         }
 
 
-        .filter-slider {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            height: calc(100% - 12px);
-            border-radius: 100px;
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-            z-index: 0;
-        }
 
         .filter-btn {
             padding: 10px 24px;
@@ -69,9 +57,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
-            transition: color 0.3s ease;
-            position: relative;
-            z-index: 1;
+            transition: all 0.3s ease;
         }
 
         .filter-btn:hover {
@@ -79,7 +65,9 @@
         }
 
         .filter-btn.active {
+            background: rgba(255, 255, 255, 0.12);
             color: #fff;
+            border-color: rgba(255, 255, 255, 0.18);
         }
 
         @media (max-width: 768px) {
@@ -163,8 +151,7 @@
         </section>
 
         <!-- Category Filter Bar -->
-        <div class="category-filter" id="category-filter">
-            <div class="filter-slider" id="filter-slider"></div>
+        <div class="category-filter">
             <button class="filter-btn active" onclick="filterProducts('all')">Todos</button>
             <button class="filter-btn" onclick="filterProducts('MYOOZ InC')">MYOOZ InC</button>
             <button class="filter-btn" onclick="filterProducts('GGB Beats')">GGB Beats</button>
@@ -404,11 +391,7 @@
             }).render('#cart-paypal-container');
         }
 
-        function moveSlider(activeBtn) {
-            const slider = document.getElementById('filter-slider');
-            slider.style.left = activeBtn.offsetLeft + 'px';
-            slider.style.width = activeBtn.offsetWidth + 'px';
-        }
+
 
         function filterProducts(category) {
             currentCategory = category;
@@ -418,7 +401,6 @@
                 const expected = (category === 'all' ? 'Todos' : category);
                 if (label === expected) {
                     b.classList.add('active');
-                    moveSlider(b);
                 } else {
                     b.classList.remove('active');
                 }
@@ -439,15 +421,6 @@
         window.addEventListener('load', () => {
             renderMerchGrid('products-grid', 'all');
             updateCartUI();
-            // Position slider on initial active button
-            const activeBtn = document.querySelector('.filter-btn.active');
-            if (activeBtn) moveSlider(activeBtn);
-        });
-
-        // Reposition slider on window resize
-        window.addEventListener('resize', () => {
-            const activeBtn = document.querySelector('.filter-btn.active');
-            if (activeBtn) moveSlider(activeBtn);
         });
     </script>
 </body>
