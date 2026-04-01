@@ -333,75 +333,108 @@
              currentRotation += 1080;
              mandalaImg.style.transform = `rotate(${currentRotation}deg)`;
         });
-        // Talent Carousel Logic: Auto-scroll + Drag to navigate
+        // Talent Carousel Logic: Auto-scroll + Hover to pause + Drag to navigate + Click to open
         const talentSection = document.querySelector('.talent-section');
         const glidingStream = document.querySelector('.gliding-stream');
         let isMoving = true;
         let isDragging = false;
+        let isHovering = false;
+        let dragMoved = false; // track whether the mouse actually moved (to distinguish clicks from drags)
         let startX;
         let scrollLeft;
+        const DRAG_THRESHOLD = 6; // px moved before treating as a drag (not a click)
 
         function autoScroll() {
-            if (isMoving && !isDragging) {
+            if (isMoving && !isDragging && !isHovering) {
                 talentSection.scrollLeft += 0.4;
                 if (talentSection.scrollLeft >= glidingStream.offsetWidth / 2) {
-                     talentSection.scrollLeft = 0;
+                    talentSection.scrollLeft = 0;
                 }
             }
             requestAnimationFrame(autoScroll);
         }
 
+        // ── Mouse Events ──────────────────────────────────────────────
+        talentSection.addEventListener('mouseenter', () => {
+            isHovering = true; // pause auto-scroll on hover
+        });
+
+        talentSection.addEventListener('mouseleave', () => {
+            isHovering = false; // resume auto-scroll when mouse leaves
+            if (isDragging) {
+                isDragging = false;
+                dragMoved = false;
+                talentSection.classList.remove('is-dragging');
+            }
+        });
+
         talentSection.addEventListener('mousedown', (e) => {
             isDragging = true;
-            isMoving = false;
-            talentSection.classList.add('is-dragging');
+            dragMoved = false;
             startX = e.pageX - talentSection.offsetLeft;
             scrollLeft = talentSection.scrollLeft;
             talentSection.style.scrollBehavior = 'auto';
+            talentSection.style.cursor = 'grabbing';
         });
-
-        const resumeMovement = () => {
-            if (!isDragging) return;
-            isDragging = false;
-            isMoving = true;
-            talentSection.classList.remove('is-dragging');
-            talentSection.style.scrollBehavior = 'smooth';
-        };
-
-        talentSection.addEventListener('mouseleave', resumeMovement);
-        talentSection.addEventListener('mouseup', resumeMovement);
 
         talentSection.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
-            e.preventDefault();
             const x = e.pageX - talentSection.offsetLeft;
-            const walk = (x - startX) * 2.5; // Increased sensitivity
-            talentSection.scrollLeft = scrollLeft - walk;
+            const walk = x - startX;
+            if (Math.abs(walk) > DRAG_THRESHOLD) {
+                dragMoved = true;
+                talentSection.classList.add('is-dragging');
+                e.preventDefault();
+                talentSection.scrollLeft = scrollLeft - walk * 2;
+            }
         });
 
-        // Touch events for mobile interactivity
-        talentSection.addEventListener('touchstart', (e) => { 
-            isMoving = false; 
-            isDragging = true;
-            talentSection.classList.add('is-dragging');
-            startX = e.touches[0].pageX - talentSection.offsetLeft;
-            scrollLeft = talentSection.scrollLeft;
-            talentSection.style.scrollBehavior = 'auto';
-        }, {passive: true});
-
-        talentSection.addEventListener('touchend', () => { 
+        window.addEventListener('mouseup', () => {
+            if (!isDragging) return;
             isDragging = false;
-            isMoving = true;
             talentSection.classList.remove('is-dragging');
-            talentSection.style.scrollBehavior = 'smooth';
-        }, {passive: true});
+            talentSection.style.cursor = 'grab';
+            // If user barely moved, treat as a click — links will fire naturally
+            // dragMoved flag is used by the click handler below
+            setTimeout(() => { dragMoved = false; }, 50);
+        });
+
+        // Block navigation only when user actually dragged (not a tap/click)
+        talentSection.querySelectorAll('.talent-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (dragMoved) e.preventDefault();
+            });
+        });
+
+        // ── Touch Events ──────────────────────────────────────────────
+        let touchDragMoved = false;
+        let touchStartX;
+        let touchScrollLeft;
+
+        talentSection.addEventListener('touchstart', (e) => {
+            touchDragMoved = false;
+            isDragging = true;
+            isHovering = true;
+            touchStartX = e.touches[0].pageX - talentSection.offsetLeft;
+            touchScrollLeft = talentSection.scrollLeft;
+            talentSection.style.scrollBehavior = 'auto';
+        }, { passive: true });
 
         talentSection.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
             const x = e.touches[0].pageX - talentSection.offsetLeft;
-            const walk = (x - startX) * 2.5; // Increased sensitivity
-            talentSection.scrollLeft = scrollLeft - walk;
-        }, {passive: true});
+            const walk = x - touchStartX;
+            if (Math.abs(walk) > DRAG_THRESHOLD) {
+                touchDragMoved = true;
+                talentSection.scrollLeft = touchScrollLeft - walk * 2;
+            }
+        }, { passive: true });
+
+        talentSection.addEventListener('touchend', () => {
+            isDragging = false;
+            isHovering = false; // resume auto-scroll after touch ends
+            setTimeout(() => { touchDragMoved = false; }, 50);
+        }, { passive: true });
 
         // Start the loop
         requestAnimationFrame(autoScroll);
