@@ -397,8 +397,8 @@
             currentCategory = category;
             const btns = document.querySelectorAll('.filter-btn');
             btns.forEach(b => {
-                const label = b.innerText.trim();
-                const expected = (category === 'all' ? 'Todos' : category);
+                const label = b.innerText.trim().toLowerCase();
+                const expected = (category === 'all' ? 'todos' : category.toLowerCase());
                 if (label === expected) {
                     b.classList.add('active');
                 } else {
