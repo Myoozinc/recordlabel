@@ -131,10 +131,13 @@
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 3px;
-            color: rgba(139, 63, 204, 0.6);
+            background: #300359;
+            color: #fff;
+            padding: 0.6rem 1.5rem;
+            border-radius: 100px;
             opacity: 0;
             transform: translateX(-12px);
-            transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s, color 0.3s;
+            transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s, background 0.3s ease;
         }
 
         .talent-panel.reverse .panel-cta {
@@ -144,7 +147,8 @@
         .talent-panel:hover .panel-cta {
             opacity: 1;
             transform: translateX(0);
-            color: rgba(139, 63, 204, 1);
+            background: #8B3FCC;
+            color: #fff;
         }
 
         @media (max-width: 600px) {
