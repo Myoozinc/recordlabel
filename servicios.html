@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,22 +12,12 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="merch.css">
     <style>
-        /* ===== OVERFLOW FIX ===== */
-        html, body {
-            overflow-x: hidden;
-            max-width: 100%;
+        .container {
+            margin-top: 120px;
+            max-width: 900px;
         }
 
 ```
-    .container {
-        margin-top: 120px;
-        max-width: 900px;
-        width: 100%;
-        box-sizing: border-box;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
-
     .page-header {
         text-align: center;
         margin-bottom: 6rem;
@@ -280,12 +272,11 @@
         border: 2px solid #050505;
     }
 
-    /* ===== OVERFLOW FIX: action-btn-container ===== */
+    /* THE FIX: was align-items: flex-end which pushed buttons past the right edge */
     .action-btn-container {
         display: flex;
         justify-content: center;
         width: 100%;
-        box-sizing: border-box;
     }
 
     /* Modal Styles */
@@ -319,7 +310,6 @@
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-        box-sizing: border-box;
     }
 
     .close-modal {
@@ -355,7 +345,6 @@
         letter-spacing: 2px;
         display: block;
         opacity: 0.5;
-        box-sizing: border-box;
     }
 
     #btn-submit-form:not(:disabled) {
@@ -393,7 +382,6 @@
         font-family: inherit;
         font-weight: 500;
         transition: all 0.3s;
-        box-sizing: border-box;
     }
 
     .form-group input:focus {
@@ -593,30 +581,6 @@
         background: #4a0e8f;
         transform: scale(1.05);
     }
-
-    /* ===== OVERFLOW FIX: responsive button containers ===== */
-    @media screen and (max-width: 600px) {
-        .promo-trigger-btn,
-        .btn-outline-custom,
-        .btn-solid-custom {
-            width: 100%;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        .modal-content {
-            padding: 2rem 1.5rem;
-        }
-
-        .promo-header {
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .promo-name {
-            font-size: 1rem;
-        }
-    }
 </style>
 ```
 
@@ -631,8 +595,8 @@
         <p class="subtitle">Audiovisuales</p>
     </div>
 
-    <!-- ===== OVERFLOW FIX: changed align-items: flex-end → align-items: center, added width: 100% ===== -->
-    <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 4rem; flex-direction: column; align-items: center; gap: 0.5rem; width: 100%;">
+    <!-- THE FIX: removed align-items: flex-end from inline style -->
+    <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 4rem; flex-direction: column; gap: 0.5rem;">
         <button class="promo-trigger-btn" onclick="openPromosModal()">
             Ver Paquetes Promocionales
         </button>
