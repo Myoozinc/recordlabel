@@ -431,11 +431,6 @@ async function addShopifyToCart(productId) {
     }
 
     // Quick Checkout for artist pages
-    // Open the window synchronously within the user gesture before any await
-    // This is required for mobile Safari/Chrome which block window navigation
-    // triggered after async operations
-    const checkoutWindow = window.open('', '_blank');
-
     try {
         const btn = (typeof event !== 'undefined' && event) ? event.target : document.querySelector(`[onclick="addShopifyToCart('${productId}')"]`);
         if (btn) {
@@ -445,10 +440,9 @@ async function addShopifyToCart(productId) {
         }
 
         const cart = await createCart([{ variantId: variant.id, quantity: 1 }]);
-        checkoutWindow.location.href = cart.checkoutUrl;
+        window.top.location.href = cart.checkoutUrl;
     } catch(err) {
         console.error('Error Quick Checkout:', err);
-        checkoutWindow.close();
         alert('Error conectando con Shopify. Intenta de nuevo.');
     }
 }
