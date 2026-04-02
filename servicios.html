@@ -970,7 +970,7 @@
             if(currentTotal > 0) {
                 submitBtn.style.display = 'block';
                 submitBtn.disabled = false;
-                submitBtn.innerText = 'PROCEDER A PAGAR (PAGO SEGURO)';
+                submitBtn.innerText = 'PAGAR';
                 submitBtn.style.background = '#8B3FCC';
                 submitBtn.style.color = '#fff';
                 submitBtn.style.fontWeight = '800';
@@ -991,7 +991,7 @@
 
         async function processShopifyServiceCheckout() {
             const btn = document.getElementById('btn-submit-form');
-            btn.innerText = 'CONECTANDO CON SHOPIFY...';
+            btn.innerText = 'PROCESSING...';
             btn.disabled = true;
             btn.style.opacity = '0.5';
 
