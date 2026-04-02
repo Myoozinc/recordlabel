@@ -205,11 +205,14 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
                     activeOptions[p.id][opt.name] = opt.values[0];
                 });
 
-                // SPECIAL OVERRIDE FOR MYOOZ INC JERSEY -> Force Black as default
-                if (p.title.toUpperCase().includes('MYOOZ INC JERSEY')) {
+                // SPECIAL OVERRIDES -> Force Black as default to match original design intent
+                const forceBlackTitles = ['MYOOZ INC JERSEY', 'DJ BARBIE CROP HOODIE'];
+                if (forceBlackTitles.some(title => p.title.toUpperCase().includes(title))) {
                     const colorOpt = p.options.find(o => o.name.toLowerCase().includes('color'));
-                    if (colorOpt && colorOpt.values.includes('Black')) {
-                        activeOptions[p.id][colorOpt.name] = 'Black';
+                    if (colorOpt && colorOpt.values.some(v => v.toUpperCase() === 'BLACK')) {
+                        // Find the exact casing of 'Black' used in Shopify
+                        const exactBlack = colorOpt.values.find(v => v.toUpperCase() === 'BLACK');
+                        activeOptions[p.id][colorOpt.name] = exactBlack || 'Black';
                     }
                 }
 
