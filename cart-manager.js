@@ -51,7 +51,7 @@ window.addItemToCart = function(product, variant, isService = false) {
     } else {
         // Standard merch item
         cart.push({
-            uniqueId: Date.now() + Math.random(),
+            uniqueId: (Date.now() + Math.random()).toString(),
             id: product.id,
             name: product.name,
             price: product.price,
@@ -92,8 +92,9 @@ window.addItemToCart = function(product, variant, isService = false) {
     }
 };
 
-function removeFromCart(uniqueId) {
-    cart = cart.filter(item => item.uniqueId !== uniqueId);
+window.removeFromCart = function(uniqueId) {
+    // String comparison to be safe
+    cart = cart.filter(item => String(item.uniqueId) !== String(uniqueId));
     saveCart();
     renderCart();
 }
