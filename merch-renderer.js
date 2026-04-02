@@ -137,40 +137,42 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
         const brandOrder = ['myooz inc', 'ggb beats', 'joss', 'rasta mia'];
 
         function getProductBrand(product) {
-            const title = product.title.toLowerCase();
-            const vendor = (product.vendor || '').toLowerCase();
-            const pType = (product.productType || '').toLowerCase();
             const tags = (product.tags || []).map(t => t.toLowerCase());
+            const title = product.title.toLowerCase();
             
-            for (const brand of brandOrder) {
-                const normalizedBrand = brand.replace(/\s/g, ' ');
-                if (
-                    tags.some(t => t.includes(normalizedBrand)) ||
-                    title.includes(normalizedBrand) ||
-                    vendor.includes(brand) ||
-                    pType.includes(brand)
-                ) {
+            // Specific artists first, then generic label brand
+            const checkOrder = ['ggb beats', 'joss', 'rasta mia', 'myooz inc'];
+            
+            // 1. Check tags (Primary Truth)
+            for (const brand of checkOrder) {
+                const compactBrand = brand.replace(/\s/g, ''); 
+                if (tags.some(t => t.includes(brand) || t.replace(/\s/g, '').includes(compactBrand))) {
                     return brand;
                 }
             }
-            return 'zzz'; // unknown goes last
+            
+            // 2. Check title (Fallback if tags were forgotten)
+            for (const brand of checkOrder) {
+                const compactBrand = brand.replace(/\s/g, ''); 
+                if (title.includes(brand) || title.replace(/\s/g, '').includes(compactBrand)) {
+                    return brand;
+                }
+            }
+
+            // 3. Unidentified products default to the general label store
+            return 'myooz inc'; 
         }
 
         function matchesFilter(product, target) {
             const t = target.toLowerCase().trim();
-            if (t === 'myooz inc' || t === 'myooz') {
-                // EXCLUSIVE rule for MYOOZ INC: Only show items that actually belong to MYOOZ INC
-                // and NOT to other artists, because vendor='MYOOZ INC' defaults everywhere.
-                const brand = getProductBrand(product);
-                return brand === 'myooz inc';
-            }
+            const brand = getProductBrand(product);
             
-            const title = product.title.toLowerCase();
-            const vendor = (product.vendor || '').toLowerCase();
-            const pType = (product.productType || '').toLowerCase();
-            const tags = (product.tags || []).map(tg => tg.toLowerCase());
+            if (t === 'myooz inc' || t === 'myooz') return brand === 'myooz inc';
+            if (t === 'ggb beats' || t === 'ggb') return brand === 'ggb beats';
+            if (t === 'rasta mia') return brand === 'rasta mia';
+            if (t === 'joss') return brand === 'joss';
             
-            return tags.some(tg => tg.includes(t)) || title.includes(t) || vendor.includes(t) || pType.includes(t);
+            return false;
         }
 
         let filtered;
