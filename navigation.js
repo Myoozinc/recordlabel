@@ -14,6 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.text())
         .then(data => {
             document.body.insertAdjacentHTML('beforeend', data);
+            
+            // Re-sync cart UI if cart-manager is present
+            if (typeof updateCartUI === 'function') {
+                updateCartUI();
+            }
         })
         .catch(error => console.error('Error loading footer:', error));
 });
