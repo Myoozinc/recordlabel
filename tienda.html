@@ -345,6 +345,16 @@
             renderMerchGrid('products-grid', 'all');
             updateCartUI();
         });
+
+        // Reset button state if user comes back via the back button
+        window.addEventListener('pageshow', (event) => {
+            const btn = document.getElementById('checkout-continue-btn');
+            if (btn) {
+                btn.innerText = 'PAGAR';
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
+        });
     </script>
 </body>
 </html>

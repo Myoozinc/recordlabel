@@ -1030,7 +1030,7 @@
             } catch(e) {
                 console.error('Shopify Services Error:', e);
                 alert('Error comunicando con Shopify: ' + e.message);
-                btn.innerText = 'PROCEDER A PAGAR (PAGO SEGURO)';
+                btn.innerText = 'PAGAR';
                 btn.disabled = false;
                 btn.style.opacity = '1';
             }
@@ -1040,6 +1040,19 @@
             if (event.target == modal) closeModal();
             if (event.target == promosModal) closePromosModal();
         }
+
+        // Reset button state if user comes back via the back button
+        window.addEventListener('pageshow', (event) => {
+            const btn = document.getElementById('btn-submit-form');
+            if (btn) {
+                // If it's the services modal button, only re-enable if there's a total
+                if (typeof currentTotal !== 'undefined' && currentTotal > 0) {
+                    btn.innerText = 'PAGAR';
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                }
+            }
+        });
     </script>
 </body>
 </html>
