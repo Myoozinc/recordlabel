@@ -141,7 +141,7 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
             const title = product.title.toLowerCase();
             
             // Specific artists first, then generic label brand
-            const checkOrder = ['ggb beats', 'joss', 'rasta mia', 'myooz inc'];
+            const checkOrder = ['ggb beats logo', 'ggb beats', 'joss', 'rasta mia', 'myooz inc'];
             
             // 1. Check tags (Primary Truth)
             for (const brand of checkOrder) {
@@ -167,6 +167,7 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
             const t = target.toLowerCase().trim();
             const brand = getProductBrand(product);
             
+            if (t === 'ggb beats logo') return brand === 'ggb beats logo';
             if (t === 'myooz inc' || t === 'myooz') return brand === 'myooz inc';
             if (t === 'ggb beats' || t === 'ggb') return brand === 'ggb beats';
             if (t === 'rasta mia') return brand === 'rasta mia';
@@ -176,14 +177,32 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
         }
 
         let filtered;
+        const brandDisplayOrder = ['myooz inc', 'ggb beats logo', 'joss', 'rasta mia', 'ggb beats'];
+
+        const sortWithinBrand = (a, b) => {
+            const aBrand = getProductBrand(a);
+            if (aBrand === 'ggb beats logo') {
+                const aIsHat = a.title.toLowerCase().includes('hat') || a.title.toLowerCase().includes('cap');
+                const bIsHat = b.title.toLowerCase().includes('hat') || b.title.toLowerCase().includes('cap');
+                if (aIsHat && !bIsHat) return -1;
+                if (!aIsHat && bIsHat) return 1;
+            }
+            return a.title.localeCompare(b.title);
+        };
+
         if (filterCategory === 'all') {
             filtered = [...merchProducts].sort((a, b) => {
-                const aIdx = brandOrder.indexOf(getProductBrand(a));
-                const bIdx = brandOrder.indexOf(getProductBrand(b));
-                return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
+                const aBrand = getProductBrand(a);
+                const bBrand = getProductBrand(b);
+                const aIdx = brandDisplayOrder.indexOf(aBrand);
+                const bIdx = brandDisplayOrder.indexOf(bBrand);
+                
+                if (aIdx !== bIdx) return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
+                return sortWithinBrand(a, b);
             });
         } else {
             filtered = merchProducts.filter(p => matchesFilter(p, filterCategory));
+            filtered.sort(sortWithinBrand);
         }
 
         if (filtered.length === 0) {
