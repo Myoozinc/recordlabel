@@ -277,6 +277,16 @@
     right: 0;
 }
 
+@media (max-width: 600px) {
+    .cart-drawer {
+        width: 100%;
+        border-left: none;
+    }
+    .cart-header, .cart-items, .cart-footer {
+        padding: 1.5rem;
+    }
+}
+
 .cart-header {
     padding: 2rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);

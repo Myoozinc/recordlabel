@@ -696,33 +696,6 @@
 
     </div>
 
-    <!-- Floating Cart Button -->
-    <button class="floating-cart-btn" onclick="toggleCart()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#fff;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-        <div id="cart-count" class="cart-count">0</div>
-    </button>
-
-    <!-- Cart Drawer -->
-    <div id="cart-drawer" class="cart-drawer">
-        <div class="cart-header">
-            <h2 style="font-size:1.5rem; font-weight:800; text-transform:uppercase;">Tu Carrito</h2>
-            <button onclick="toggleCart()" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
-        </div>
-        
-        <div id="cart-items" class="cart-items">
-            <!-- Cart items injected here -->
-        </div>
-
-        <div class="cart-footer">
-            <div class="cart-total" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: auto;">
-                <span>TOTAL</span>
-                <span id="cart-total-display">$0.00</span>
-            </div>
-
-            <button id="checkout-continue-btn" class="add-to-cart-btn" style="margin-top: 1.5rem; width: 100%; padding: 16px; font-size: 1rem;" onclick="processUnifiedCheckout()">PAGAR</button>
-        </div>
-    </div>
-
     </div>
 
     <div class="modal" id="promos-modal">
