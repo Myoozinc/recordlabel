@@ -335,7 +335,9 @@
         document.getElementById('mandala-container').addEventListener('touchstart', () => {
              currentRotation += 1080;
              mandalaImg.style.transform = `rotate(${currentRotation}deg)`;
-           // Talent Carousel Logic: CSS Animation + Pause on Interactive
+        });
+
+        // Talent Carousel Logic: CSS Animation + Pause on Interactive
         const talentSection = document.querySelector('.talent-section');
         const glidingStream = document.querySelector('.gliding-stream');
         
@@ -362,7 +364,7 @@
             isDragging = true;
             dragMoved = false;
             glidingStream.classList.add('paused');
-            glidingStream.classList.remove('auto-gliding'); // Switch to manual control
+            glidingStream.classList.remove('auto-gliding');
             
             startX = e.pageX - talentSection.offsetLeft;
             scrollLeft = talentSection.scrollLeft;
@@ -384,7 +386,6 @@
             isDragging = false;
             talentSection.style.cursor = 'grab';
             
-            // Resume auto-gliding after a brief delay
             setTimeout(() => {
                 if (!isDragging) {
                     glidingStream.classList.add('auto-gliding');
@@ -392,7 +393,7 @@
                 }
             }, 2000);
             
-            setTimeout(() => { dragMoved = false; }, 50);
+            setTimeout(() => { dragMoved = false; }, 100);
         });
 
         // ── Touch Logic (Mobile) ────────────────────────────────────
@@ -426,12 +427,7 @@
             item.addEventListener('click', (e) => {
                 if (dragMoved) e.preventDefault();
             });
-        }); // resume auto-scroll after touch ends
-            setTimeout(() => { touchDragMoved = false; }, 50);
-        }, { passive: true });
-
-        // Start the loop
-        requestAnimationFrame(autoScroll);
+        });
     </script>
 </body>
 </html>

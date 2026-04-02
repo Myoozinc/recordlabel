@@ -128,10 +128,7 @@ function renderCart() {
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     totalDisplay.innerText = '$' + total.toFixed(2);
     const checkoutBtn = document.getElementById('checkout-continue-btn');
-    if (checkoutBtn) checkoutBtn.style.display = 'block';
-}
-
-async function processUnifiedCheckout() {
+    if (checkoutBtn) checkoutBtn.style.display = 'block';async function processUnifiedCheckout() {
     const btn = document.getElementById('checkout-continue-btn');
     if (!btn) return;
     
@@ -188,9 +185,22 @@ async function processUnifiedCheckout() {
         const shopifyCart = await createCart(lineItems, attributes);
         
         // Final Redirect - MOBILE FRIENDLY
-        // Use assign() as it can be more reliable than direct href setting in some mobile webview contexts
         if (shopifyCart && shopifyCart.checkoutUrl) {
-            window.location.assign(shopifyCart.checkoutUrl);
+            btn.innerText = 'REDIRECCIONANDO...';
+            
+            // Try direct location change first
+            window.location.href = shopifyCart.checkoutUrl;
+            
+            // Fallback for some mobile browsers that block redirect after async
+            setTimeout(() => {
+                const fallbackLink = document.createElement('a');
+                fallbackLink.href = shopifyCart.checkoutUrl;
+                fallbackLink.innerText = 'Si no has sido redireccionado, haz clic aquí';
+                fallbackLink.style.cssText = 'color: #8B3FCC; font-size: 0.8rem; display: block; margin-top: 1rem; text-align: center; text-decoration: underline;';
+                btn.parentNode.insertBefore(fallbackLink, btn.nextSibling);
+                btn.innerText = 'PAGAR';
+                btn.disabled = false;
+            }, 3000);
         } else {
             throw new Error('No checkout URL returned from Shopify');
         }
@@ -198,8 +208,7 @@ async function processUnifiedCheckout() {
     } catch (err) {
         console.error("Error creating unified Shopify cart", err);
         btn.innerText = 'Error. Intenta de nuevo.';
-        // Also show an alert on mobile as it's more visible than button text changes
-        alert("Hubo un problema al conectar con la pasarela de pago: " + (err.message || 'Error desconocido'));
+        alert("Hubo un problema al conectar con Shopify: " + (err.message || 'Error desconocido'));
         
         setTimeout(() => {
             btn.innerText = 'PAGAR';
@@ -207,6 +216,7 @@ async function processUnifiedCheckout() {
             btn.style.opacity = '1';
         }, 3000);
     }
+}
 }
 
 // Global initialization
