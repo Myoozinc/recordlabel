@@ -194,7 +194,7 @@
                 <span id="cart-total-display">$0.00</span>
             </div>
 
-            <button id="checkout-continue-btn" class="add-to-cart-btn" style="margin-top: 1.5rem; width: 100%; padding: 16px; font-size: 1rem;" onclick="processShopifyCheckout()">PAGAR</button>
+            <button id="checkout-continue-btn" class="add-to-cart-btn" style="margin-top: 1.5rem; width: 100%; padding: 16px; font-size: 1rem;" onclick="processUnifiedCheckout()">PAGAR</button>
         </div>
     </div>
 
@@ -209,112 +209,9 @@
 
     <script src="navigation.js"></script>
     <script src="merch-renderer.js"></script>
+    <script src="cart-manager.js"></script>
     <script>
         let currentCategory = 'all';
-        let cart = JSON.parse(localStorage.getItem('myooz_cart')) || [];
-
-        function toggleCart() {
-            document.getElementById('cart-drawer').classList.toggle('open');
-            renderCart();
-        }
-
-        window.addItemToCart = function(product, variant) {
-            cart.push({
-                uniqueId: Date.now() + Math.random(),
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                variantId: variant.id,
-                variantName: variant.label,
-                image: product.image
-            });
-            saveCart();
-            updateCartUI();
-
-            const btn = event.target;
-            const originalText = btn.innerText;
-            btn.innerText = '¡AÑADIDO!';
-            btn.style.background = '#00ff88';
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.style.background = '';
-            }, 1000);
-        };
-
-        function removeFromCart(uniqueId) {
-            cart = cart.filter(item => item.uniqueId !== uniqueId);
-            saveCart();
-            renderCart();
-            updateCartUI();
-        }
-
-        function saveCart() {
-            localStorage.setItem('myooz_cart', JSON.stringify(cart));
-        }
-
-        function updateCartUI() {
-            document.getElementById('cart-count').innerText = cart.length;
-        }
-
-        function renderCart() {
-            const container = document.getElementById('cart-items');
-            const totalDisplay = document.getElementById('cart-total-display');
-
-            if (cart.length === 0) {
-                container.innerHTML = '<p style="text-align:center; opacity:0.5; margin-top:3rem;">Tu carrito está vacío</p>';
-                totalDisplay.innerText = '$0.00';
-                document.getElementById('checkout-continue-btn').style.display = 'none';
-                return;
-            }
-
-            container.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <img src="${item.image}" class="cart-item-img">
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-variant">${item.variantName}</div>
-                        <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                    </div>
-                    <div class="remove-item" onclick="removeFromCart(${item.uniqueId})">Eliminar</div>
-                </div>
-            `).join('');
-
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
-            totalDisplay.innerText = '$' + total.toFixed(2);
-            document.getElementById('checkout-continue-btn').style.display = 'block';
-        }
-
-        async function processShopifyCheckout() {
-            const btn = document.getElementById('checkout-continue-btn');
-            btn.innerText = 'PROCESSING...';
-            btn.disabled = true;
-
-            try {
-                // Group cart items by variant ID
-                const variantCounts = {};
-                for (let item of cart) {
-                    variantCounts[item.variantId] = (variantCounts[item.variantId] || 0) + 1;
-                }
-
-                const lineItems = Object.entries(variantCounts).map(([vId, qty]) => ({
-                    variantId: vId,
-                    quantity: qty
-                }));
-
-                const shopifyCart = await createCart(lineItems);
-                window.location.href = shopifyCart.checkoutUrl;
-            } catch (err) {
-                console.error("Error creating Shopify cart", err);
-                btn.innerText = 'Error. Intenta de nuevo.';
-                setTimeout(() => {
-                    btn.innerText = 'PROCEDER AL PAGO (PAGO SEGURO)';
-                    btn.disabled = false;
-                    btn.style.opacity = '1';
-                }, 3000);
-            }
-        }
-
-
 
         function filterProducts(category) {
             currentCategory = category;
@@ -343,17 +240,7 @@
 
         window.addEventListener('load', () => {
             renderMerchGrid('products-grid', 'all');
-            updateCartUI();
-        });
-
-        // Reset button state if user comes back via the back button
-        window.addEventListener('pageshow', (event) => {
-            const btn = document.getElementById('checkout-continue-btn');
-            if (btn) {
-                btn.innerText = 'PAGAR';
-                btn.disabled = false;
-                btn.style.opacity = '1';
-            }
+            // updateCartUI is called by cart-manager.js on load
         });
     </script>
 </body>

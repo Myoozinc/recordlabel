@@ -182,12 +182,22 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
 
         const sortWithinBrand = (a, b) => {
             const aBrand = getProductBrand(a);
-            if (aBrand === 'ggb beats logo') {
+            const bBrand = getProductBrand(b);
+            
+            // Special sorting for GGB Beats filter: Logo items first, then others
+            if (filterCategory.toLowerCase().includes('ggb')) {
+                if (aBrand === 'ggb beats logo' && bBrand !== 'ggb beats logo') return -1;
+                if (aBrand !== 'ggb beats logo' && bBrand === 'ggb beats logo') return 1;
+            }
+            
+            // Special case for hat/cap within GGB Beats Logo
+            if (aBrand === 'ggb beats logo' && bBrand === 'ggb beats logo') {
                 const aIsHat = a.title.toLowerCase().includes('hat') || a.title.toLowerCase().includes('cap');
                 const bIsHat = b.title.toLowerCase().includes('hat') || b.title.toLowerCase().includes('cap');
                 if (aIsHat && !bIsHat) return -1;
                 if (!aIsHat && bIsHat) return 1;
             }
+            
             return a.title.localeCompare(b.title);
         };
 
@@ -422,14 +432,15 @@ async function addShopifyToCart(productId) {
 
     // Quick Checkout for artist pages
     try {
-        const btn = event.target || document.querySelector(`[onclick="addShopifyToCart('${productId}')"]`);
-        const origText = btn.innerText;
-        btn.innerText = 'CONECTANDO...';
-        btn.style.opacity = '0.5';
-        btn.disabled = true;
+        const btn = (typeof event !== 'undefined' && event) ? event.target : document.querySelector(`[onclick="addShopifyToCart('${productId}')"]`);
+        if (btn) {
+            btn.innerText = 'CONECTANDO...';
+            btn.style.opacity = '0.5';
+            btn.disabled = true;
+        }
 
         const cart = await createCart([{ variantId: variant.id, quantity: 1 }]);
-        window.location.href = cart.checkoutUrl;
+        window.top.location.href = cart.checkoutUrl;
     } catch(err) {
         console.error('Error Quick Checkout:', err);
         alert('Error conectando con Shopify. Intenta de nuevo.');

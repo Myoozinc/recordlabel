@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="merch.css">
     <style>
         .container {
             margin-top: 120px;
@@ -136,6 +137,139 @@
             opacity: 0.85;
         }
 
+        /* Unified Cart Styles */
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 450px;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 21000;
+            box-shadow: -20px 0 60px rgba(0,0,0,0.8);
+            transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-drawer.open {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .cart-footer {
+            padding: 2rem;
+            background: rgba(255,255,255,0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .cart-item-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            object-fit: contain;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .cart-item-variant {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 4px;
+        }
+
+        .cart-item-price {
+            font-weight: 800;
+            color: #8B3FCC;
+        }
+
+        .remove-item {
+            color: rgba(255, 62, 62, 0.7);
+            cursor: pointer;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-left: auto;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 900;
+            margin: 1.5rem 0;
+        }
+
+        .floating-cart-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: #300359;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 15000;
+            cursor: pointer;
+            box-shadow: none;
+            transition: all 0.3s;
+        }
+
+        .floating-cart-btn:hover {
+            background: #8B3FCC;
+            transform: scale(1.02);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ff3e3e;
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #050505;
+        }
+
         .action-btn-container {
             display: flex;
             justify-content: center;
@@ -193,14 +327,14 @@
         }
 
         #btn-submit-form {
-            background: rgba(255, 255, 255, 0.05) !important;
-            color: var(--text-secondary) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            background: #300359 !important;
+            color: #fff !important;
+            border: none !important;
             border-radius: 100px;
             padding: 1.1rem 2rem;
-            font-size: 0.75rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            font-weight: 700;
+            font-weight: 800;
             cursor: not-allowed;
             width: 100%;
             transition: all 0.3s;
@@ -209,8 +343,13 @@
             opacity: 0.5;
         }
 
-        #btn-submit-form:hover {
-            background: #f2ba36 !important;
+        #btn-submit-form:not(:disabled) {
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        #btn-submit-form:not(:disabled):hover {
+            background: #8B3FCC !important;
             transform: scale(1.01);
         }
 
@@ -557,6 +696,33 @@
 
     </div>
 
+    <!-- Floating Cart Button -->
+    <button class="floating-cart-btn" onclick="toggleCart()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#fff;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <div id="cart-count" class="cart-count">0</div>
+    </button>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="cart-drawer">
+        <div class="cart-header">
+            <h2 style="font-size:1.5rem; font-weight:800; text-transform:uppercase;">Tu Carrito</h2>
+            <button onclick="toggleCart()" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        
+        <div id="cart-items" class="cart-items">
+            <!-- Cart items injected here -->
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: auto;">
+                <span>TOTAL</span>
+                <span id="cart-total-display">$0.00</span>
+            </div>
+
+            <button id="checkout-continue-btn" class="add-to-cart-btn" style="margin-top: 1.5rem; width: 100%; padding: 16px; font-size: 1rem;" onclick="processUnifiedCheckout()">PAGAR</button>
+        </div>
+    </div>
+
     </div>
 
     <div class="modal" id="promos-modal">
@@ -746,23 +912,9 @@
     </div>
 
     <script src="navigation.js"></script>
+    <script src="merch-renderer.js"></script>
+    <script src="cart-manager.js"></script>
     <script>
-        // Shopify Cart API (direct GraphQL)
-        const SHOPIFY_DOMAIN = 'myooz-inc.myshopify.com';
-        const SHOPIFY_TOKEN = 'acd24150be762dc32d5801dbdf47b973';
-        const STOREFRONT_API_URL = `https://${SHOPIFY_DOMAIN}/api/2024-10/graphql.json`;
-
-        async function shopifyFetch(query, variables = {}) {
-            const res = await fetch(STOREFRONT_API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-Shopify-Storefront-Access-Token': SHOPIFY_TOKEN },
-                body: JSON.stringify({ query, variables })
-            });
-            const json = await res.json();
-            if (json.errors) { console.error('Shopify Errors:', json.errors); throw new Error(json.errors[0].message); }
-            return json.data;
-        }
-
         const modal = document.getElementById('service-modal');
         const promosModal = document.getElementById('promos-modal');
         const hiddenServicesInput = document.getElementById('hidden-services');
@@ -970,69 +1122,57 @@
             if(currentTotal > 0) {
                 submitBtn.style.display = 'block';
                 submitBtn.disabled = false;
-                submitBtn.innerText = 'PAGAR';
-                submitBtn.style.background = '#8B3FCC';
-                submitBtn.style.color = '#fff';
-                submitBtn.style.fontWeight = '800';
-                submitBtn.style.cursor = 'pointer';
-                submitBtn.style.padding = '16px';
-                submitBtn.onclick = processShopifyServiceCheckout;
+                submitBtn.innerText = 'AÑADIR AL CARRITO';
+                submitBtn.onclick = addServicesToCart;
             } else {
                 submitBtn.style.display = 'block';
                 submitBtn.disabled = true;
                 submitBtn.innerText = 'Selecciona un servicio para comenzar';
-                submitBtn.style.background = 'transparent';
-                submitBtn.style.border = '1px solid rgba(255,255,255,0.1)';
-                submitBtn.style.color = 'rgba(255,255,255,0.5)';
-                submitBtn.style.cursor = 'not-allowed';
                 submitBtn.onclick = null;
             }
         }
 
-        async function processShopifyServiceCheckout() {
+        async function addServicesToCart() {
             const btn = document.getElementById('btn-submit-form');
+            const originalText = btn.innerText;
             btn.innerText = 'PROCESSING...';
             btn.disabled = true;
-            btn.style.opacity = '0.5';
 
             try {
-                // 1. Fetch products to find the bridge product
-                const productsQuery = `{ products(first: 50) { edges { node { id title variants(first: 5) { edges { node { id } } } } } } }`;
-                const productsData = await shopifyFetch(productsQuery);
-                const allProducts = productsData.products.edges.map(e => e.node);
-                const serviceProduct = allProducts.find(p => p.title.toLowerCase().includes('servicios myooz'));
-
-                if (!serviceProduct) {
-                    alert('Error: Producto "Servicios MYOOZ InC" no encontrado. Verifica que esté Activo y publicado en Headless.');
-                    throw new Error('Bridge product not found');
+                // Fetch products to find bridge product (needed for variant ID)
+                if (shopifyProducts.length === 0) {
+                    shopifyProducts = await fetchAllProducts();
                 }
+                const serviceProduct = shopifyProducts.find(p => p.title.toLowerCase().includes('servicios myooz'));
+                if (!serviceProduct) throw new Error('Bridge product not found');
 
-                const variantId = serviceProduct.variants.edges[0].node.id;
+                const variantId = serviceProduct.variants[0].id;
                 const trackingDetails = `Servicios: ${hiddenServicesInput.value} | Total: $${currentTotal}`;
 
-                // 2. Create cart with the bridge product x total quantity
-                const cartQuery = `mutation {
-                    cartCreate(input: {
-                        lines: [{merchandiseId: "${variantId}", quantity: ${currentTotal}}]
-                        attributes: [{key: "Detalle de Servicios Contratados", value: "${trackingDetails.replace(/"/g, '\\"')}"}]
-                    }) {
-                        cart { id checkoutUrl }
-                        userErrors { field message }
-                    }
-                }`;
+                window.addItemToCart({
+                    id: serviceProduct.id,
+                    name: "SERVICIOS MYOOZ InC",
+                    price: currentTotal,
+                    image: 'myooz-inc-logo.png', // Fallback icon
+                    details: trackingDetails
+                }, {
+                    id: variantId,
+                    label: "Servicios"
+                }, true);
 
-                const cartData = await shopifyFetch(cartQuery);
-                if (cartData.cartCreate.userErrors.length > 0) {
-                    throw new Error(cartData.cartCreate.userErrors[0].message);
-                }
+                btn.innerText = 'AÑADIDO';
+                setTimeout(() => {
+                    closeModal();
+                    toggleCart();
+                }, 800);
 
-                window.location.href = cartData.cartCreate.cart.checkoutUrl;
-            } catch(e) {
-                console.error('Shopify Services Error:', e);
-                alert('Error comunicando con Shopify: ' + e.message);
-                btn.innerText = 'PAGAR';
-                btn.disabled = false;
-                btn.style.opacity = '1';
+            } catch (e) {
+                console.error('Error adding services to cart', e);
+                btn.innerText = 'Error';
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                }, 2000);
             }
         }
 
@@ -1040,19 +1180,6 @@
             if (event.target == modal) closeModal();
             if (event.target == promosModal) closePromosModal();
         }
-
-        // Reset button state if user comes back via the back button
-        window.addEventListener('pageshow', (event) => {
-            const btn = document.getElementById('btn-submit-form');
-            if (btn) {
-                // If it's the services modal button, only re-enable if there's a total
-                if (typeof currentTotal !== 'undefined' && currentTotal > 0) {
-                    btn.innerText = 'PAGAR';
-                    btn.disabled = false;
-                    btn.style.opacity = '1';
-                }
-            }
-        });
     </script>
 </body>
 </html>
