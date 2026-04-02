@@ -440,7 +440,7 @@ async function addShopifyToCart(productId) {
         }
 
         const cart = await createCart([{ variantId: variant.id, quantity: 1 }]);
-        window.top.location.href = cart.checkoutUrl;
+        window.location.href = cart.checkoutUrl;
     } catch(err) {
         console.error('Error Quick Checkout:', err);
         alert('Error conectando con Shopify. Intenta de nuevo.');

@@ -186,8 +186,8 @@ async function processUnifiedCheckout() {
         
         const shopifyCart = await createCart(lineItems, attributes);
         
-        // Final Redirect - BREAKING OUT OF MOBILE WRAPPERS
-        window.top.location.href = shopifyCart.checkoutUrl;
+        // Final Redirect - MOBILE FRIENDLY
+        window.location.href = shopifyCart.checkoutUrl;
         
     } catch (err) {
         console.error("Error creating unified Shopify cart", err);
