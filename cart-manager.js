@@ -133,45 +133,43 @@ function renderCart() {
 async function processUnifiedCheckout() {
     const btn = document.getElementById('checkout-continue-btn');
     if (!btn) return;
-    
+
     btn.innerText = 'PROCESSING...';
     btn.disabled = true;
 
+    // Open the window synchronously within the user gesture before any await
+    // This is required for mobile Safari/Chrome which block window navigation
+    // triggered after async operations
+    const checkoutWindow = window.open('', '_blank');
+
     try {
-        // Group items for Shopify
-        // For services, we use the bridge product variant and quantity = total price
-        // For merch, we use variant ID and quantity = count
-        
         const lineItems = [];
         const attributes = [];
-        
-        // Find service bridge product variant ID if services are present
+
         const hasServices = cart.some(item => item.isService);
         let serviceVariantId = null;
-        
+
         if (hasServices) {
-            // We'll use the ID stored in the item or fetch it
             const serviceItem = cart.find(item => item.isService);
             serviceVariantId = serviceItem.variantId;
-            
+
             lineItems.push({
                 variantId: serviceVariantId,
-                quantity: Math.round(serviceItem.price) // Price as quantity
+                quantity: Math.round(serviceItem.price)
             });
-            
+
             attributes.push({
                 key: "Detalle de Servicios Contratados",
                 value: serviceItem.details
             });
         }
-        
-        // Process merch items
+
         const merchItems = cart.filter(item => !item.isService);
         const variantCounts = {};
         merchItems.forEach(item => {
             variantCounts[item.variantId] = (variantCounts[item.variantId] || 0) + 1;
         });
-        
+
         for (const [vId, qty] of Object.entries(variantCounts)) {
             lineItems.push({
                 variantId: vId,
@@ -179,18 +177,18 @@ async function processUnifiedCheckout() {
             });
         }
 
-        // Create the cart via Storefront API (merch-renderer.js should be loaded)
         if (typeof createCart !== 'function') {
             throw new Error('Shopify API not loaded');
         }
-        
+
         const shopifyCart = await createCart(lineItems, attributes);
-        
-        // Final Redirect - BREAKING OUT OF MOBILE WRAPPERS
-        window.top.location.href = shopifyCart.checkoutUrl;
-        
+
+        // Assign URL to the already-opened window — works on both desktop and mobile
+        checkoutWindow.location.href = shopifyCart.checkoutUrl;
+
     } catch (err) {
         console.error("Error creating unified Shopify cart", err);
+        checkoutWindow.close();
         btn.innerText = 'Error. Intenta de nuevo.';
         setTimeout(() => {
             btn.innerText = 'PAGAR';
