@@ -26,39 +26,6 @@ let shopifyProducts = [];
 const selectedVariants = {};
 const activeOptions = {};
 
-const colorMap = {
-    'black': '#151515', 'negro': '#151515', 'white': '#fdfdfd', 'blanco': '#fdfdfd',
-    'blue': '#0047ab', 'azul': '#0047ab', 'deep blue': '#0b132b', 'deep': '#0b132b',
-    'grey': '#666666', 'gris': '#666666', 'gray': '#666666',
-    'purple': '#8B3FCC', 'morado': '#8B3FCC',
-    'beige': '#f5f5dc', 'olive': '#3d3d22',
-    'wine': '#722f37', 'vino': '#722f37',
-    'green': '#004b23', 'verde': '#004b23',
-    'red': '#8b0000', 'rojo': '#8b0000',
-    'navy': '#001f3f', 'navy blazer': '#14213d',
-    'maroon': '#6A1E26', 'vintage black': '#2b2b2b',
-    'team royal': '#0053A0', 'forest green': '#1C352D',
-    'team red': '#C8102E', 'bubblegum': '#FFC1CC',
-    'orchid': '#E2A1CA', 'charcoal heather': '#3B3C36',
-    'carbon grey': '#5A5A5A'
-};
-
-function getColorHex(name) {
-    const key = name.toLowerCase().trim();
-    // Use fallback function if simple map lookup fails
-    if (colorMap[key]) return colorMap[key];
-    
-    // Fuzzy matching for complex descriptive colors not caught explicitly
-    if (key.includes('black') || key.includes('negro')) return '#151515';
-    if (key.includes('grey') || key.includes('gray')) return '#666666';
-    if (key.includes('red') || key.includes('rojo')) return '#C8102E';
-    if (key.includes('blue') || key.includes('azul')) return '#0053A0';
-    if (key.includes('green') || key.includes('verde')) return '#1C352D';
-    if (key.includes('white') || key.includes('blanco')) return '#fdfdfd';
-    
-    return '#888888';
-}
-
 // ========== FETCH PRODUCTS ==========
 async function fetchAllProducts() {
     const query = `{
@@ -266,21 +233,23 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
                         <span style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px;">${opt.name}</span>
                         <div class="option-values" style="display:flex; gap:8px; margin-top:5px; flex-wrap:wrap;">`;
 
-                    opt.values.forEach(val => {
-                        const isActive = activeOptions[p.id][opt.name] === val;
-                        if (isColor) {
-                            optionsHTML += `<div class="variant-dot ${isActive ? 'active' : ''}"
-                                style="background-color: ${getColorHex(val)}; cursor:pointer; border: 1px solid rgba(255,255,255,0.25); box-sizing: border-box;"
-                                onclick="updateShopifyOption('${p.id}', '${opt.name}', '${val.replace(/'/g, "\\'")}')"
-                                title="${val}"></div>`;
-                        } else {
+                    if (isColor) {
+                        optionsHTML += `<select class="color-select" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 8px 12px; border-radius: 6px; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 0.85rem; outline: none; margin-bottom: 5px; width: 100%;" onchange="updateShopifyOption('${p.id}', '${opt.name}', this.value)">`;
+                        opt.values.forEach(val => {
+                            const isSelected = activeOptions[p.id][opt.name] === val;
+                            optionsHTML += `<option value="${val.replace(/'/g, "\\'")}" style="color: #000; background: #fff;" ${isSelected ? 'selected' : ''}>${val}</option>`;
+                        });
+                        optionsHTML += `</select>`;
+                    } else {
+                        opt.values.forEach(val => {
+                            const isActive = activeOptions[p.id][opt.name] === val;
                             optionsHTML += `<button class="size-pill ${isActive ? 'active' : ''}"
                                 style="padding:4px 12px; border:1px solid ${isActive ? '#8B3FCC' : 'rgba(255,255,255,0.1)'}; background:${isActive ? 'rgba(139,63,204,0.1)' : 'transparent'}; color:#fff; border-radius:4px; cursor:pointer; font-size:0.8rem;"
                                 onclick="updateShopifyOption('${p.id}', '${opt.name}', '${val.replace(/'/g, "\\'")}')">
                                 ${val}
                             </button>`;
-                        }
-                    });
+                        });
+                    }
 
                     optionsHTML += `</div></div>`;
                 });
@@ -346,16 +315,15 @@ function updateShopifyOption(productId, optionName, optionValue) {
     if (!card) return;
 
     const isColor = optionName.toLowerCase().includes('color');
-    const optionGroups = card.querySelectorAll('.option-group');
-    optionGroups.forEach(group => {
-        const groupName = group.querySelector('span').innerText;
-        if (groupName.toLowerCase() === optionName.toLowerCase()) {
-            const buttons = group.querySelectorAll(isColor ? '.variant-dot' : '.size-pill');
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-                if (isColor) {
-                    if (btn.title === optionValue) btn.classList.add('active');
-                } else {
+    if (!isColor) {
+        // Only update pill states manually (dropdown <select> handles its own state)
+        const optionGroups = card.querySelectorAll('.option-group');
+        optionGroups.forEach(group => {
+            const groupName = group.querySelector('span').innerText;
+            if (groupName.toLowerCase() === optionName.toLowerCase()) {
+                const buttons = group.querySelectorAll('.size-pill');
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
                     if (btn.innerText.trim() === optionValue) {
                         btn.classList.add('active');
                         btn.style.borderColor = '#8B3FCC';
@@ -364,10 +332,10 @@ function updateShopifyOption(productId, optionName, optionValue) {
                         btn.style.borderColor = 'rgba(255,255,255,0.1)';
                         btn.style.background = 'transparent';
                     }
-                }
-            });
-        }
-    });
+                });
+            }
+        });
+    }
 }
 
 // ========== ADD TO CART ==========
