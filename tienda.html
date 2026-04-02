@@ -285,6 +285,7 @@
         }
 
         async function processShopifyCheckout() {
+            const btn = document.getElementById('checkout-continue-btn');
             btn.innerText = 'PROCESSING...';
             btn.disabled = true;
 
