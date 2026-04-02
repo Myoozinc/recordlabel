@@ -224,14 +224,43 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
                     activeOptions[p.id][opt.name] = opt.values[0];
                 });
 
-                // SPECIAL OVERRIDES -> Force Black as default to match original design intent
-                const forceBlackTitles = ['MYOOZ INC JERSEY', 'DJ BARBIE CROP HOODIE', 'GGB BEATS ADIDAS HAT'];
-                if (forceBlackTitles.some(title => p.title.toUpperCase().includes(title))) {
+                // SPECIAL OVERRIDES -> Force specific default colors visually requested by user
+                const defaultColorMap = {
+                    'DJ BARBIE CROP TOP': ['WHITE', 'BLANCO'],
+                    'GGB BEATS HAT': ['WHITE', 'BLANCO'],
+                    'VOLVERÉ HOODIE': ['MAROON', 'RED', 'ROJO'],
+                    'DANCING IN THE SHADOWS': ['STORM', 'DARK GREY', 'CHARCOAL'],
+                    'VOLVERÉ TANK': ['TEAM ROYAL', 'ROYAL', 'BLUE', 'AZUL'],
+                    'MYOOZ INC HOODIE': ['BLACK', 'NEGRO'],
+                    'GAMEPLAY': ['NAVY BLAZER', 'NAVY', 'DARK BLUE'],
+                    'GGB BEATS ADIDAS': ['BLACK', 'NEGRO'],
+                    'GGB BEATS HOODIE': ['BLACK', 'NEGRO'],
+                    'DJ BARBIE CROP HOODIE': ['BLACK', 'NEGRO'],
+                    'FANTASMA REMIX': ['MILITARY GREEN', 'OLIVE', 'GREEN', 'VERDE'],
+                    'GGB BEATS SWEATSHIRT': ['BLACK', 'NEGRO'],
+                    'GG PAD': ['DENIM', 'INDIGO', 'NAVY', 'BLUE'],
+                    'URBAN X CROP': ['MILITARY GREEN', 'OLIVE', 'GREEN', 'VERDE'],
+                    '90S RAGLAN': ['WHITE', 'WHITE/BLACK', 'BLANCO'],
+                    'OLDIES\' SUMMER': ['NAVY BLAZER', 'NAVY'],
+                    'LAST URBAN X': ['VINTAGE BLACK', 'BLACK', 'CHARCOAL'],
+                    'GGB BEATS JERSEY': ['WHITE', 'BLANCO'],
+                    'MYOOZ INC JERSEY': ['BLACK', 'NEGRO']
+                };
+
+                const titleUpper = p.title.toUpperCase().trim();
+                let matchingOverrideKeys = Object.keys(defaultColorMap).filter(k => titleUpper.includes(k));
+                
+                if (matchingOverrideKeys.length > 0) {
+                    const fallbackColors = defaultColorMap[matchingOverrideKeys[0]];
                     const colorOpt = p.options.find(o => o.name.toLowerCase().includes('color'));
-                    if (colorOpt && colorOpt.values.some(v => v.toUpperCase() === 'BLACK')) {
-                        // Find the exact casing of 'Black' used in Shopify
-                        const exactBlack = colorOpt.values.find(v => v.toUpperCase() === 'BLACK');
-                        activeOptions[p.id][colorOpt.name] = exactBlack || 'Black';
+                    if (colorOpt) {
+                        for (const fallback of fallbackColors) {
+                            const exactValueMatch = colorOpt.values.find(v => v.toUpperCase() === fallback);
+                            if (exactValueMatch) {
+                                activeOptions[p.id][colorOpt.name] = exactValueMatch;
+                                break;
+                            }
+                        }
                     }
                 }
 
