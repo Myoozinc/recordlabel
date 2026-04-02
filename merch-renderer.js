@@ -27,20 +27,36 @@ const selectedVariants = {};
 const activeOptions = {};
 
 const colorMap = {
-    'black': '#111', 'negro': '#111', 'white': '#f0f0f0', 'blanco': '#f0f0f0',
+    'black': '#151515', 'negro': '#151515', 'white': '#fdfdfd', 'blanco': '#fdfdfd',
     'blue': '#0047ab', 'azul': '#0047ab', 'deep blue': '#0b132b', 'deep': '#0b132b',
-    'grey': '#555', 'gris': '#555', 'gray': '#555',
+    'grey': '#666666', 'gris': '#666666', 'gray': '#666666',
     'purple': '#8B3FCC', 'morado': '#8B3FCC',
     'beige': '#f5f5dc', 'olive': '#3d3d22',
     'wine': '#722f37', 'vino': '#722f37',
     'green': '#004b23', 'verde': '#004b23',
     'red': '#8b0000', 'rojo': '#8b0000',
-    'navy': '#001f3f', 'navy blazer': '#1c2541'
+    'navy': '#001f3f', 'navy blazer': '#14213d',
+    'maroon': '#6A1E26', 'vintage black': '#2b2b2b',
+    'team royal': '#0053A0', 'forest green': '#1C352D',
+    'team red': '#C8102E', 'bubblegum': '#FFC1CC',
+    'orchid': '#E2A1CA', 'charcoal heather': '#3B3C36',
+    'carbon grey': '#5A5A5A'
 };
 
 function getColorHex(name) {
     const key = name.toLowerCase().trim();
-    return colorMap[key] || '#888';
+    // Use fallback function if simple map lookup fails
+    if (colorMap[key]) return colorMap[key];
+    
+    // Fuzzy matching for complex descriptive colors not caught explicitly
+    if (key.includes('black') || key.includes('negro')) return '#151515';
+    if (key.includes('grey') || key.includes('gray')) return '#666666';
+    if (key.includes('red') || key.includes('rojo')) return '#C8102E';
+    if (key.includes('blue') || key.includes('azul')) return '#0053A0';
+    if (key.includes('green') || key.includes('verde')) return '#1C352D';
+    if (key.includes('white') || key.includes('blanco')) return '#fdfdfd';
+    
+    return '#888888';
 }
 
 // ========== FETCH PRODUCTS ==========
@@ -220,6 +236,14 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
                     activeOptions[p.id][opt.name] = opt.values[0];
                 });
 
+                // SPECIAL OVERRIDE FOR MYOOZ INC JERSEY -> Force Black as default
+                if (p.title.toUpperCase().includes('MYOOZ INC JERSEY')) {
+                    const colorOpt = p.options.find(o => o.name.toLowerCase().includes('color'));
+                    if (colorOpt && colorOpt.values.includes('Black')) {
+                        activeOptions[p.id][colorOpt.name] = 'Black';
+                    }
+                }
+
                 // Find the specific variant that matches these default options
                 let initialVariant = p.variants.find(v =>
                     v.selectedOptions.every(so => activeOptions[p.id][so.name] === so.value)
@@ -246,7 +270,7 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
                         const isActive = activeOptions[p.id][opt.name] === val;
                         if (isColor) {
                             optionsHTML += `<div class="variant-dot ${isActive ? 'active' : ''}"
-                                style="background-color: ${getColorHex(val)}; cursor:pointer;"
+                                style="background-color: ${getColorHex(val)}; cursor:pointer; border: 1px solid rgba(255,255,255,0.25); box-sizing: border-box;"
                                 onclick="updateShopifyOption('${p.id}', '${opt.name}', '${val.replace(/'/g, "\\'")}')"
                                 title="${val}"></div>`;
                         } else {
