@@ -226,7 +226,7 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
 
                 // SPECIAL OVERRIDES -> Force specific default colors visually requested by user
                 const defaultColorMap = {
-                    'DJ BARBIE CROP TOP': ['WHITE', 'BLANCO'],
+                    'DJ BARBIE CROP TOP': ['ORCHID', 'PINK', 'ROSADO'],
                     'GGB BEATS HAT': ['WHITE', 'BLANCO'],
                     'VOLVERÉ HOODIE': ['MAROON', 'RED', 'ROJO'],
                     'DANCING IN THE SHADOWS': ['STORM', 'DARK GREY', 'CHARCOAL'],
@@ -238,7 +238,7 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
                     'DJ BARBIE CROP HOODIE': ['BLACK', 'NEGRO'],
                     'FANTASMA REMIX': ['MILITARY GREEN', 'OLIVE', 'GREEN', 'VERDE'],
                     'GGB BEATS SWEATSHIRT': ['BLACK', 'NEGRO'],
-                    'GG PAD': ['DENIM', 'INDIGO', 'NAVY', 'BLUE'],
+                    'GG PAD': ['INDIGO BLUE', 'INDIGO', 'DENIM', 'BLUE'],
                     'URBAN X CROP': ['MILITARY GREEN', 'OLIVE', 'GREEN', 'VERDE'],
                     '90S RAGLAN': ['WHITE', 'WHITE/BLACK', 'BLANCO'],
                     'OLDIES\' SUMMER': ['NAVY BLAZER', 'NAVY'],
