@@ -225,7 +225,7 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
                 });
 
                 // SPECIAL OVERRIDES -> Force Black as default to match original design intent
-                const forceBlackTitles = ['MYOOZ INC JERSEY', 'DJ BARBIE CROP HOODIE'];
+                const forceBlackTitles = ['MYOOZ INC JERSEY', 'DJ BARBIE CROP HOODIE', 'GGB BEATS ADIDAS HAT'];
                 if (forceBlackTitles.some(title => p.title.toUpperCase().includes(title))) {
                     const colorOpt = p.options.find(o => o.name.toLowerCase().includes('color'));
                     if (colorOpt && colorOpt.values.some(v => v.toUpperCase() === 'BLACK')) {
