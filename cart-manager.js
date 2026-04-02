@@ -128,7 +128,10 @@ function renderCart() {
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     totalDisplay.innerText = '$' + total.toFixed(2);
     const checkoutBtn = document.getElementById('checkout-continue-btn');
-    if (checkoutBtn) checkoutBtn.style.display = 'block';async function processUnifiedCheckout() {
+    if (checkoutBtn) checkoutBtn.style.display = 'block';
+}
+
+async function processUnifiedCheckout() {
     const btn = document.getElementById('checkout-continue-btn');
     if (!btn) return;
     
@@ -216,7 +219,6 @@ function renderCart() {
             btn.style.opacity = '1';
         }, 3000);
     }
-}
 }
 
 // Global initialization
