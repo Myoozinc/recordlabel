@@ -243,7 +243,16 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
                         });
                         optionsHTML += `</select>`;
                     } else {
-                        opt.values.forEach(val => {
+                        const sizeOrder = ['XXS', 'XS', 'S', 'M', 'L', 'XL', '2XL', 'XXL', '3XL', 'XXXL', '4XL'];
+                        const sortedValues = [...opt.values].sort((a, b) => {
+                            let aIdx = sizeOrder.indexOf(a.toUpperCase().trim());
+                            let bIdx = sizeOrder.indexOf(b.toUpperCase().trim());
+                            if (aIdx === -1) aIdx = 999;
+                            if (bIdx === -1) bIdx = 999;
+                            return aIdx - bIdx;
+                        });
+
+                        sortedValues.forEach(val => {
                             const isActive = activeOptions[p.id][opt.name] === val;
                             optionsHTML += `<button class="size-pill ${isActive ? 'active' : ''}"
                                 style="padding:4px 12px; border:1px solid ${isActive ? '#8B3FCC' : 'rgba(255,255,255,0.1)'}; background:${isActive ? 'rgba(139,63,204,0.1)' : 'transparent'}; color:#fff; border-radius:4px; cursor:pointer; font-size:0.8rem;"
