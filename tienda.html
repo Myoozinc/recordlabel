@@ -65,9 +65,10 @@
         }
 
         .filter-btn.active {
-            background: rgba(255, 255, 255, 0.12);
+            background: linear-gradient(135deg, #300359, #8B3FCC);
             color: #fff;
-            border-color: rgba(255, 255, 255, 0.18);
+            border-color: #8B3FCC;
+            box-shadow: 0 4px 15px rgba(139, 63, 204, 0.3);
         }
 
         @media (max-width: 768px) {
@@ -154,6 +155,7 @@
         <div class="category-filter">
             <button class="filter-btn active" onclick="filterProducts('all')">Todos</button>
             <button class="filter-btn" onclick="filterProducts('MYOOZ InC')">MYOOZ InC</button>
+            <button class="filter-btn" onclick="filterProducts('GGB Beats Logo')">GGB Beats Logo</button>
             <button class="filter-btn" onclick="filterProducts('GGB Beats')">GGB Beats</button>
             <button class="filter-btn" onclick="filterProducts('Joss')">Joss</button>
             <button class="filter-btn" onclick="filterProducts('Rasta Mia')">Rasta Mia</button>
@@ -322,8 +324,8 @@
             const btns = document.querySelectorAll('.filter-btn');
             btns.forEach(b => {
                 const label = b.innerText.trim().toLowerCase();
-                const expected = (category === 'all' ? 'todos' : category.toLowerCase());
-                if (label === expected) {
+                const target = category.toLowerCase();
+                if (label === target || (label === 'todos' && target === 'all')) {
                     b.classList.add('active');
                 } else {
                     b.classList.remove('active');
