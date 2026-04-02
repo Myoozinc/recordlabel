@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="merch.css">
+    <script src="merch-renderer.js" defer></script>
+    <script src="cart-manager.js" defer></script>
     <style>
         body{overflow-x:hidden;}.container{margin-top:0;padding-top:0;}
         .hero-section{position:relative;width:100%;min-height:65vh;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;padding-bottom:2rem;}
@@ -38,7 +41,7 @@
         .licence-card.featured { background: none; border-color: var(--glass-border); }
         .licence-header { display: flex; flex-direction: column; gap: 0.4rem; }
         .licence-name { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-secondary); }
-        .licence-price { font-size: 2.5rem; font-weight: 800; letter-spacing: -2px; background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.3) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
+        .licence-price { font-size: 2.5rem; font-weight: 800; letter-spacing: -2px; background: linear-gradient(0deg, #300359 0%, #8B3FCC 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
         .licence-type { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-white); }
         .licence-formats { color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; padding-top: 0.2rem; border-top: 1px solid var(--glass-border); }
         .licence-terms { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; flex: 1; }
@@ -138,8 +141,10 @@
             </div>
         </div>
         <div class="content-section">
-        <div class="content-section">
-
+            <h2 class="section-title" style="font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1.5rem;color:var(--text-white);">Merch Oficial</h2>
+            <div id="artist-merch-container" class="products-grid">
+                <!-- Merch will be loaded here -->
+            </div>
         </div>
         <a href="productores.html" class="nav-back">← Nuestros Productores</a>
     </div>

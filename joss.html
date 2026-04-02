@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="merch.css">
+    <script src="merch-renderer.js" defer></script>
+    <script src="cart-manager.js" defer></script>
     <style>
         body { overflow-x: hidden; }
         .container { margin-top: 0; padding-top: 0; }
@@ -123,20 +125,17 @@
         </div>
     </div>
 
-    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
     <script src="navigation.js"></script>
-    <script src="merch-renderer.js"></script>
+    <script src="cart-manager.js"></script>
     <script>
         function showModal(title, body) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-body').innerText = body;
-            document.getElementById('payment-modal').style.display = 'flex';
-        }
-        function closeModal() {
-            document.getElementById('payment-modal').style.display = 'none';
+            // Simplified modal for generic alerts if needed
+            alert(title + ": " + body);
         }
         window.addEventListener('load', () => {
-            renderMerchGrid('artist-merch-container', 'Joss', true);
+            if (typeof renderMerchGrid === 'function') {
+                renderMerchGrid('artist-merch-container', 'Joss', true);
+            }
         });
     </script>
 </body>

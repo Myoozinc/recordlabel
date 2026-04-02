@@ -187,11 +187,19 @@ async function processUnifiedCheckout() {
         const shopifyCart = await createCart(lineItems, attributes);
         
         // Final Redirect - MOBILE FRIENDLY
-        window.location.href = shopifyCart.checkoutUrl;
+        // Use assign() as it can be more reliable than direct href setting in some mobile webview contexts
+        if (shopifyCart && shopifyCart.checkoutUrl) {
+            window.location.assign(shopifyCart.checkoutUrl);
+        } else {
+            throw new Error('No checkout URL returned from Shopify');
+        }
         
     } catch (err) {
         console.error("Error creating unified Shopify cart", err);
         btn.innerText = 'Error. Intenta de nuevo.';
+        // Also show an alert on mobile as it's more visible than button text changes
+        alert("Hubo un problema al conectar con la pasarela de pago: " + (err.message || 'Error desconocido'));
+        
         setTimeout(() => {
             btn.innerText = 'PAGAR';
             btn.disabled = false;

@@ -132,6 +132,12 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
+        .gliding-stream.auto-gliding {
+            animation: glideLeft 40s linear infinite;
+        }
+        .gliding-stream.paused {
+            animation-play-state: paused;
+        }
         .talent-item {
             display: flex;
             flex-direction: column;
@@ -329,107 +335,98 @@
         document.getElementById('mandala-container').addEventListener('touchstart', () => {
              currentRotation += 1080;
              mandalaImg.style.transform = `rotate(${currentRotation}deg)`;
-        });
-        // Talent Carousel Logic: Auto-scroll + Hover to pause + Drag to navigate + Click to open
+           // Talent Carousel Logic: CSS Animation + Pause on Interactive
         const talentSection = document.querySelector('.talent-section');
         const glidingStream = document.querySelector('.gliding-stream');
-        let isMoving = true;
+        
+        // Start auto-gliding by default
+        glidingStream.classList.add('auto-gliding');
+
         let isDragging = false;
-        let isHovering = false;
-        let dragMoved = false; // track whether the mouse actually moved (to distinguish clicks from drags)
         let startX;
         let scrollLeft;
-        const DRAG_THRESHOLD = 6; // px moved before treating as a drag (not a click)
+        let dragMoved = false;
+        const DRAG_THRESHOLD = 5;
 
-        function autoScroll() {
-            if (isMoving && !isDragging && !isHovering) {
-                talentSection.scrollLeft += 0.4;
-                if (talentSection.scrollLeft >= glidingStream.offsetWidth / 2) {
-                    talentSection.scrollLeft = 0;
-                }
-            }
-            requestAnimationFrame(autoScroll);
-        }
-
-        // ── Mouse Events ──────────────────────────────────────────────
+        // Pause animation on hover (desktop)
         talentSection.addEventListener('mouseenter', () => {
-            isHovering = true; // pause auto-scroll on hover
+            glidingStream.classList.add('paused');
         });
 
         talentSection.addEventListener('mouseleave', () => {
-            isHovering = false; // resume auto-scroll when mouse leaves
-            if (isDragging) {
-                isDragging = false;
-                dragMoved = false;
-                talentSection.classList.remove('is-dragging');
-            }
+            if (!isDragging) glidingStream.classList.remove('paused');
         });
 
+        // ── Drag Logic (Mouse) ──────────────────────────────────────
         talentSection.addEventListener('mousedown', (e) => {
             isDragging = true;
             dragMoved = false;
+            glidingStream.classList.add('paused');
+            glidingStream.classList.remove('auto-gliding'); // Switch to manual control
+            
             startX = e.pageX - talentSection.offsetLeft;
             scrollLeft = talentSection.scrollLeft;
-            talentSection.style.scrollBehavior = 'auto';
             talentSection.style.cursor = 'grabbing';
         });
 
-        talentSection.addEventListener('mousemove', (e) => {
+        window.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
             const x = e.pageX - talentSection.offsetLeft;
-            const walk = x - startX;
+            const walk = (x - startX) * 1.5;
             if (Math.abs(walk) > DRAG_THRESHOLD) {
                 dragMoved = true;
-                talentSection.classList.add('is-dragging');
-                e.preventDefault();
-                talentSection.scrollLeft = scrollLeft - walk * 2;
+                talentSection.scrollLeft = scrollLeft - walk;
             }
         });
 
         window.addEventListener('mouseup', () => {
             if (!isDragging) return;
             isDragging = false;
-            talentSection.classList.remove('is-dragging');
             talentSection.style.cursor = 'grab';
-            // If user barely moved, treat as a click — links will fire naturally
-            // dragMoved flag is used by the click handler below
+            
+            // Resume auto-gliding after a brief delay
+            setTimeout(() => {
+                if (!isDragging) {
+                    glidingStream.classList.add('auto-gliding');
+                    glidingStream.classList.remove('paused');
+                }
+            }, 2000);
+            
             setTimeout(() => { dragMoved = false; }, 50);
         });
 
-        // Block navigation only when user actually dragged (not a tap/click)
-        talentSection.querySelectorAll('.talent-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                if (dragMoved) e.preventDefault();
-            });
-        });
-
-        // ── Touch Events ──────────────────────────────────────────────
-        let touchDragMoved = false;
-        let touchStartX;
-        let touchScrollLeft;
-
+        // ── Touch Logic (Mobile) ────────────────────────────────────
         talentSection.addEventListener('touchstart', (e) => {
-            touchDragMoved = false;
             isDragging = true;
-            isHovering = true;
-            touchStartX = e.touches[0].pageX - talentSection.offsetLeft;
-            touchScrollLeft = talentSection.scrollLeft;
-            talentSection.style.scrollBehavior = 'auto';
+            glidingStream.classList.add('paused');
+            glidingStream.classList.remove('auto-gliding');
+            startX = e.touches[0].pageX - talentSection.offsetLeft;
+            scrollLeft = talentSection.scrollLeft;
         }, { passive: true });
 
         talentSection.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
             const x = e.touches[0].pageX - talentSection.offsetLeft;
-            const walk = x - touchStartX;
-            if (Math.abs(walk) > DRAG_THRESHOLD) {
-                touchDragMoved = true;
-                talentSection.scrollLeft = touchScrollLeft - walk * 2;
-            }
+            const walk = (x - startX) * 1.2;
+            talentSection.scrollLeft = scrollLeft - walk;
         }, { passive: true });
 
         talentSection.addEventListener('touchend', () => {
             isDragging = false;
-            isHovering = false; // resume auto-scroll after touch ends
+            setTimeout(() => {
+                if (!isDragging) {
+                    glidingStream.classList.add('auto-gliding');
+                    glidingStream.classList.remove('paused');
+                }
+            }, 3000);
+        }, { passive: true });
+
+        // Block navigation only when user actually dragged
+        talentSection.querySelectorAll('.talent-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (dragMoved) e.preventDefault();
+            });
+        }); // resume auto-scroll after touch ends
             setTimeout(() => { touchDragMoved = false; }, 50);
         }, { passive: true });
 
