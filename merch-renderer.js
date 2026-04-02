@@ -169,7 +169,8 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
             
             if (t === 'ggb beats logo') return brand === 'ggb beats logo';
             if (t === 'myooz inc' || t === 'myooz') return brand === 'myooz inc';
-            if (t === 'ggb beats' || t === 'ggb') return brand === 'ggb beats';
+            // Inclusive filter for main store GGB button
+            if (t === 'ggb beats' || t === 'ggb') return brand === 'ggb beats' || brand === 'ggb beats logo';
             if (t === 'rasta mia') return brand === 'rasta mia';
             if (t === 'joss') return brand === 'joss';
             
