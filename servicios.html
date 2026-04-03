@@ -10,130 +10,50 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="merch.css">
     <style>
-        :root {
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-white: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.6);
-            --purple-glow: #8B3FCC;
-            --deep-purple: #300359;
-        }
-
-        body {
-            background-color: #050505;
-            color: var(--text-white);
-            font-family: 'Outfit', sans-serif;
-            margin: 0;
-            overflow-x: hidden;
-        }
-
         .container {
             margin-top: 120px;
-            max-width: 1100px;
+            max-width: 900px;
             margin-left: auto;
             margin-right: auto;
-            padding: 0 20px;
         }
 
-        /* HEADER ALIGNMENT */
-        .page-header.main-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .page-header h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -2px;
-            margin: 0;
-        }
-
-        .action-btn-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end; 
-            gap: 0.8rem;
-            margin-top: -1.5rem;
-            margin-bottom: 5rem;
-            width: 100%;
-        }
-
-        @media screen and (max-width: 900px) {
-            .action-btn-container { align-items: center; margin-top: 2rem; }
-        }
-
-        /* CART DRAWER MATCHING SCREENSHOT 2 */
-        .cart-drawer {
-            position: fixed;
-            top: 0;
-            right: -100%; 
-            width: 450px;
-            max-width: 100%;
-            height: 100%;
-            background: #0a0a0a;
-            z-index: 21000;
-            box-shadow: -20px 0 60px rgba(0,0,0,0.8);
-            transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-            display: flex;
-            flex-direction: column;
-            border-left: 1px solid var(--glass-border);
-        }
-
-        .cart-drawer.open { right: 0; }
-
-        .cart-header {
-            padding: 2rem;
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cart-items {
-            flex: 1;
-            overflow-y: auto;
-            padding: 2rem;
-        }
-
-        .cart-footer {
-            padding: 2rem;
-            background: #0a0a0a;
-            border-top: 1px solid var(--glass-border);
-        }
-
-        .cart-total-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-        }
-
-        /* MODAL STYLES */
-        .modal {
-            display: none; position: fixed; inset: 0; background: rgba(5, 5, 5, 0.95);
-            backdrop-filter: blur(10px); z-index: 20000; align-items: center; justify-content: center; padding: 1rem;
-        }
-        .modal.active { display: flex; }
-        .modal-content {
-            background: #0d0d0d; border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 3rem; max-width: 650px; width: 100%;
-            position: relative; max-height: 90vh; overflow-y: auto;
-        }
-
-        /* SERVICE DISPLAY */
+        .page-header { text-align: center; margin-bottom: 6rem; }
+        .main-header { margin-bottom: 4rem; }
+        .service-section { margin-bottom: 8rem; }
         .service-list { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem 4rem; margin-top: 4rem; }
-        @media screen and (max-width: 900px) { .service-list { grid-template-columns: 1fr; } }
-        .service-item { padding-bottom: 2rem; border-bottom: 1px solid var(--glass-border); }
-        .service-price { font-weight: 800; color: var(--purple-glow); font-size: 1.35rem; }
-        .purple-title { color: #300359; font-weight: 800; text-transform: uppercase; text-align: center; font-size: 3rem; margin-bottom: 1rem;}
 
-        /* FORM ELEMENTS */
-        .service-checkbox { display: flex; align-items: center; padding: 1.2rem 0; border-bottom: 1px solid var(--glass-border); cursor: pointer; gap: 1.5rem; }
-        .service-info { display: flex; justify-content: space-between; width: 100%; }
-        
-        .btn-solid-custom { background: #300359; color: white; padding: 1.25rem 3.5rem; border-radius: 100px; font-weight: 800; text-transform: uppercase; border: none; cursor: pointer; transition: 0.3s; }
+        @media screen and (max-width: 900px) { .service-list { grid-template-columns: 1fr; } }
+
+        .service-item { display: flex; flex-direction: column; gap: 0.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--glass-border); }
+        .service-item-header { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+        .service-item h3 { font-size: 1.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-white); }
+        .service-price { font-size: 1.35rem; font-weight: 800; background: linear-gradient(0deg, #300359 0%, #8b3fcc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .service-desc { color: var(--text-secondary); font-size: 1rem; line-height: 1.6; max-width: 600px; }
+        .purple-title { font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 800; text-transform: uppercase; letter-spacing: -2px; margin-bottom: 0.5rem; color: #300359; -webkit-text-fill-color: #300359 !important; }
+
+        .btn-outline-custom { display: inline-block; background: transparent; color: #8B3FCC; padding: 0.75rem 2.2rem; border-radius: 100px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; text-align: center; cursor: pointer; border: 1px solid rgba(139, 63, 204, 0.9); transition: all 0.3s ease; }
+        .btn-solid-custom { display: inline-block; background: #300359; color: var(--text-white); padding: 1.25rem 3.5rem; border-radius: 100px; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 3px; font-weight: 800; cursor: pointer; border: none; transition: transform 0.3s, opacity 0.3s; }
+
+        /* --- BUTTON FIX: LOCKED TO RIGHT --- */
+        .action-btn-container { display: flex; flex-direction: column; align-items: flex-end; width: 100%; gap: 0.8rem; }
+        @media screen and (max-width: 900px) { .action-btn-container { align-items: center; } }
+
+        /* --- CART FIX: NO OVERLAP --- */
+        .cart-drawer { position: fixed; top: 0; right: -100%; width: 450px; height: 100%; background: #0a0a0a; z-index: 25000; box-shadow: -20px 0 60px rgba(0,0,0,0.8); transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1); display: flex; flex-direction: column; border-left: 1px solid rgba(255, 255, 255, 0.1); }
+        .cart-drawer.open { right: 0; }
+        .cart-header { padding: 2rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 2rem; }
+        .cart-footer { padding: 2rem; background: rgba(255,255,255,0.02); border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .cart-total { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 900; margin: 1.5rem 0; }
+
+        /* Modals */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(10px); z-index: 30000; align-items: center; justify-content: center; padding: 1rem; }
+        .modal.active { display: flex; }
+        .modal-content { background: #0d0d0d; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 3rem; max-width: 650px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-modal { position: absolute; top: 1.25rem; right: 1.5rem; font-size: 1.5rem; color: #fff; cursor: pointer; border: none; background: none; }
+        .service-checkbox { display: flex; align-items: center; padding: 1.2rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); cursor: pointer; gap: 1.5rem; }
+        .service-info { display: flex; justify-content: space-between; flex-grow: 1; }
+        .sb-price { color: #8B3FCC; font-weight: 900; }
     </style>
 </head>
 <body>
@@ -141,155 +61,124 @@
 <div class="container">
     <div class="page-header main-header">
         <h1>Servicios</h1>
-        <p class="subtitle" style="text-transform: uppercase; letter-spacing: 4px; opacity: 0.6;">Audiovisuales</p>
+        <p class="subtitle">Audiovisuales</p>
     </div>
 
-    <div class="action-btn-container">
-        <button class="btn-solid-custom" style="padding: 1rem 2rem; font-size: 0.8rem;" onclick="openPromosModal()">Ver Paquetes Promocionales</button>
-        <button class="btn-solid-custom" style="background: transparent; border: 1px solid #8B3FCC; color: #8B3FCC; padding: 1rem 2rem; font-size: 0.8rem;" onclick="openModal()">Solicitar servicios</button>
+    <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 4rem;">
+        <button class="btn-solid-custom" style="padding: 1rem 2.8rem; font-size: 0.85rem;" onclick="openPromosModal()">Ver Paquetes Promocionales</button>
+        <button class="btn-outline-custom" onclick="openModal()">Solicitar servicios</button>
     </div>
 
-    <section class="service-section" style="margin-bottom: 6rem;">
-        <h2 class="purple-title">Estudio de Audio</h2>
+    <section class="service-section">
+        <h1 class="purple-title" style="text-align: center;">Estudio de Audio</h1>
         <div class="service-list">
             <div class="service-item">
-                <div style="display:flex; justify-content:space-between;"><h3>Mix</h3><span class="service-price">$150</span></div>
-                <p style="color:var(--text-secondary);">Balanceo, EQ y compresión profesional.</p>
+                <div class="service-item-header"><h3>Mix</h3><span class="service-price">$150</span></div>
+                <p class="service-desc">Balanceo perfecto, EQ, compresión y efectos profesionales.</p>
             </div>
             <div class="service-item">
-                <div style="display:flex; justify-content:space-between;"><h3>Master</h3><span class="service-price">$150</span></div>
-                <p style="color:var(--text-secondary);">Volumen comercial y pegada final.</p>
+                <div class="service-item-header"><h3>Master</h3><span class="service-price">$150</span></div>
+                <p class="service-desc">El pulido final. Volumen comercial y pegada listos para plataformas.</p>
             </div>
             <div class="service-item">
-                <div style="display:flex; justify-content:space-between;"><h3>Mejora IA</h3><span class="service-price">$100</span></div>
-                <p style="color:var(--text-secondary);">Tratamiento profesional para pistas IA.</p>
+                <div class="service-item-header"><h3>Mejora IA</h3><span class="service-price">$100</span></div>
+                <p class="service-desc">Tratamiento de mezcla profesional para limpiar y potenciar pistas IA.</p>
             </div>
             <div class="service-item">
-                <div style="display:flex; justify-content:space-between;"><h3>Beat Exclusivo</h3><span class="service-price">$200</span></div>
-                <p style="color:var(--text-secondary);">Producción instrumental única.</p>
+                <div class="service-item-header"><h3>Beat Exclusivo</h3><span class="service-price">$200</span></div>
+                <p class="service-desc">Creación de beat instrumental profesional adaptado a tu hit.</p>
             </div>
         </div>
     </section>
 
-    <section class="service-section" style="margin-bottom: 6rem;">
-        <h2 class="purple-title">Estudio Visual</h2>
+    <section class="service-section">
+        <h1 class="purple-title" style="text-align: center;">Estudio Visual</h1>
         <div class="service-list">
             <div class="service-item">
-                <div style="display:flex; justify-content:space-between;"><h3>Edición de Video</h3><span class="service-price">$150</span></div>
-                <p style="color:var(--text-secondary);">Cortes y color dinámico.</p>
+                <div class="service-item-header"><h3>Edición</h3><span class="service-price">$150</span></div>
+                <p class="service-desc">Cortes dinámicos y color cinemático para retención de audiencia.</p>
             </div>
             <div class="service-item">
-                <div style="display:flex; justify-content:space-between;"><h3>Producción IA</h3><span class="service-price">$350</span></div>
-                <p style="color:var(--text-secondary);">Videoclips generados con IA.</p>
+                <div class="service-item-header"><h3>Producción IA</h3><span class="service-price">$350</span></div>
+                <p class="service-desc">Videoclips hiperrealistas generados con IA de vanguardia.</p>
             </div>
         </div>
     </section>
 
-    <section class="service-section" style="margin-bottom: 6rem;">
-        <h2 class="purple-title">Agencia</h2>
+    <section class="service-section">
+        <h1 class="purple-title" style="text-align: center;">Agencia</h1>
         <div class="service-list">
             <div class="service-item">
-                <div style="display:flex; justify-content:space-between;"><h3>Campaña Viral</h3><span class="service-price">$200</span></div>
-                <p style="color:var(--text-secondary);">Estrategia de 50 Reels para tu música.</p>
+                <div class="service-item-header"><h3>Campaña 50 Reels</h3><span class="service-price">$200</span></div>
+                <p class="service-desc">Despliegue estratégico en nuestra red privada para viralizar tu música.</p>
             </div>
             <div class="service-item">
-                <div style="display:flex; justify-content:space-between;"><h3>Management</h3><span class="service-price">$250</span></div>
-                <p style="color:var(--text-secondary);">Escalabilidad y estrategia mensual.</p>
+                <div class="service-item-header"><h3>Management</h3><span class="service-price">$250</span></div>
+                <p class="service-desc">Estrategia semanal para escalar tu proyecto al millón.</p>
             </div>
         </div>
     </section>
-</div>
-
-<div class="modal" id="service-modal">
-    <div class="modal-content">
-        <button onclick="closeModal()" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:2rem; cursor:pointer;">&times;</button>
-        <h2 style="text-align:center; color:#300359; margin-bottom:2rem; font-weight:800;">SOLICITUD</h2>
-        
-        <form id="service-form" action="https://api.web3forms.com/submit" method="POST">
-            <input type="hidden" name="access_key" value="b91241a6-e5bd-482b-b19b-7d1f707121fa">
-            <input type="hidden" name="Servicios_Elegidos" id="hidden-services">
-            
-            <div style="margin-bottom:1.5rem;">
-                <label style="font-size:0.7rem; font-weight:800; letter-spacing:2px; display:block; margin-bottom:0.5rem;">TU NOMBRE</label>
-                <input type="text" name="name" required placeholder="Nombre completo" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); padding:1.2rem; border-radius:100px; color:white; box-sizing:border-box;">
-            </div>
-            
-            <div id="services-checklist-group">
-                <label class="service-checkbox"><input type="checkbox" data-service="Mix" data-price="150" onchange="calculateTotal()"><div class="service-info"><span>Mix</span><span style="color:var(--purple-glow); font-weight:800;">$150</span></div></label>
-                <label class="service-checkbox"><input type="checkbox" data-service="Master" data-price="150" onchange="calculateTotal()"><div class="service-info"><span>Master</span><span style="color:var(--purple-glow); font-weight:800;">$150</span></div></label>
-                <label class="service-checkbox"><input type="checkbox" data-service="Mejora IA" data-price="100" onchange="calculateTotal()"><div class="service-info"><span>Mejora IA</span><span style="color:var(--purple-glow); font-weight:800;">$100</span></div></label>
-                <label class="service-checkbox"><input type="checkbox" data-service="Edición de Video" data-price="150" onchange="calculateTotal()"><div class="service-info"><span>Edición de Video</span><span style="color:var(--purple-glow); font-weight:800;">$150</span></div></label>
-                <label class="service-checkbox"><input type="checkbox" data-service="Producción IA" data-price="350" onchange="calculateTotal()"><div class="service-info"><span>Producción IA</span><span style="color:var(--purple-glow); font-weight:800;">$350</span></div></label>
-                <label class="service-checkbox"><input type="checkbox" data-service="Beat Exclusivo" data-price="200" onchange="calculateTotal()"><div class="service-info"><span>Beat Exclusivo</span><span style="color:var(--purple-glow); font-weight:800;">$200</span></div></label>
-                <label class="service-checkbox"><input type="checkbox" data-service="Campaña Viral" data-price="200" onchange="calculateTotal()"><div class="service-info"><span>Campaña Viral</span><span style="color:var(--purple-glow); font-weight:800;">$200</span></div></label>
-                <label class="service-checkbox"><input type="checkbox" data-service="Management" data-price="250" onchange="calculateTotal()"><div class="service-info"><span>Management</span><span style="color:var(--purple-glow); font-weight:800;">$250</span></div></label>
-            </div>
-
-            <div id="smart-promo-container" style="margin-top:1rem;"></div>
-
-            <div style="margin-top:2rem; border-top:1px solid var(--glass-border); padding-top:1rem; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-weight:800; letter-spacing:2px;">TOTAL</span>
-                <span style="font-size:2.2rem; font-weight:900;" id="total-display">$0</span>
-            </div>
-            <button type="button" id="btn-submit-form" disabled onclick="addServicesToCart()" class="btn-solid-custom" style="width:100%; margin-top:1.5rem;">Añadir al Carrito</button>
-        </form>
-    </div>
 </div>
 
 <div class="modal" id="promos-modal">
     <div class="modal-content">
-        <button onclick="closePromosModal()" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:2rem; cursor:pointer;">&times;</button>
-        <h2 style="text-align:center; color:#300359; margin-bottom:2rem; font-weight:800;">PROMOCIONES</h2>
-        <div style="display:flex; flex-direction:column; gap:1.5rem;">
-            <div style="padding:1.5rem; border:1px solid var(--glass-border); border-radius:15px; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <h3 style="margin:0;">Upgrade IA</h3>
-                    <p style="margin:5px 0; font-size:0.8rem; opacity:0.6;">IA + Mix + Master</p>
-                    <span style="color:var(--purple-glow); font-weight:900; font-size:1.2rem;">$220</span>
-                </div>
-                <button class="btn-solid-custom" style="padding:0.8rem 1.5rem; font-size:0.7rem;" onclick="selectPromo('Upgrade IA', 220)">Seleccionar</button>
+        <button class="close-modal" onclick="closePromosModal()">&times;</button>
+        <h2 style="color: #300359; text-align: center; font-weight: 800; margin-bottom: 2rem;">PROMOCIONES</h2>
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div><h3>Upgrade IA</h3><span style="color:#8B3FCC; font-weight:900;">$220</span></div>
+                <button class="btn-solid-custom" style="padding: 0.6rem 1.5rem; font-size: 0.7rem;" onclick="selectPromo('Upgrade IA', 220)">Seleccionar</button>
             </div>
-            <div style="padding:1.5rem; border:1px solid var(--glass-border); border-radius:15px; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <h3 style="margin:0;">Artista Independiente</h3>
-                    <p style="margin:5px 0; font-size:0.8rem; opacity:0.6;">Mix + Master + Campaña</p>
-                    <span style="color:var(--purple-glow); font-weight:900; font-size:1.2rem;">$350</span>
-                </div>
-                <button class="btn-solid-custom" style="padding:0.8rem 1.5rem; font-size:0.7rem;" onclick="selectPromo('Artista Independiente', 350)">Seleccionar</button>
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div><h3>Artista Independiente</h3><span style="color:#8B3FCC; font-weight:900;">$350</span></div>
+                <button class="btn-solid-custom" style="padding: 0.6rem 1.5rem; font-size: 0.7rem;" onclick="selectPromo('Artista Independiente', 350)">Seleccionar</button>
             </div>
-            <div style="padding:1.5rem; border:1px solid var(--glass-border); border-radius:15px; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <h3 style="margin:0;">Audiovisual Pro</h3>
-                    <p style="margin:5px 0; font-size:0.8rem; opacity:0.6;">Mix + Master + Video IA</p>
-                    <span style="color:var(--purple-glow); font-weight:900; font-size:1.2rem;">$450</span>
-                </div>
-                <button class="btn-solid-custom" style="padding:0.8rem 1.5rem; font-size:0.7rem;" onclick="selectPromo('Audiovisual Pro', 450)">Seleccionar</button>
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div><h3>Audiovisual Pro</h3><span style="color:#8B3FCC; font-weight:900;">$450</span></div>
+                <button class="btn-solid-custom" style="padding: 0.6rem 1.5rem; font-size: 0.7rem;" onclick="selectPromo('Audiovisual Pro', 450)">Seleccionar</button>
             </div>
-             <div style="padding:1.5rem; border:1px solid var(--glass-border); border-radius:15px; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <h3 style="margin:0;">Código del Millón</h3>
-                    <p style="margin:5px 0; font-size:0.8rem; opacity:0.6;">Pack Completo Estratégico</p>
-                    <span style="color:var(--purple-glow); font-weight:900; font-size:1.2rem;">$899</span>
-                </div>
-                <button class="btn-solid-custom" style="padding:0.8rem 1.5rem; font-size:0.7rem;" onclick="selectPromo('Código del Millón', 899)">Seleccionar</button>
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div><h3>Emprendedor Musical</h3><span style="color:#8B3FCC; font-weight:900;">$499</span></div>
+                <button class="btn-solid-custom" style="padding: 0.6rem 1.5rem; font-size: 0.7rem;" onclick="selectPromo('Emprendedor Musical', 499)">Seleccionar</button>
+            </div>
+            <div style="border-bottom: none; padding-bottom: 0; display: flex; justify-content: space-between; align-items: center;">
+                <div><h3>Código del Millón</h3><span style="color:#8B3FCC; font-weight:900;">$899</span></div>
+                <button class="btn-solid-custom" style="padding: 0.6rem 1.5rem; font-size: 0.7rem;" onclick="selectPromo('Código del Millón', 899)">Seleccionar</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="cart-drawer" id="cart-drawer">
-    <div class="cart-header">
-        <h2 style="margin:0; font-weight:900; letter-spacing:1px;">TU CARRITO</h2>
-        <button onclick="toggleCart()" style="background:none; border:none; color:white; font-size:1.8rem; cursor:pointer;">&times;</button>
+<div class="modal" id="service-modal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal()">&times;</button>
+        <h2 style="color: #300359; text-align: center; font-weight: 800; margin-bottom: 2rem;">SOLICITUD</h2>
+        <form id="service-form">
+            <input type="hidden" id="hidden-services">
+            <div id="services-checklist-group">
+                <label class="service-checkbox"><input type="checkbox" data-service="Mix" data-price="150" onchange="calculateTotal()"><div class="service-info"><span>Mix</span><span class="sb-price">$150</span></div></label>
+                <label class="service-checkbox"><input type="checkbox" data-service="Master" data-price="150" onchange="calculateTotal()"><div class="service-info"><span>Master</span><span class="sb-price">$150</span></div></label>
+                <label class="service-checkbox"><input type="checkbox" data-service="Mejora IA" data-price="100" onchange="calculateTotal()"><div class="service-info"><span>Mejora IA</span><span class="sb-price">$100</span></div></label>
+                <label class="service-checkbox"><input type="checkbox" data-service="Edición" data-price="150" onchange="calculateTotal()"><div class="service-info"><span>Edición</span><span class="sb-price">$150</span></div></label>
+                <label class="service-checkbox"><input type="checkbox" data-service="Producción IA" data-price="350" onchange="calculateTotal()"><div class="service-info"><span>Producción IA</span><span class="sb-price">$350</span></div></label>
+                <label class="service-checkbox"><input type="checkbox" data-service="Beat Exclusivo" data-price="200" onchange="calculateTotal()"><div class="service-info"><span>Beat Exclusivo</span><span class="sb-price">$200</span></div></label>
+                <label class="service-checkbox"><input type="checkbox" data-service="Campaña 50 Reels" data-price="200" onchange="calculateTotal()"><div class="service-info"><span>Campaña 50 Reels</span><span class="sb-price">$200</span></div></label>
+                <label class="service-checkbox"><input type="checkbox" data-service="Management" data-price="250" onchange="calculateTotal()"><div class="service-info"><span>Management</span><span class="sb-price">$250</span></div></label>
+            </div>
+            <div style="margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 800;">TOTAL</span><span style="font-size: 2rem; font-weight: 900;" id="total-display">$0</span>
+            </div>
+            <button type="button" id="btn-submit-form" disabled onclick="addServicesToCart()" class="btn-solid-custom" style="width: 100%; margin-top: 1.5rem;">Añadir al Carrito</button>
+        </form>
     </div>
-    <div class="cart-items" id="cart-items">
-        </div>
+</div>
+
+<div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header"><h2>TU CARRITO</h2><button onclick="toggleCart()" style="background:none; border:none; color:white; font-size:2rem;">&times;</button></div>
+    <div class="cart-items" id="cart-items"></div>
     <div class="cart-footer">
-        <div class="cart-total-row">
-            <span>TOTAL</span>
-            <span id="cart-total-amount">$0.00</span>
-        </div>
-        <button class="btn-solid-custom" style="width:100%; height:60px;" onclick="window.location.href='/checkout'">PAGAR</button>
+        <div class="cart-total"><span>TOTAL</span><span id="cart-total-amount">$0.00</span></div>
+        <button class="btn-solid-custom" style="width:100%;" onclick="window.location.href='/checkout'">PAGAR</button>
     </div>
 </div>
 
@@ -310,44 +199,31 @@
 
     function calculateTotal() {
         let total = 0; let selected = [];
-        checkboxes.forEach(cb => {
-            if(cb.checked) {
-                total += parseInt(cb.dataset.price);
-                selected.push(cb.dataset.service);
-            }
-        });
-        if(selected.includes('Mix') && selected.includes('Master')) {
-            total -= 100;
-            document.getElementById('smart-promo-container').innerHTML = '<div style="color:#00ff88; font-weight:800; text-align:right;">PROMO MIX+MASTER -$100</div>';
-        } else {
-            document.getElementById('smart-promo-container').innerHTML = '';
-        }
+        checkboxes.forEach(cb => { if(cb.checked) { total += parseInt(cb.dataset.price); selected.push(cb.dataset.service); } });
         document.getElementById('total-display').innerText = '$' + total;
         hiddenServicesInput.value = selected.join(', ');
         document.getElementById('btn-submit-form').disabled = total === 0;
     }
 
     function selectPromo(name, price) {
-        closePromosModal();
-        openModal();
+        closePromosModal(); openModal();
         document.getElementById('services-checklist-group').style.display = 'none';
         document.getElementById('total-display').innerText = '$' + price;
         hiddenServicesInput.value = "PAQUETE: " + name;
         document.getElementById('btn-submit-form').disabled = false;
     }
 
-    async function addServicesToCart() {
+    function addServicesToCart() {
         const total = parseInt(document.getElementById('total-display').innerText.replace('$',''));
         if(window.addItemToCart) {
             window.addItemToCart({
-                id: 'servicios-myooz-' + Date.now(),
+                id: 'svc-' + Date.now(),
                 name: "SERVICIOS MYOOZ InC",
                 price: total,
                 image: 'myooz-inc-logo.png',
                 details: hiddenServicesInput.value
             }, { id: 'v1', label: "Premium" }, true);
-            closeModal();
-            toggleCart();
+            closeModal(); toggleCart();
         }
     }
 </script>
