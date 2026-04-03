@@ -34,7 +34,7 @@
             padding: 0 20px;
         }
 
-        /* HEADER & BUTTON ALIGNMENT */
+        /* HEADER ALIGNMENT */
         .page-header.main-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -62,7 +62,7 @@
             .action-btn-container { align-items: center; margin-top: 2rem; }
         }
 
-        /* UNIFIED CART DRAWER (Fixes Empty Info) */
+        /* CART DRAWER MATCHING SCREENSHOT 2 */
         .cart-drawer {
             position: fixed;
             top: 0;
@@ -97,14 +97,14 @@
 
         .cart-footer {
             padding: 2rem;
-            background: rgba(255,255,255,0.02);
+            background: #0a0a0a;
             border-top: 1px solid var(--glass-border);
         }
 
-        .cart-total {
+        .cart-total-row {
             display: flex;
             justify-content: space-between;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             font-weight: 900;
             margin-bottom: 1.5rem;
             text-transform: uppercase;
@@ -127,16 +127,13 @@
         @media screen and (max-width: 900px) { .service-list { grid-template-columns: 1fr; } }
         .service-item { padding-bottom: 2rem; border-bottom: 1px solid var(--glass-border); }
         .service-price { font-weight: 800; color: var(--purple-glow); font-size: 1.35rem; }
-        .purple-title { color: #300359; font-weight: 800; text-transform: uppercase; text-align: center; font-size: 3rem; }
+        .purple-title { color: #300359; font-weight: 800; text-transform: uppercase; text-align: center; font-size: 3rem; margin-bottom: 1rem;}
 
         /* FORM ELEMENTS */
         .service-checkbox { display: flex; align-items: center; padding: 1.2rem 0; border-bottom: 1px solid var(--glass-border); cursor: pointer; gap: 1.5rem; }
         .service-info { display: flex; justify-content: space-between; width: 100%; }
-        .total-val { font-size: 2.2rem; font-weight: 900; color: #fff; }
         
         .btn-solid-custom { background: #300359; color: white; padding: 1.25rem 3.5rem; border-radius: 100px; font-weight: 800; text-transform: uppercase; border: none; cursor: pointer; transition: 0.3s; }
-        .btn-solid-custom:hover { opacity: 0.8; transform: translateY(-2px); }
-        .btn-solid-custom:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
     </style>
 </head>
 <body>
@@ -152,38 +149,52 @@
         <button class="btn-solid-custom" style="background: transparent; border: 1px solid #8B3FCC; color: #8B3FCC; padding: 1rem 2rem; font-size: 0.8rem;" onclick="openModal()">Solicitar servicios</button>
     </div>
 
-    <section class="service-section" style="margin-bottom: 8rem;">
+    <section class="service-section" style="margin-bottom: 6rem;">
         <h2 class="purple-title">Estudio de Audio</h2>
         <div class="service-list">
             <div class="service-item">
                 <div style="display:flex; justify-content:space-between;"><h3>Mix</h3><span class="service-price">$150</span></div>
-                <p style="color:var(--text-secondary);">Balanceo perfecto, EQ y compresión profesional.</p>
+                <p style="color:var(--text-secondary);">Balanceo, EQ y compresión profesional.</p>
             </div>
             <div class="service-item">
                 <div style="display:flex; justify-content:space-between;"><h3>Master</h3><span class="service-price">$150</span></div>
-                <p style="color:var(--text-secondary);">Volumen comercial y pegada para plataformas.</p>
+                <p style="color:var(--text-secondary);">Volumen comercial y pegada final.</p>
             </div>
             <div class="service-item">
                 <div style="display:flex; justify-content:space-between;"><h3>Mejora IA</h3><span class="service-price">$100</span></div>
-                <p style="color:var(--text-secondary);">Potenciación de pistas generadas por Inteligencia Artificial.</p>
+                <p style="color:var(--text-secondary);">Tratamiento profesional para pistas IA.</p>
             </div>
             <div class="service-item">
                 <div style="display:flex; justify-content:space-between;"><h3>Beat Exclusivo</h3><span class="service-price">$200</span></div>
-                <p style="color:var(--text-secondary);">Creación de instrumental profesional desde cero.</p>
+                <p style="color:var(--text-secondary);">Producción instrumental única.</p>
             </div>
         </div>
     </section>
 
-    <section class="service-section" style="margin-bottom: 8rem;">
+    <section class="service-section" style="margin-bottom: 6rem;">
         <h2 class="purple-title">Estudio Visual</h2>
         <div class="service-list">
             <div class="service-item">
                 <div style="display:flex; justify-content:space-between;"><h3>Edición de Video</h3><span class="service-price">$150</span></div>
-                <p style="color:var(--text-secondary);">Color y cortes dinámicos para videoclips.</p>
+                <p style="color:var(--text-secondary);">Cortes y color dinámico.</p>
             </div>
             <div class="service-item">
                 <div style="display:flex; justify-content:space-between;"><h3>Producción IA</h3><span class="service-price">$350</span></div>
-                <p style="color:var(--text-secondary);">Universos visuales generados con IA.</p>
+                <p style="color:var(--text-secondary);">Videoclips generados con IA.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="service-section" style="margin-bottom: 6rem;">
+        <h2 class="purple-title">Agencia</h2>
+        <div class="service-list">
+            <div class="service-item">
+                <div style="display:flex; justify-content:space-between;"><h3>Campaña Viral</h3><span class="service-price">$200</span></div>
+                <p style="color:var(--text-secondary);">Estrategia de 50 Reels para tu música.</p>
+            </div>
+            <div class="service-item">
+                <div style="display:flex; justify-content:space-between;"><h3>Management</h3><span class="service-price">$250</span></div>
+                <p style="color:var(--text-secondary);">Escalabilidad y estrategia mensual.</p>
             </div>
         </div>
     </section>
@@ -192,13 +203,16 @@
 <div class="modal" id="service-modal">
     <div class="modal-content">
         <button onclick="closeModal()" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:2rem; cursor:pointer;">&times;</button>
-        <h2 style="text-align:center; color:#300359; margin-bottom:2rem;">SOLICITUD DE SERVICIOS</h2>
+        <h2 style="text-align:center; color:#300359; margin-bottom:2rem; font-weight:800;">SOLICITUD</h2>
         
         <form id="service-form" action="https://api.web3forms.com/submit" method="POST">
             <input type="hidden" name="access_key" value="b91241a6-e5bd-482b-b19b-7d1f707121fa">
             <input type="hidden" name="Servicios_Elegidos" id="hidden-services">
             
-            <input type="text" name="name" required placeholder="Tu Nombre" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); padding:1rem; border-radius:10px; color:white; margin-bottom:1rem;">
+            <div style="margin-bottom:1.5rem;">
+                <label style="font-size:0.7rem; font-weight:800; letter-spacing:2px; display:block; margin-bottom:0.5rem;">TU NOMBRE</label>
+                <input type="text" name="name" required placeholder="Nombre completo" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); padding:1.2rem; border-radius:100px; color:white; box-sizing:border-box;">
+            </div>
             
             <div id="services-checklist-group">
                 <label class="service-checkbox"><input type="checkbox" data-service="Mix" data-price="150" onchange="calculateTotal()"><div class="service-info"><span>Mix</span><span style="color:var(--purple-glow); font-weight:800;">$150</span></div></label>
@@ -214,27 +228,68 @@
             <div id="smart-promo-container" style="margin-top:1rem;"></div>
 
             <div style="margin-top:2rem; border-top:1px solid var(--glass-border); padding-top:1rem; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-weight:800;">TOTAL</span>
-                <span class="total-val" id="total-display">$0</span>
+                <span style="font-weight:800; letter-spacing:2px;">TOTAL</span>
+                <span style="font-size:2.2rem; font-weight:900;" id="total-display">$0</span>
             </div>
-            <button type="button" id="btn-submit-form" disabled onclick="addServicesToCart()" class="btn-solid-custom" style="width:100%; margin-top:2rem;">Añadir al Carrito</button>
+            <button type="button" id="btn-submit-form" disabled onclick="addServicesToCart()" class="btn-solid-custom" style="width:100%; margin-top:1.5rem;">Añadir al Carrito</button>
         </form>
+    </div>
+</div>
+
+<div class="modal" id="promos-modal">
+    <div class="modal-content">
+        <button onclick="closePromosModal()" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:2rem; cursor:pointer;">&times;</button>
+        <h2 style="text-align:center; color:#300359; margin-bottom:2rem; font-weight:800;">PROMOCIONES</h2>
+        <div style="display:flex; flex-direction:column; gap:1.5rem;">
+            <div style="padding:1.5rem; border:1px solid var(--glass-border); border-radius:15px; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <h3 style="margin:0;">Upgrade IA</h3>
+                    <p style="margin:5px 0; font-size:0.8rem; opacity:0.6;">IA + Mix + Master</p>
+                    <span style="color:var(--purple-glow); font-weight:900; font-size:1.2rem;">$220</span>
+                </div>
+                <button class="btn-solid-custom" style="padding:0.8rem 1.5rem; font-size:0.7rem;" onclick="selectPromo('Upgrade IA', 220)">Seleccionar</button>
+            </div>
+            <div style="padding:1.5rem; border:1px solid var(--glass-border); border-radius:15px; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <h3 style="margin:0;">Artista Independiente</h3>
+                    <p style="margin:5px 0; font-size:0.8rem; opacity:0.6;">Mix + Master + Campaña</p>
+                    <span style="color:var(--purple-glow); font-weight:900; font-size:1.2rem;">$350</span>
+                </div>
+                <button class="btn-solid-custom" style="padding:0.8rem 1.5rem; font-size:0.7rem;" onclick="selectPromo('Artista Independiente', 350)">Seleccionar</button>
+            </div>
+            <div style="padding:1.5rem; border:1px solid var(--glass-border); border-radius:15px; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <h3 style="margin:0;">Audiovisual Pro</h3>
+                    <p style="margin:5px 0; font-size:0.8rem; opacity:0.6;">Mix + Master + Video IA</p>
+                    <span style="color:var(--purple-glow); font-weight:900; font-size:1.2rem;">$450</span>
+                </div>
+                <button class="btn-solid-custom" style="padding:0.8rem 1.5rem; font-size:0.7rem;" onclick="selectPromo('Audiovisual Pro', 450)">Seleccionar</button>
+            </div>
+             <div style="padding:1.5rem; border:1px solid var(--glass-border); border-radius:15px; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <h3 style="margin:0;">Código del Millón</h3>
+                    <p style="margin:5px 0; font-size:0.8rem; opacity:0.6;">Pack Completo Estratégico</p>
+                    <span style="color:var(--purple-glow); font-weight:900; font-size:1.2rem;">$899</span>
+                </div>
+                <button class="btn-solid-custom" style="padding:0.8rem 1.5rem; font-size:0.7rem;" onclick="selectPromo('Código del Millón', 899)">Seleccionar</button>
+            </div>
+        </div>
     </div>
 </div>
 
 <div class="cart-drawer" id="cart-drawer">
     <div class="cart-header">
-        <h2 style="margin:0; font-weight:800;">TU CARRITO</h2>
-        <button onclick="toggleCart()" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+        <h2 style="margin:0; font-weight:900; letter-spacing:1px;">TU CARRITO</h2>
+        <button onclick="toggleCart()" style="background:none; border:none; color:white; font-size:1.8rem; cursor:pointer;">&times;</button>
     </div>
     <div class="cart-items" id="cart-items">
         </div>
     <div class="cart-footer">
-        <div class="cart-total">
+        <div class="cart-total-row">
             <span>TOTAL</span>
             <span id="cart-total-amount">$0.00</span>
         </div>
-        <button class="btn-solid-custom" style="width:100%;" onclick="initiateCheckout()">PAGAR</button>
+        <button class="btn-solid-custom" style="width:100%; height:60px;" onclick="window.location.href='/checkout'">PAGAR</button>
     </div>
 </div>
 
@@ -243,11 +298,14 @@
 <script src="cart-manager.js"></script>
 <script>
     const modal = document.getElementById('service-modal');
+    const pModal = document.getElementById('promos-modal');
     const hiddenServicesInput = document.getElementById('hidden-services');
     const checkboxes = document.querySelectorAll('.service-checkbox input');
 
-    function openModal() { modal.classList.add('active'); }
+    function openModal() { modal.classList.add('active'); document.getElementById('services-checklist-group').style.display = 'block'; }
     function closeModal() { modal.classList.remove('active'); }
+    function openPromosModal() { pModal.classList.add('active'); }
+    function closePromosModal() { pModal.classList.remove('active'); }
     function toggleCart() { document.getElementById('cart-drawer').classList.toggle('open'); }
 
     function calculateTotal() {
@@ -258,42 +316,39 @@
                 selected.push(cb.dataset.service);
             }
         });
-
-        // Mix+Master Discount Logic
         if(selected.includes('Mix') && selected.includes('Master')) {
             total -= 100;
-            document.getElementById('smart-promo-container').innerHTML = '<div style="color:#00ff88; font-weight:800; text-align:right; font-size:0.8rem;">PROMO MIX+MASTER: -$100 APLICADO</div>';
+            document.getElementById('smart-promo-container').innerHTML = '<div style="color:#00ff88; font-weight:800; text-align:right;">PROMO MIX+MASTER -$100</div>';
         } else {
             document.getElementById('smart-promo-container').innerHTML = '';
         }
-
         document.getElementById('total-display').innerText = '$' + total;
         hiddenServicesInput.value = selected.join(', ');
         document.getElementById('btn-submit-form').disabled = total === 0;
     }
 
+    function selectPromo(name, price) {
+        closePromosModal();
+        openModal();
+        document.getElementById('services-checklist-group').style.display = 'none';
+        document.getElementById('total-display').innerText = '$' + price;
+        hiddenServicesInput.value = "PAQUETE: " + name;
+        document.getElementById('btn-submit-form').disabled = false;
+    }
+
     async function addServicesToCart() {
         const total = parseInt(document.getElementById('total-display').innerText.replace('$',''));
-        const details = hiddenServicesInput.value;
-
-        // Uses your existing cart-manager.js function
         if(window.addItemToCart) {
             window.addItemToCart({
-                id: 'servicios-myooz',
+                id: 'servicios-myooz-' + Date.now(),
                 name: "SERVICIOS MYOOZ InC",
                 price: total,
-                image: 'https://myoozinc.github.io/myooz-inc-logo.png', // Ensure this path is correct
-                details: details
-            }, { id: 'service-variant', label: "Servicios" }, true);
-            
+                image: 'myooz-inc-logo.png',
+                details: hiddenServicesInput.value
+            }, { id: 'v1', label: "Premium" }, true);
             closeModal();
             toggleCart();
         }
-    }
-
-    function initiateCheckout() {
-        // Redirect to your payment processing page or Shopify checkout
-        window.location.href = "/checkout"; 
     }
 </script>
 </body>
