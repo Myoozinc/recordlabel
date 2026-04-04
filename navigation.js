@@ -14,13 +14,26 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.text())
         .then(data => {
             document.body.insertAdjacentHTML('beforeend', data);
-            
-            // Re-sync cart UI if cart-manager is present
-            if (typeof updateCartUI === 'function') {
-                updateCartUI();
-            }
         })
         .catch(error => console.error('Error loading footer:', error));
+
+    // Load cart drawer ONLY on shop-enabled pages
+    const shopPages = ['servicios.html', 'tienda.html', 'joss.html', 'rasta-mia.html', 'ggbbeats.html'];
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+    if (shopPages.includes(currentPage)) {
+        fetch('cart-drawer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.body.insertAdjacentHTML('beforeend', data);
+                
+                // Re-sync cart UI if cart-manager is present
+                if (typeof updateCartUI === 'function') {
+                    updateCartUI();
+                }
+            })
+            .catch(error => console.error('Error loading cart drawer:', error));
+    }
 });
 
 // Set active state on navigation links

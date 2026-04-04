@@ -18,31 +18,4 @@
         <a href="privacy.html" target="_blank">Política de Privacidad</a> | 
         <a href="terms.html" target="_blank">Términos y Condiciones</a>
     </p>
-
-    <!-- Floating Cart Button -->
-    <button class="floating-cart-btn" onclick="toggleCart()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#fff;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-        <div id="cart-count" class="cart-count">0</div>
-    </button>
-
-    <!-- Cart Drawer -->
-    <div id="cart-drawer" class="cart-drawer">
-        <div class="cart-header">
-            <h2 style="font-size:1.5rem; font-weight:800; text-transform:uppercase; margin:0;">Tu Carrito</h2>
-            <button onclick="toggleCart()" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer; padding:0;">&times;</button>
-        </div>
-        
-        <div id="cart-items" class="cart-items" style="flex:1; overflow-y:auto;">
-            <!-- Cart items injected here -->
-        </div>
-
-        <div class="cart-footer">
-            <div class="cart-total" style="display:flex; justify-content:space-between; font-weight:800; margin-bottom: 1.5rem;">
-                <span>TOTAL</span>
-                <span id="cart-total-display">$0.00</span>
-            </div>
-
-            <button id="checkout-continue-btn" class="add-to-cart-btn" style="margin-top: 1.5rem; width: 100%; padding: 16px; font-size: 1rem; cursor:pointer;" onclick="processUnifiedCheckout()">PAGAR</button>
-        </div>
-    </div>
 </footer>
