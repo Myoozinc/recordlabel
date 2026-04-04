@@ -261,7 +261,7 @@
 .cart-drawer {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
     width: 450px;
     height: 100%;
     background: #0a0a0a;
@@ -271,10 +271,13 @@
     display: flex;
     flex-direction: column;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateX(100%);
+    visibility: hidden;
 }
 
 .cart-drawer.open {
-    right: 0;
+    transform: translateX(0);
+    visibility: visible;
 }
 
 @media (max-width: 600px) {
