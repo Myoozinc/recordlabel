@@ -157,82 +157,23 @@
 
             </div>
         </div>
-        <div class="content-section">
-            <h2 class="section-title" style="font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1.5rem;color:var(--text-white);">Merch Oficial</h2>
-            <div id="artist-merch-container" class="products-grid">
-                <!-- Merch will be loaded here -->
-            </div>
-        </div>
-        <div class="content-section">
-
-        </div>
         <a href="productores.html" class="nav-back">← Nuestros Productores</a>
-    </div>
-
-    <!-- Modal Success -->
-    <div id="payment-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 20000; justify-content: center; align-items: center;">
-        <div style="background: #111; border: 1px solid rgba(255,255,255,0.1); padding: 3rem; border-radius: 40px; max-width: 500px; width: 90%; text-align: center;">
-            <h2 id="modal-title" style="font-size: 2rem; margin-bottom: 1rem; background: linear-gradient(135deg, #300359, #8B3FCC); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">¡Pedido Recibido!</h2>
-            <p id="modal-body" style="color: rgba(255,255,255,0.7); margin-bottom: 2rem;">Gracias por tu compra. Pronto recibirás un correo con los detalles del envío.</p>
-            <button onclick="closeModal()" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 12px 30px; border-radius: 100px; cursor: pointer; font-weight: 700;">Cerrar</button>
-        </div>
-    </div>
-
-    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
-    <script src="navigation.js"></script>
-    <script src="merch-renderer.js"></script>
-    <script>
-        function showModal(title, body) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-body').innerText = body;
-            document.getElementById('payment-modal').style.display = 'flex';
-        }
-        function closeModal() {
-            document.getElementById('payment-modal').style.display = 'none';
-        }
-        window.addEventListener('load', () => {
-            renderMerchGrid('artist-merch-container', 'GGB Beats Logo', true);
-        });
-    </script>
-
-    <!-- Licence Request Modal -->
-    <div class="modal-overlay" id="licenceModal">
-        <div class="modal-box">
-            <button class="modal-close" onclick="closeModal()">&#x2715;</button>
-            <h2 class="modal-title">Solicitar Licencia</h2>
-            <p class="modal-sub">Completa el formulario y te contactamos.</p>
-            <form onsubmit="submitLicenceForm(event)">
-                <div class="modal-field" id="beat-name-container">
-                    <label for="beat-name">Nombre del Beat</label>
-                    <input type="text" id="beat-name" placeholder="¿Cuál es el beat?" required>
-                </div>
-                <div class="modal-field">
-                    <label for="client-name">Tu Nombre</label>
-                    <input type="text" id="client-name" placeholder="Tu Nombre o Alias" required>
-                </div>
-                <div class="modal-field">
-                    <label for="licence-type">Tipo de Licencia</label>
-                    <select id="licence-type">
-                        <option value="WAV Lease — $100">WAV Lease — $100</option>
-                        <option value="Licencia Exclusiva (Beat Personalizado) — A partir de $200">Licencia Exclusiva (Beat Personalizado) — A partir de $200</option>
-                    </select>
-                </div>
-                <div class="modal-field">
-                    <label for="client-email">Tu Email</label>
-                    <input type="email" id="client-email" placeholder="tu@email.com" required>
-                </div>
-                <button type="submit" class="modal-submit">Enviar solicitud</button>
-            </form>
-        </div>
     </div>
 
     <!-- Footer will be loaded here by navigation.js -->
     <script src="navigation.js"></script>
+    <script src="merch-renderer.js"></script>
+    <script src="cart-manager.js" defer></script>
+    <!-- Modal Success -->
+    <div id="payment-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 20000; justify-content: center; align-items: center;">
+        <div style="background: #111; border: 1px solid rgba(255,255,255,0.1); padding: 3rem; border-radius: 40px; max-width: 500px; width: 90%; text-align: center;">
+            <h2 id="modal-title-success" style="font-size: 2rem; margin-bottom: 1rem; background: linear-gradient(135deg, #300359, #8B3FCC); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">¡Pedido Recibido!</h2>
+            <p id="modal-body-success" style="color: rgba(255,255,255,0.7); margin-bottom: 2rem;">Gracias por tu compra. Pronto recibirás un correo con los detalles del envío.</p>
+            <button onclick="document.getElementById('payment-modal').style.display='none'" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: 700;">Cerrar</button>
+        </div>
+    </div>
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
     <script>
-        window.addEventListener('load', () => {
-            renderMerchGrid('artist-merch-container', 'GGB Beats', true);
-        });
-
         function openModal(type, price) {
             document.getElementById('licenceModal').classList.add('open');
             document.body.style.overflow = 'hidden';
@@ -293,5 +234,7 @@
             }).catch(() => { alert('Error de conexión.'); });
         }
     </script>
+</body>
+</html>
 </body>
 </html>

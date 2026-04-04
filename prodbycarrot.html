@@ -9,8 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="merch.css">
-    <script src="merch-renderer.js" defer></script>
     <script src="cart-manager.js" defer></script>
     <style>
         body { overflow-x: hidden; }
@@ -164,12 +162,6 @@
 
         </div>
 
-        <div class="content-section">
-            <h2 class="section-title" style="font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1.5rem;color:var(--text-white);">Merch Oficial</h2>
-            <div id="artist-merch-container" class="products-grid">
-                <!-- Merch will be loaded here -->
-            </div>
-        </div>
         <a href="productores.html" class="nav-back">← Nuestros Productores</a>
     </div>
 
@@ -206,9 +198,7 @@
 
     <script src="navigation.js"></script>
     <script>
-        window.addEventListener('load', () => {
-            renderMerchGrid('artist-merch-container', 'Prodbycarrot', true);
-        });
+
 
         function openModal(type, price) {
             document.getElementById('licence-type').value = type + ' — ' + price;
