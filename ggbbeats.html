@@ -252,22 +252,11 @@
             }).catch(() => { alert('Error de conexión.'); });
         }
 
-        // --- Optimized Merch Initialization ---
-        const initMerch = () => {
-            console.log('Initializing GGB Merch...');
+        window.addEventListener('load', () => {
             if (typeof renderMerchGrid === 'function') {
                 renderMerchGrid('artist-merch-container', 'GGB BEATS LOGO', true);
-            } else {
-                console.warn('renderMerchGrid not found, retrying in 500ms...');
-                setTimeout(initMerch, 500);
             }
-        };
-
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            initMerch();
-        } else {
-            window.addEventListener('load', initMerch);
-        }
+        });
     </script>
 </body>
 </html>
