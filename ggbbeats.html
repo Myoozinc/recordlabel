@@ -168,6 +168,15 @@
 
             </div>
         </div>
+
+        <!-- MERCH -->
+        <div class="content-section">
+            <h2 class="section-title" style="font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1.5rem;color:var(--text-white);">Merch Oficial</h2>
+            <div id="artist-merch-container" class="products-grid">
+                <!-- Merch will be loaded here -->
+            </div>
+        </div>
+        
         <a href="productores.html" class="nav-back">← Nuestros Productores</a>
     </div>
 
@@ -244,6 +253,12 @@
                 } else { alert('Error al enviar. Inténtalo de nuevo.'); }
             }).catch(() => { alert('Error de conexión.'); });
         }
+
+        window.addEventListener('load', () => {
+            if (typeof renderMerchGrid === 'function') {
+                renderMerchGrid('artist-merch-container', 'GGB BEATS LOGO', true);
+            }
+        });
     </script>
 </body>
 </html>
