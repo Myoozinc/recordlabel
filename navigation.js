@@ -51,3 +51,15 @@ function setActiveNavLink() {
         }
     });
 }
+
+// --- GTM Spotify Tracking ---
+document.addEventListener('click', function(e) {
+    const spotifyLink = e.target.closest('a[href*="spotify.com"]');
+    if (spotifyLink && window.dataLayer) {
+        window.dataLayer.push({
+            'event': 'spotify_click',
+            'spotify_url': spotifyLink.href,
+            'spotify_artist': spotifyLink.closest('.talent-content') || spotifyLink.closest('.hero-content') ? document.title.split('|')[0].trim() : 'General'
+        });
+    }
+});
