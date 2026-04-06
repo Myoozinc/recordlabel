@@ -182,8 +182,6 @@
 
     <!-- Footer will be loaded here by navigation.js -->
     <script src="navigation.js"></script>
-    <script src="merch-renderer.js"></script>
-    <script src="cart-manager.js" defer></script>
     <!-- Modal Success -->
     <div id="payment-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 20000; justify-content: center; align-items: center;">
         <div style="background: #111; border: 1px solid rgba(255,255,255,0.1); padding: 3rem; border-radius: 40px; max-width: 500px; width: 90%; text-align: center;">
@@ -254,11 +252,22 @@
             }).catch(() => { alert('Error de conexión.'); });
         }
 
-        window.addEventListener('load', () => {
+        // --- Optimized Merch Initialization ---
+        const initMerch = () => {
+            console.log('Initializing GGB Merch...');
             if (typeof renderMerchGrid === 'function') {
                 renderMerchGrid('artist-merch-container', 'GGB BEATS LOGO', true);
+            } else {
+                console.warn('renderMerchGrid not found, retrying in 500ms...');
+                setTimeout(initMerch, 500);
             }
-        });
+        };
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            initMerch();
+        } else {
+            window.addEventListener('load', initMerch);
+        }
     </script>
 </body>
 </html>
