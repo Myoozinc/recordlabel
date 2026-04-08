@@ -530,6 +530,8 @@
 </style>
 
 
+    <script src="merch-renderer.js" defer></script>
+    <script src="cart-manager.js" defer></script>
 </head><body>
 
 <div class="container">
@@ -835,8 +837,6 @@
 </div>
 
 <script src="navigation.js"></script>
-<script src="merch-renderer.js"></script>
-<script src="cart-manager.js"></script>
 <script>
     const modal = document.getElementById('service-modal');
     const promosModal = document.getElementById('promos-modal');
@@ -1076,7 +1076,7 @@
                 id: serviceProduct.id,
                 name: "SERVICIOS MYOOZ InC",
                 price: currentTotal,
-                image: 'myooz-inc-logo.png', // Fallback icon
+                image: 'images/myooz-inc-logo.png', // Fallback icon
                 details: trackingDetails
             }, {
                 id: variantId,
