@@ -541,10 +541,10 @@
     </div>
 
     <div class="action-btn-container" style="margin-top: -3.5rem; margin-bottom: 4rem; display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem;">
-        <button class="promo-trigger-btn" onclick="openPromosModal()">
+        <button class="promo-trigger-btn" data-action="open-promos">
             Ver Paquetes Promocionales
         </button>
-        <button class="btn-outline-custom" onclick="openModal()">Solicitar servicios</button>
+        <button class="btn-outline-custom" data-action="open-modal">Solicitar servicios</button>
     </div>
 
     <!-- Estudio Musical -->
@@ -643,7 +643,7 @@
     </section>
 
     <div class="action-btn-container" style="margin-bottom: 4rem; justify-content: center;">
-        <button class="btn-solid-custom" onclick="openModal()">Solicitar servicios</button>
+        <button class="btn-solid-custom" data-action="open-modal">Solicitar servicios</button>
     </div>
 
 </div>
@@ -652,7 +652,7 @@
 
 <div class="modal" id="promos-modal">
     <div class="modal-content">
-        <button class="close-modal" onclick="closePromosModal()">&times;</button>
+        <button class="close-modal" data-action="close-promos">&times;</button>
         <div style="text-align: center; margin-bottom: 2.5rem;">
             <h2 style="color: #300359; font-size: 2.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -1px; margin-bottom: 0.5rem;">PROMOCIONES</h2>
             <p style="color: #fff; text-transform: uppercase; letter-spacing: 3px; font-size: 0.75rem; font-weight: 400; opacity: 0.9;">Precios Especiales</p>
@@ -669,7 +669,7 @@
                     </div>
                 </div>
                 <p class="promo-item-desc">Mejora de canción IA + Mix & Master. <br><strong style="color: var(--purple-glow);">AHORRAS $80 USD</strong></p>
-                <button class="promo-btn-select" onclick="selectPromo('Paquete Upgrade IA', 220, 'Mejora de Canción IA, Mix, Master', 300)">Seleccionar →</button>
+                <button class="promo-btn-select" data-action="select-promo" data-name="Paquete Upgrade IA" data-price="220" data-services="Mejora de Canción IA, Mix, Master" data-original="300">Seleccionar →</button>
             </div>
 
             <!-- Promo 2 -->
@@ -682,7 +682,7 @@
                     </div>
                 </div>
                 <p class="promo-item-desc">Beat Exclusivo + Mix & Master. <br><strong style="color: var(--purple-glow);">AHORRAS $50 USD</strong></p>
-                <button class="promo-btn-select" onclick="selectPromo('Paquete Artista Independiente', 350, 'Beat Exclusivo, Mix, Master', 400)">Seleccionar →</button>
+                <button class="promo-btn-select" data-action="select-promo" data-name="Paquete Artista Independiente" data-price="350" data-services="Beat Exclusivo, Mix, Master" data-original="400">Seleccionar →</button>
             </div>
 
             <!-- Promo EXTRA (New Request) -->
@@ -695,7 +695,7 @@
                     </div>
                 </div>
                 <p class="promo-item-desc">Producción Urbana + Mix & Master + Edición de Video. <br><strong style="color: var(--purple-glow);">AHORRAS $100 USD</strong></p>
-                <button class="promo-btn-select" onclick="selectPromo('Paquete Audiovisual Pro', 450, 'Beat Exclusivo, Mix, Master, Edición de Videoclip', 550)">Seleccionar →</button>
+                <button class="promo-btn-select" data-action="select-promo" data-name="Paquete Audiovisual Pro" data-price="450" data-services="Beat Exclusivo, Mix, Master, Edición de Videoclip" data-original="550">Seleccionar →</button>
             </div>
 
             <!-- Promo 3 -->
@@ -708,7 +708,7 @@
                     </div>
                 </div>
                 <p class="promo-item-desc">Beat + Mix/Master + 50 Reels. <br><strong style="color: var(--purple-glow);">AHORRAS $101 USD</strong></p>
-                <button class="promo-btn-select" onclick="selectPromo('Paquete Emprendedor Musical', 499, 'Beat Original, Mix, Master, 50 Reels', 600)">Seleccionar →</button>
+                <button class="promo-btn-select" data-action="select-promo" data-name="Paquete Emprendedor Musical" data-price="499" data-services="Beat Original, Mix, Master, 50 Reels" data-original="600">Seleccionar →</button>
             </div>
 
             <!-- Promo 4 (Limited) -->
@@ -722,7 +722,7 @@
                     </div>
                 </div>
                 <p class="promo-item-desc">Ecosistema completo VIP. <br><strong style="color: var(--purple-glow);">TODO INCLUIDO</strong></p>
-                <button class="promo-btn-select" onclick="selectPromo('Código del Millón', 899, 'Beat Original, Mix, Master, Videoclip IA, 50 Reels, Management', 1200)">Seleccionar →</button>
+                <button class="promo-btn-select" data-action="select-promo" data-name="Código del Millón" data-price="899" data-services="Beat Original, Mix, Master, Videoclip IA, 50 Reels, Management" data-original="1200">Seleccionar →</button>
             </div>
         </div>
     </div>
@@ -731,7 +731,7 @@
 <!-- Modal Form -->
 <div class="modal" id="service-modal">
     <div class="modal-content">
-        <button class="close-modal" onclick="closeModal()">&times;</button>
+        <button class="close-modal" data-action="close-modal">&times;</button>
         <div style="text-align: center; margin-bottom: 2.5rem;">
             <h2 style="color: #300359; font-size: 2.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -1px; margin-bottom: 0.5rem;">SOLICITUD</h2>
             <p style="color: #fff; text-transform: uppercase; letter-spacing: 3px; font-size: 0.75rem; font-weight: 400; opacity: 0.9;">Servicios Profesionales</p>
@@ -759,7 +759,7 @@
                 <label>Selecciona los servicios:</label>
                 
                 <label class="service-checkbox">
-                    <input type="checkbox" data-service="Mix" data-price="150" onchange="calculateTotal()">
+                    <input type="checkbox" data-service="Mix" data-price="150" data-action="calculate-total">
                     <div class="service-info">
                         <span>Mix</span>
                         <div class="sb-price">$150</div>
@@ -767,7 +767,7 @@
                 </label>
 
                 <label class="service-checkbox">
-                    <input type="checkbox" data-service="Master" data-price="150" onchange="calculateTotal()">
+                    <input type="checkbox" data-service="Master" data-price="150" data-action="calculate-total">
                     <div class="service-info">
                         <span>Master</span>
                         <div class="sb-price">$150</div>
@@ -775,7 +775,7 @@
                 </label>
 
                 <label class="service-checkbox">
-                    <input type="checkbox" data-service="Mejora de Canción IA" data-price="100" onchange="calculateTotal()">
+                    <input type="checkbox" data-service="Mejora de Canción IA" data-price="100" data-action="calculate-total">
                     <div class="service-info">
                         <span>Mejora de Canción IA</span>
                         <div class="sb-price">$100</div>
@@ -783,7 +783,7 @@
                 </label>
 
                 <label class="service-checkbox">
-                    <input type="checkbox" data-service="Edición de Videoclip" data-price="150" onchange="calculateTotal()">
+                    <input type="checkbox" data-service="Edición de Videoclip" data-price="150" data-action="calculate-total">
                     <div class="service-info">
                         <span>Edición de Videoclip</span>
                         <div class="sb-price">$150</div>
@@ -791,7 +791,7 @@
                 </label>
 
                 <label class="service-checkbox">
-                    <input type="checkbox" data-service="Producción de Videoclip IA" data-price="350" onchange="calculateTotal()">
+                    <input type="checkbox" data-service="Producción de Videoclip IA" data-price="350" data-action="calculate-total">
                     <div class="service-info">
                         <span>Producción de Videoclip IA</span>
                         <div class="sb-price">$350</div>
@@ -799,7 +799,7 @@
                 </label>
 
                 <label class="service-checkbox">
-                    <input type="checkbox" data-service="Beat Exclusivo" data-price="200" onchange="calculateTotal()">
+                    <input type="checkbox" data-service="Beat Exclusivo" data-price="200" data-action="calculate-total">
                     <div class="service-info">
                         <span>Beat Exclusivo</span>
                         <div class="sb-price">$200</div>
@@ -807,7 +807,7 @@
                 </label>
 
                 <label class="service-checkbox">
-                    <input type="checkbox" data-service="Campaña Viral 50 Reels" data-price="200" onchange="calculateTotal()">
+                    <input type="checkbox" data-service="Campaña Viral 50 Reels" data-price="200" data-action="calculate-total">
                     <div class="service-info">
                         <span>Campaña Viral 50 Reels</span>
                         <div class="sb-price">$200</div>
@@ -815,7 +815,7 @@
                 </label>
 
                 <label class="service-checkbox">
-                    <input type="checkbox" data-service="Management Estratégico" data-price="250" onchange="calculateTotal()">
+                    <input type="checkbox" data-service="Management Estratégico" data-price="250" data-action="calculate-total">
                     <div class="service-info">
                         <span>Management Estratégico</span>
                         <div class="sb-price">$250</div>
@@ -916,7 +916,7 @@
                 ${servicesListHtml}
             </div>
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <button type="button" onclick="openPromosModal()" style="background: transparent; color: var(--purple-glow); border: 1px solid var(--purple-glow); padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: 0.3s;">← Volver a Promos</button>
+                <button type="button" data-action="open-promos" style="background: transparent; color: var(--purple-glow); border: 1px solid var(--purple-glow); padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: 0.3s;">← Volver a Promos</button>
             </div>
         `;
         
