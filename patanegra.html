@@ -16,6 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="profile.css">
     <style>
         body{overflow-x:hidden;}.container{margin-top:0;padding-top:0;}
         .hero-section{position:relative;width:100%;min-height:65vh;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;padding-bottom:2rem;}
@@ -27,32 +28,12 @@
         .artist-name{font-family:'Outfit',sans-serif;font-size:clamp(2.5rem,8.5vw,5.5rem);font-weight:800;text-transform:uppercase;letter-spacing:-2px;line-height:0.9;padding:0 0.5rem;margin-bottom:1rem;background:linear-gradient(180deg,#fff 30%,rgba(255,255,255,0.2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:nameReveal 0.8s ease 0.4s both;}
         @keyframes nameReveal{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
         .hero-socials{display:flex;gap:1rem;justify-content:center;animation:nameReveal 0.8s ease 0.7s both;}
-        .talent-content{max-width:1000px;margin:0 auto;padding:2rem 2rem 4rem;}
-        .content-section{margin-bottom:2.5rem;}
-        .video-grid{display:flex;gap:1.25rem;overflow-x:auto;scrollbar-width:none;padding:1rem 0;scroll-snap-type:x mandatory;}
-        .video-grid::-webkit-scrollbar{display:none;}
-        .video-item{flex:0 0 320px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.02);transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);transform:scale(0.96);scroll-snap-align:start;border:1px solid rgba(255,255,255,0.05);}
-        .video-item:hover{transform:scale(1.05);z-index:10;border-color:var(--purple-glow);box-shadow:0 10px 30px rgba(0,0,0,0.5);}
-        .video-item iframe{width:100%;height:100%;border:none;display:block;}
-        .video-placeholder{display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.1);font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;}
-        .music-embed{border-radius:8px;overflow:hidden;}
-        .music-embed iframe{width:100%;border:none;border-radius:8px;display:block;}
-        .licences-embed{border-radius:8px;overflow:hidden;}
-        .licences-embed iframe{width:100%;border:none;border-radius:8px;display:block;min-height:500px;}
-        .bio-text{color:var(--text-secondary);line-height:1.9;font-size:1rem;max-width:720px;}
-        .nav-back{display:inline-flex;align-items:center;gap:0.5rem;padding:10px 24px;border:1px solid var(--glass-border);border-radius:8px;color:var(--text-secondary);text-decoration:none;font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;transition:all 0.3s;}
-        .nav-back:hover{border-color:var(--purple-core);color:var(--text-white);}
         @media (max-width: 600px) {
             .hero-section { min-height: 50vh; padding-bottom: 1.5rem; }
             .hero-content { padding: 0 1rem; }
             .artist-name { font-size: clamp(1.8rem, 9vw, 3rem); letter-spacing: -1px; }
-            .talent-content { padding: 1.5rem 1rem 3rem; }
-            .content-section { margin-bottom: 2rem; }
-            .video-grid { padding: 0.5rem 0; }
-            .video-item { flex: 0 0 85vw; max-width: 85vw; transform: scale(1); }
-            .music-embed iframe { height: 352px; }
-            .nav-back { padding: 12px 20px; min-height: 44px; font-size: 0.75rem; }
         }
+        /* Profile components loaded via profile.css */
     </style>
 </head>
 <body>

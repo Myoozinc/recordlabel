@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="merch.css">
+    <link rel="stylesheet" href="profile.css">
     <script src="merch-renderer.js" defer></script>
     <script src="cart-manager.js" defer></script>
     <style>
@@ -37,35 +38,7 @@
         }
         @keyframes nameReveal { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
         .hero-socials { display: flex; gap: 1.5rem; justify-content: center; animation: nameReveal 0.8s ease 0.7s both; padding-top: 1rem; }
-        .talent-content { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 5rem; position: relative; z-index: 3; }
-        .content-section { margin-bottom: 3rem; }
-        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
-        .section-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 4px; color: rgba(255,255,255,0.4); margin: 0; }
-        
-        .video-grid { display: flex; gap: 1.25rem; overflow-x: auto; scrollbar-width: none; padding: 1rem 0; scroll-snap-type: x mandatory; }
-        .video-grid::-webkit-scrollbar { display: none; }
-        .video-item { flex: 0 0 320px; scroll-snap-align: start; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: scale(0.96); }
-        .video-item:hover { border-color: #8B3FCC; transform: scale(1.05); z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .video-item iframe { width: 100%; height: 100%; border: none; display: block; }
-        
-        .music-embed { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .music-embed iframe { width: 100%; border: none; border-radius: 12px; display: block; }
-        
-        .bio-text { color: rgba(255,255,255,0.6); line-height: 2; font-size: 1.15rem; max-width: 800px; margin: 0 auto; text-align: left; }
-        .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; padding: 10px 24px; border: 1px solid var(--glass-border); border-radius: 8px; color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s; margin-top: 5rem; }
-        .nav-back:hover { border-color: var(--purple-core); color: var(--text-white); }
-        @media (max-width: 600px) {
-            .hero-section { min-height: 50vh; padding-bottom: 1.5rem; }
-            .hero-content { padding: 0 1rem; }
-            .artist-name { font-size: clamp(2.2rem, 10vw, 4rem); letter-spacing: -1px; }
-            .talent-content { padding: 1.5rem 1rem 3rem; }
-            .content-section { margin-bottom: 2rem; }
-            .video-grid { padding: 0.5rem 0; }
-            .video-item { flex: 0 0 85vw; max-width: 85vw; transform: scale(1); }
-            .music-embed iframe { height: 352px; }
-            .bio-text { font-size: 1rem; line-height: 1.8; }
-            .nav-back { padding: 12px 20px; min-height: 44px; font-size: 0.75rem; margin-top: 2rem; }
-        }
+        /* Profile components loaded via profile.css */
     </style>
 </head>
 <body>

@@ -16,6 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="profile.css">
     <script src="cart-manager.js" defer></script>
     <style>
         body{overflow-x:hidden;}.container{margin-top:0;padding-top:0;}
@@ -28,65 +29,12 @@
         .artist-name{font-family:'Outfit',sans-serif;font-size:clamp(2.5rem,8.5vw,5.5rem);font-weight:800;text-transform:uppercase;letter-spacing:-2px;line-height:0.9;padding:0 0.5rem;margin-bottom:1rem;background:linear-gradient(180deg,#fff 30%,rgba(255,255,255,0.2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:nameReveal 0.8s ease 0.4s both;}
         @keyframes nameReveal{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
         .hero-socials{display:flex;gap:1rem;justify-content:center;animation:nameReveal 0.8s ease 0.7s both;}
-        .talent-content{max-width:1000px;margin:0 auto;padding:2rem 2rem 4rem;}
-        .content-section{margin-bottom:2.5rem;}
-        .video-grid{display:flex;gap:1.25rem;overflow-x:auto;scrollbar-width:none;padding:1rem 0;scroll-snap-type:x mandatory;}
-        .video-grid::-webkit-scrollbar{display:none;}
-        .video-item{flex:0 0 320px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.02);transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);transform:scale(0.96);scroll-snap-align:start;border:1px solid rgba(255,255,255,0.05);}
-        .video-item:hover{transform:scale(1.05);z-index:10;border-color:var(--purple-glow);box-shadow:0 10px 30px rgba(0,0,0,0.5);}
-        .video-item iframe{width:100%;height:100%;border:none;display:block;}
-        .video-placeholder{display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.1);font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;}
-        .music-embed{border-radius:8px;overflow:hidden;}
-        .music-embed iframe{width:100%;border:none;border-radius:8px;display:block;}
-        .licences-section { margin-bottom: 5rem; }
-        .licences-intro { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.7; }
-        .licence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-        .licence-card { padding: 2rem 2.5rem 2rem 0; border-top: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 1.2rem; }
-        .licence-card:last-child { padding-left: 2.5rem; padding-right: 0; border-left: 1px solid var(--glass-border); border-top: 1px solid var(--glass-border); }
-        .licence-card.featured { background: none; border-color: var(--glass-border); }
-        .licence-header { display: flex; flex-direction: column; gap: 0.4rem; }
-        .licence-name { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-secondary); }
-        .licence-price { font-size: 2.5rem; font-weight: 800; letter-spacing: -2px; background: linear-gradient(0deg, #300359 0%, #8B3FCC 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
-        .licence-type { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-white); }
-        .licence-formats { color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; padding-top: 0.2rem; border-top: 1px solid var(--glass-border); }
-        .licence-terms { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; flex: 1; }
-        .licence-terms li { display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.4; }
-        .licence-terms svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px; opacity: 0.6; }
-        .licence-cta { display: inline-block; text-align: center; padding: 10px 0; border: 1px solid rgba(139,63,204,0.9); border-radius: 8px; color: #8B3FCC; background-color: transparent !important; -webkit-appearance: none; appearance: none; cursor: pointer; text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s; font-family: 'Outfit', sans-serif; }
-        .licence-cta:hover { background: rgba(139,63,204,0.15); border-color: #8B3FCC; color: #fff; }
-        @media (max-width: 640px) { .licence-grid { grid-template-columns: 1fr; } .licence-card { padding: 2rem 0 !important; } .licence-card:last-child { padding: 2rem 0 !important; border-left: none !important; } }
-        /* Modal */
-        .modal-overlay{position:fixed;inset:0;background:rgba(5,5,5,0.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:5000;opacity:0;pointer-events:none;transition:opacity 0.3s;}
-        .modal-overlay.open{opacity:1;pointer-events:all;}
-        .modal-box{background:#0a0a0a;border:1px solid rgba(139,63,204,0.45);border-radius:12px;padding:2.5rem;width:min(460px,90vw);position:relative;transform:translateY(20px);transition:transform 0.3s;}
-        .modal-overlay.open .modal-box{transform:translateY(0);}
-        .modal-close{position:absolute;top:1.2rem;right:1.4rem;background:none;border:none;color:var(--text-secondary);font-size:1.1rem;cursor:pointer;padding:0;line-height:1;}
-        .modal-close:hover{color:#fff;}
-        .modal-title{font-size:1.3rem;font-weight:800;text-transform:uppercase;letter-spacing:-0.5px;margin-bottom:0.3rem;background:linear-gradient(180deg,#fff 30%,rgba(255,255,255,0.3) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-        .modal-sub{color:var(--text-secondary);font-size:0.82rem;margin-bottom:2rem;}
-        .modal-field{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.4rem;}
-        .modal-field label{font-size:0.72rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-secondary);}
-        .modal-field input,.modal-field select{background:rgba(255,255,255,0.04);border:1px solid var(--glass-border);border-radius:8px;padding:12px 16px;color:#fff;font-family:'Outfit',sans-serif;font-size:0.9rem;width:100%;transition:border-color 0.3s;}
-        .modal-field input:focus,.modal-field select:focus{outline:none;border-color:rgba(139,63,204,0.7);}
-        .modal-field select option{background:#0a0a0a;}
-        .modal-submit{width:100%;padding:14px;background:#300359;border:none;border-radius: 8px;color:#fff;font-family:'Outfit',sans-serif;font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;cursor:pointer;transition:all 0.3s;margin-top:0.5rem;}
-        .modal-submit:hover{background:#8B3FCC;}
-        .bio-text{color:var(--text-secondary);line-height:1.9;font-size:1rem;max-width:720px;}
-        .nav-back{display:inline-flex;align-items:center;gap:0.5rem;padding:10px 24px;border:1px solid var(--glass-border);border-radius:8px;color:var(--text-secondary);text-decoration:none;font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;transition:all 0.3s;}
-        .nav-back:hover{border-color:var(--purple-core);color:var(--text-white);}
         @media (max-width: 600px) {
             .hero-section { min-height: 50vh; padding-bottom: 1.5rem; }
             .hero-content { padding: 0 1rem; }
             .artist-name { font-size: clamp(1.8rem, 9vw, 3rem); letter-spacing: -1px; }
-            .talent-content { padding: 1.5rem 1rem 3rem; }
-            .content-section { margin-bottom: 2rem; }
-            .video-grid { padding: 0.5rem 0; }
-            .video-item { flex: 0 0 85vw; max-width: 85vw; transform: scale(1); }
-            .music-embed iframe { height: 352px; }
-            .nav-back { padding: 12px 20px; min-height: 44px; font-size: 0.75rem; }
-            .modal-box { padding: 1.5rem; }
-            .modal-field input, .modal-field select { font-size: 16px; }
         }
+        /* Profile components loaded via profile.css */
     </style>
 </head>
 <body>
