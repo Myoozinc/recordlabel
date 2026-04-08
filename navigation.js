@@ -38,6 +38,21 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => console.error('Error loading cart drawer:', error));
     }
+
+    // ── Cart Event Delegation (CSP-compliant) ──
+    // Handles clicks on dynamically-injected cart-drawer buttons
+    document.body.addEventListener('click', function(e) {
+        const toggle = e.target.closest('[data-action="toggle-cart"]');
+        if (toggle && typeof toggleCart === 'function') {
+            toggleCart();
+            return;
+        }
+        const checkout = e.target.closest('[data-action="checkout"]');
+        if (checkout && typeof processUnifiedCheckout === 'function') {
+            processUnifiedCheckout();
+            return;
+        }
+    });
 });
 
 // Set active state on navigation links

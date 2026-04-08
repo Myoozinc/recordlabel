@@ -318,7 +318,7 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
                             const isActive = activeOptions[p.id][opt.name] === val;
                             optionsHTML += `<button class="size-pill ${isActive ? 'active' : ''}"
                                 style="padding:4px 12px; border:1px solid ${isActive ? '#8B3FCC' : 'rgba(255,255,255,0.1)'}; background:${isActive ? 'rgba(139,63,204,0.1)' : 'transparent'}; color:#fff; border-radius:4px; cursor:pointer; font-size:0.8rem;"
-                                onclick="updateShopifyOption('${p.id}', '${opt.name}', '${val.replace(/'/g, "\\'")}')">
+                                data-action="update-option" data-product-id="${p.id}" data-option-name="${opt.name}" data-option-value="${val.replace(/"/g, '&quot;')}">
                                 ${val}
                             </button>`;
                         });
