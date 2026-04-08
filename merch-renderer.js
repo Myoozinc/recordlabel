@@ -298,10 +298,10 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
                         <div class="option-values" style="display:flex; gap:8px; margin-top:5px; flex-wrap:wrap;">`;
 
                     if (isColor) {
-                        optionsHTML += `<select class="color-select" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 8px 12px; border-radius: 6px; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 0.85rem; outline: none; margin-bottom: 5px; width: 100%;" onchange="updateShopifyOption('${p.id}', '${opt.name}', this.value)">`;
+                        optionsHTML += `<select class="color-select" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 8px 12px; border-radius: 6px; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 0.85rem; outline: none; margin-bottom: 5px; width: 100%;" data-action="update-option" data-product-id="${p.id}" data-option-name="${opt.name}">`;
                         opt.values.forEach(val => {
                             const isSelected = activeOptions[p.id][opt.name] === val;
-                            optionsHTML += `<option value="${val.replace(/'/g, "\\'")}" style="color: #000; background: #fff;" ${isSelected ? 'selected' : ''}>${val}</option>`;
+                            optionsHTML += `<option value="${val.replace(/"/g, '&quot;')}" style="color: #000; background: #fff;" ${isSelected ? 'selected' : ''}>${val}</option>`;
                         });
                         optionsHTML += `</select>`;
                     } else {
@@ -341,13 +341,31 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
                             <small>USD</small> $${parseFloat(price).toFixed(2)}
                         </div>
                         ${optionsHTML}
-                        <button class="add-to-cart-btn" onclick="addShopifyToCart('${p.id}')" style="margin-top:auto;">
+                        <button class="add-to-cart-btn" data-action="add-to-cart" data-product-id="${p.id}" style="margin-top:auto;">
                             AÑADIR AL CARRITO
                         </button>
                     </div>
                 </div>
             `;
         }).join('');
+
+        // ── Event Delegation (CSP-compliant — replaces inline onclick/onchange) ──
+        grid.onclick = function(e) {
+            const addBtn = e.target.closest('[data-action="add-to-cart"]');
+            if (addBtn) { addShopifyToCart(addBtn.dataset.productId, addBtn); return; }
+
+            const sizeBtn = e.target.closest('[data-action="update-option"]');
+            if (sizeBtn && sizeBtn.tagName === 'BUTTON') {
+                updateShopifyOption(sizeBtn.dataset.productId, sizeBtn.dataset.optionName, sizeBtn.dataset.optionValue);
+            }
+        };
+        grid.onchange = function(e) {
+            const sel = e.target.closest('[data-action="update-option"]');
+            if (sel && sel.tagName === 'SELECT') {
+                updateShopifyOption(sel.dataset.productId, sel.dataset.optionName, e.target.value);
+            }
+        };
+
     } catch(err) {
         console.error('Error fetching Shopify products:', err);
         grid.innerHTML = `<p style="color:red; text-align:center; grid-column: 1/-1; padding: 3rem;">Error cargando catálogo: ${err.message}</p>`;
@@ -412,7 +430,7 @@ function updateShopifyOption(productId, optionName, optionValue) {
 }
 
 // ========== ADD TO CART ==========
-async function addShopifyToCart(productId) {
+async function addShopifyToCart(productId, btnEl) {
     const product = shopifyProducts.find(p => p.id === productId);
     const variant = selectedVariants[productId] || product.variants[0];
 
@@ -426,13 +444,13 @@ async function addShopifyToCart(productId) {
         }, {
             id: variant.id,
             label: variant.title
-        });
+        }, false, btnEl);
         return;
     }
 
     // Quick Checkout for artist pages
     try {
-        const btn = (typeof event !== 'undefined' && event) ? event.target : document.querySelector(`[onclick="addShopifyToCart('${productId}')"]`);
+        const btn = btnEl || document.querySelector(`[data-action="add-to-cart"][data-product-id="${productId}"]`);
         if (btn) {
             btn.innerText = 'CONECTANDO...';
             btn.style.opacity = '0.5';

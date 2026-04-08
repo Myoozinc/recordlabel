@@ -19,7 +19,7 @@ function toggleCart() {
     }
 }
 
-window.addItemToCart = function(product, variant, isService = false) {
+window.addItemToCart = function(product, variant, isService = false, triggerBtn = null) {
     if (isService) {
         // Handle services as a special bundle or update existing service item
         const existingServiceIndex = cart.findIndex(item => item.isService);
@@ -65,8 +65,9 @@ window.addItemToCart = function(product, variant, isService = false) {
     saveCart();
     
     // Feedback on trigger button if possible
-    if (typeof event !== 'undefined' && event && event.target && event.target.innerText) {
-        const btn = event.target;
+    const _btn = triggerBtn || (typeof event !== 'undefined' && event && event.target && event.target.tagName === 'BUTTON' ? event.target : null);
+    if (_btn && _btn.innerText) {
+        const btn = _btn;
         const originalText = btn.innerText;
         btn.innerText = '¡AÑADIDO!';
         const originalBg = btn.style.background;
@@ -121,9 +122,15 @@ function renderCart() {
                 <div class="cart-item-price">$${item.price.toFixed(2)}</div>
                 ${item.isService ? `<div style="font-size:0.6rem; color:rgba(255,255,255,0.4); margin-top:4px;">${item.details}</div>` : ''}
             </div>
-            <div class="remove-item" onclick="removeFromCart('${item.uniqueId}')">Eliminar</div>
+            <div class="remove-item" data-action="remove-item" data-unique-id="${item.uniqueId}" style="cursor:pointer;">Eliminar</div>
         </div>
     `).join('');
+
+    // ── Event Delegation (CSP-compliant — replaces inline onclick) ──
+    container.onclick = function(e) {
+        const removeBtn = e.target.closest('[data-action="remove-item"]');
+        if (removeBtn) removeFromCart(removeBtn.dataset.uniqueId);
+    };
 
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     totalDisplay.innerText = '$' + total.toFixed(2);
