@@ -121,6 +121,11 @@
     </section>
 
     <div class="talent-content">
+
+        <div style="margin-bottom: 3rem;">
+            <a href="productores.html" class="nav-back" style="margin-top: 0;">← Nuestros Productores</a>
+        </div>
+
         <div class="content-section">
             <div class="video-grid">
                 <div class="video-item"><iframe src="https://www.youtube.com/embed/OAMM8ji9pr0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
@@ -190,6 +195,37 @@
         </div>
         
         <a href="productores.html" class="nav-back">← Nuestros Productores</a>
+    </div>
+
+    <!-- Licence Request Modal -->
+    <div class="modal-overlay" id="licenceModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+            <h2 class="modal-title">Solicitar Licencia</h2>
+            <p class="modal-sub">Completa el formulario y te contactamos.</p>
+            <form onsubmit="submitLicenceForm(event)">
+                <div class="modal-field" id="beat-name-container">
+                    <label for="beat-name">Nombre del Beat</label>
+                    <input type="text" id="beat-name" placeholder="¿Cuál es el beat?" required>
+                </div>
+                <div class="modal-field">
+                    <label for="client-name">Tu Nombre</label>
+                    <input type="text" id="client-name" placeholder="Tu Nombre o Alias" required>
+                </div>
+                <div class="modal-field">
+                    <label for="licence-type">Tipo de Licencia</label>
+                    <select id="licence-type">
+                        <option value="WAV Lease — $100">WAV Lease — $100</option>
+                        <option value="Licencia Exclusiva (Beat Personalizado) — A partir de $200">Licencia Exclusiva (Beat Personalizado) — A partir de $200</option>
+                    </select>
+                </div>
+                <div class="modal-field">
+                    <label for="client-email">Tu Email</label>
+                    <input type="email" id="client-email" placeholder="tu@email.com" required>
+                </div>
+                <button type="submit" class="modal-submit">Enviar solicitud</button>
+            </form>
+        </div>
     </div>
 
     <!-- Footer will be loaded here by navigation.js -->

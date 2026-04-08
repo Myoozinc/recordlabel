@@ -4,8 +4,12 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('header.html')
         .then(response => response.text())
         .then(data => {
-            document.body.insertAdjacentHTML('afterbegin', data);
-            setActiveNavLink();
+            const noHeaderPages = ['rasta-mia.html', 'joss.html', 'prodbycarrot.html', 'ggbbeats.html', 'mnimalbeats.html', 'patanegra.html'];
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            if (!noHeaderPages.includes(currentPage)) {
+                document.body.insertAdjacentHTML('afterbegin', data);
+                setActiveNavLink();
+            }
         })
         .catch(error => console.error('Error loading header:', error));
 
