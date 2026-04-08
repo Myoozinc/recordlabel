@@ -204,6 +204,13 @@
             <h2 class="modal-title">Solicitar Licencia</h2>
             <p class="modal-sub">Completa el formulario y te contactamos.</p>
             <form onsubmit="submitLicenceForm(event)">
+                <div class="modal-field">
+                    <label for="licence-type">Tipo de Licencia</label>
+                    <select id="licence-type">
+                        <option value="WAV Lease — $100">WAV Lease — $100</option>
+                        <option value="Licencia Exclusiva (Beat Personalizado) — A partir de $200">Licencia Exclusiva (Beat Personalizado) — A partir de $200</option>
+                    </select>
+                </div>
                 <div class="modal-field" id="beat-name-container">
                     <label for="beat-name">Nombre del Beat</label>
                     <input type="text" id="beat-name" placeholder="¿Cuál es el beat?" required>
@@ -211,13 +218,6 @@
                 <div class="modal-field">
                     <label for="client-name">Tu Nombre</label>
                     <input type="text" id="client-name" placeholder="Tu Nombre o Alias" required>
-                </div>
-                <div class="modal-field">
-                    <label for="licence-type">Tipo de Licencia</label>
-                    <select id="licence-type">
-                        <option value="WAV Lease — $100">WAV Lease — $100</option>
-                        <option value="Licencia Exclusiva (Beat Personalizado) — A partir de $200">Licencia Exclusiva (Beat Personalizado) — A partir de $200</option>
-                    </select>
                 </div>
                 <div class="modal-field">
                     <label for="client-email">Tu Email</label>
