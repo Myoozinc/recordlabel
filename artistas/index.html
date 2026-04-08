@@ -13,19 +13,22 @@
     <!-- End Google Tag Manager -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productores | MYOOZ InC</title>
-    <meta name="description" content="Nuestros Productores — Los arquitectos del sonido de MYOOZ InC.">
+    <title>Artistas | MYOOZ InC</title>
+    <meta name="description" content="Nuestros Artistas — Las voces de MYOOZ InC.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <style>
         .page-header {
             text-align: center;
             padding: 100px 2rem 3rem;
         }
 
-        .roster-panels { width: 100%; }
+        /* ── CINEMATIC EDITORIAL PANELS ── */
+        .roster-panels {
+            width: 100%;
+        }
 
         .talent-panel {
             display: block;
@@ -37,70 +40,131 @@
             text-decoration: none;
             border-top: 1px solid rgba(255, 255, 255, 0.04);
         }
-        .talent-panel:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
 
-        .panel-bg { position: absolute; inset: 0; }
+        .talent-panel:last-child {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* Atmospheric image background */
+        .panel-bg {
+            position: absolute;
+            inset: 0;
+        }
+
         .panel-bg img {
-            width: 100%; height: 100%;
-            object-fit: cover; object-position: center 25%;
-            filter: saturate(0.2) brightness(0.4);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 25%;
+            filter: saturate(0.25) brightness(0.45);
             transform: scale(1.06);
             transition: transform 0.8s ease, filter 0.6s ease;
         }
 
-        /* Specific focal points for producers with high faces */
-        .talent-panel[href="prodbycarrot.html"] img { object-position: center 15%; }
+        /* Specific focal points for artists with high faces */
+        .talent-panel[href="/rasta-mia/"] img { object-position: center 15%; }
+        .talent-panel[href="/joss/"] img { object-position: center 10%; }
 
         .talent-panel:hover .panel-bg img {
             transform: scale(1);
-            filter: saturate(0.4) brightness(0.55);
+            filter: saturate(0.45) brightness(0.55);
         }
 
+        /* Directional gradient overlay — alternates per entry */
         .panel-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(90deg, rgba(5,5,5,0.88) 0%, rgba(5,5,5,0.5) 45%, rgba(5,5,5,0.05) 100%);
-        }
-        .talent-panel.reverse .panel-overlay {
-            background: linear-gradient(270deg, rgba(5,5,5,0.88) 0%, rgba(5,5,5,0.5) 45%, rgba(5,5,5,0.05) 100%);
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,
+                rgba(5, 5, 5, 0.88) 0%,
+                rgba(5, 5, 5, 0.55) 45%,
+                rgba(5, 5, 5, 0.1) 100%
+            );
+            transition: opacity 0.5s ease;
         }
 
+        /* Alternate: image on left, text on right */
+        .talent-panel.reverse .panel-overlay {
+            background: linear-gradient(270deg,
+                rgba(5, 5, 5, 0.88) 0%,
+                rgba(5, 5, 5, 0.55) 45%,
+                rgba(5, 5, 5, 0.1) 100%
+            );
+        }
+
+        /* Content */
         .panel-content {
-            position: relative; z-index: 2;
+            position: relative;
+            z-index: 2;
             height: 100%;
-            display: flex; flex-direction: column; justify-content: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             padding: 0 7%;
         }
-        .talent-panel.reverse .panel-content { align-items: flex-end; text-align: right; }
 
-        /* Purple gradient — bottom-up */
+        .talent-panel.reverse .panel-content {
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        /* Purple gradient name — bottom-up */
         .panel-name {
             font-size: clamp(2.2rem, 5vw, 3.8rem);
-            font-weight: 800; text-transform: uppercase; letter-spacing: -1px; line-height: 1; margin-bottom: 0.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
             background: linear-gradient(180deg, #8B3FCC 0%, #300359 100%);
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             transition: filter 0.4s ease;
         }
-        .talent-panel:hover .panel-name { filter: brightness(1.3); }
 
-        .panel-tagline { color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1.2rem; }
+        .talent-panel:hover .panel-name {
+            filter: brightness(1.3);
+        }
+
+        .panel-tagline {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 1.5rem;
+        }
 
         .panel-cta {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            font-size: 0.72rem; text-transform: uppercase; letter-spacing: 3px; font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
             color: #300359;
-            opacity: 0; transform: translateX(-12px);
+            font-weight: 700;
+            opacity: 0;
+            transform: translateX(-12px);
             transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
         }
-        .talent-panel.reverse .panel-cta { transform: translateX(12px); }
-        .talent-panel:hover .panel-cta { opacity: 1; transform: translateX(0); color: #300359; }
+
+        .talent-panel.reverse .panel-cta {
+            transform: translateX(12px);
+        }
+
+        .talent-panel:hover .panel-cta {
+            opacity: 1;
+            transform: translateX(0);
+            color: #300359;
+        }
 
         @media (max-width: 600px) {
             .page-header {
                 padding: 85px 1.5rem 2rem;
             }
             .talent-panel {
-                height: 45vh;
-                min-height: 260px;
+                height: 55vh;
+                min-height: 280px;
             }
             .panel-content {
                 padding: 0 5%;
@@ -109,7 +173,7 @@
                 font-size: clamp(1.8rem, 8vw, 2.8rem);
             }
             .panel-tagline {
-                font-size: 0.7rem;
+                font-size: 0.75rem;
                 letter-spacing: 2px;
                 margin-bottom: 1rem;
             }
@@ -117,12 +181,12 @@
             .panel-cta {
                 opacity: 0.7;
                 transform: translateX(0);
-                font-size: 0.65rem;
+                font-size: 0.7rem;
             }
         }
     </style>
-    <script src="merch-renderer.js" defer></script>
-    <script src="cart-manager.js" defer></script>
+    <script src="/merch-renderer.js" defer></script>
+    <script src="/cart-manager.js" defer></script>
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
@@ -132,47 +196,27 @@
     <!-- Header will be loaded here by navigation.js -->
 
     <div class="page-header">
-        <h1>Nuestros Productores</h1>
+        <h1>Nuestros Artistas</h1>
     </div>
 
     <div class="roster-panels">
 
-        <a href="ggbbeats.html" class="talent-panel">
-            <div class="panel-bg"><img src="images/ggbbeats-logo.png" alt="GGB Beats"></div>
+        <a href="/rasta-mia/" class="talent-panel">
+            <div class="panel-bg"><img src="/images/rasta-mia.png" alt="Rasta Mia"></div>
             <div class="panel-overlay"></div>
             <div class="panel-content">
-                <h2 class="panel-name">GGB Beats</h2>
-                <p class="panel-tagline">Productor · Versátil Beats Urbanos</p>
+                <h2 class="panel-name">Rasta Mia</h2>
+                <p class="panel-tagline">Cantautora · Norte de Francia</p>
                 <span class="panel-cta">Ver →</span>
             </div>
         </a>
 
-        <a href="prodbycarrot.html" class="talent-panel reverse">
-            <div class="panel-bg"><img src="images/prodbycarrot.png" alt="Prodbycarrot"></div>
+        <a href="/joss/" class="talent-panel reverse">
+            <div class="panel-bg"><img src="/images/joss.png" alt="JOSS"></div>
             <div class="panel-overlay"></div>
             <div class="panel-content">
-                <h2 class="panel-name">Prodbycarrot</h2>
-                <p class="panel-tagline">Beatmaker · Chill urban & lofi</p>
-                <span class="panel-cta">← Ver</span>
-            </div>
-        </a>
-
-        <a href="mnimalbeats.html" class="talent-panel">
-            <div class="panel-bg"><img src="images/mnimalbeats-logo.png" alt="Mnimal Beats"></div>
-            <div class="panel-overlay"></div>
-            <div class="panel-content">
-                <h2 class="panel-name">Mnimal Beats</h2>
-                <p class="panel-tagline">Beatmaker · Dance urban beats</p>
-                <span class="panel-cta">Ver →</span>
-            </div>
-        </a>
-
-        <a href="patanegra.html" class="talent-panel reverse">
-            <div class="panel-bg"><img src="images/patanegra-logo.png" alt="Pata Negra"></div>
-            <div class="panel-overlay"></div>
-            <div class="panel-content">
-                <h2 class="panel-name">Pata Negra</h2>
-                <p class="panel-tagline">Compositor · Flamenco</p>
+                <h2 class="panel-name">JOSS</h2>
+                <p class="panel-tagline">Cantante &amp; Compositor · Venezuela</p>
                 <span class="panel-cta">← Ver</span>
             </div>
         </a>
@@ -180,6 +224,6 @@
     </div>
 
     <!-- Footer will be loaded here by navigation.js -->
-    <script src="navigation.js"></script>
+    <script src="/navigation.js"></script>
 </body>
 </html>

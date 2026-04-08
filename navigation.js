@@ -1,11 +1,12 @@
 // Load header and footer components
 document.addEventListener('DOMContentLoaded', function() {
     // Load header
-    fetch('header.html')
+    fetch('/header.html')
         .then(response => response.text())
         .then(data => {
-            const noHeaderPages = ['rasta-mia.html', 'joss.html', 'prodbycarrot.html', 'ggbbeats.html', 'mnimalbeats.html', 'patanegra.html'];
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const noHeaderPages = ['rasta-mia', 'joss', 'prodbycarrot', 'ggbbeats', 'mnimalbeats', 'patanegra'];
+            const pathSegments = window.location.pathname.split('/').filter(Boolean);
+            const currentPage = pathSegments.length > 0 ? pathSegments[pathSegments.length - 1] : 'index';
             if (!noHeaderPages.includes(currentPage)) {
                 document.body.insertAdjacentHTML('afterbegin', data);
                 setActiveNavLink();
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error loading header:', error));
 
     // Load footer
-    fetch('footer.html')
+    fetch('/footer.html')
         .then(response => response.text())
         .then(data => {
             document.body.insertAdjacentHTML('beforeend', data);
@@ -22,11 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error loading footer:', error));
 
     // Load cart drawer ONLY on shop-enabled pages
-    const shopPages = ['servicios.html', 'tienda.html', 'joss.html', 'rasta-mia.html', 'ggbbeats.html'];
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const shopPages = ['servicios', 'tienda', 'joss', 'rasta-mia', 'ggbbeats'];
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+    const currentPage = pathSegments.length > 0 ? pathSegments[pathSegments.length - 1] : 'index';
 
     if (shopPages.includes(currentPage)) {
-        fetch('cart-drawer.html')
+        fetch('/cart-drawer.html')
             .then(response => response.text())
             .then(data => {
                 document.body.insertAdjacentHTML('beforeend', data);
@@ -57,15 +59,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Set active state on navigation links
 function setActiveNavLink() {
-    // Get current page filename
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    // Get current page directory
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+    const currentPageMatch = pathSegments.length > 0 ? `/${pathSegments[pathSegments.length - 1]}/` : '/';
     
     // Get all nav links
     const navLinks = document.querySelectorAll('.nav-links a');
     
     // Set active class on current page
     navLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPage) {
+        if (link.getAttribute('href') === currentPageMatch) {
             link.classList.add('active');
         }
     });

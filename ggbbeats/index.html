@@ -13,20 +13,22 @@
     <!-- End Google Tag Manager -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mnimal Beats | MYOOZ InC</title>
-    <meta name="description" content="Mnimal Beats — Beatmaker. Dance urban beats.">
+    <title>GGB Beats | MYOOZ InC</title>
+    <meta name="description" content="GGB Beats — Productor. Versátil Beats Urbanos.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="profile.css">
-    <script src="cart-manager.js" defer></script>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/merch.css">
+    <link rel="stylesheet" href="/profile.css">
+    <script src="/merch-renderer.js" defer></script>
+    <script src="/cart-manager.js" defer></script>
     <style>
         body{overflow-x:hidden;}.container{margin-top:0;padding-top:0;}
-        .hero-section{position:relative;width:100%;min-height:65vh;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;padding-bottom:2rem;}
-        .hero-bg{position:absolute;inset:0;background:#050505;display:flex;align-items:center;justify-content:center;}
+        .hero-section{position:relative;width:100%;min-height:65vh;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;padding-bottom:2rem;text-align:center;}
+        .hero-bg{position:absolute;inset:0;background:#050505;display:flex;align-items:center;justify-content:center;z-index:0;}
         .hero-bg img{width:100%;height:100%;object-fit:cover;object-position: center;opacity:0.45;}
-        .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,5,5,0.1) 0%,rgba(5,5,5,0.5) 55%,rgba(5,5,5,1) 100%);}
+        .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,5,5,0.1) 0%,rgba(5,5,5,0.5) 55%,rgba(5,5,5,1) 100%);z-index:1;}
         .hero-purple-light{position:absolute;top:35%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(48,3,89,0.5) 0%,transparent 70%);pointer-events:none;}
         .hero-content{position:relative;z-index:2;text-align:center;padding:0 2rem;}
         .artist-name{font-family:'Outfit',sans-serif;font-size:clamp(2.5rem,8.5vw,5.5rem);font-weight:800;text-transform:uppercase;letter-spacing:-2px;line-height:0.9;padding:0 0.5rem;margin-bottom:1rem;background:linear-gradient(180deg,#fff 30%,rgba(255,255,255,0.2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:nameReveal 0.8s ease 0.4s both;}
@@ -47,15 +49,15 @@
     <!-- End Google Tag Manager (noscript) -->
     <!-- Header will be loaded here by navigation.js -->
     <section class="hero-section">
-        <div class="hero-bg"><img src="images/mnimalbeats-logo.png" alt="Mnimal Beats"></div>
+        <div class="hero-bg"><img src="/images/ggbbeats-logo.png" alt="GGB Beats"></div>
         <div class="hero-overlay"></div>
 
         <div class="hero-content">
-            <h1 class="artist-name">Mnimal Beats</h1>
+            <h1 class="artist-name">GGB Beats</h1>
             <div class="hero-socials">
-                <a href="https://youtube.com/@mnimalbeats" class="social-icon" target="_blank"><img src="images/youtube-logo.png" alt="YouTube"></a>
-                <a href="https://open.spotify.com/artist/5b68nrj7BkhjkAkTQg6CSn" class="social-icon" target="_blank"><img src="images/spotify-logo.png" alt="Spotify"></a>
-                <a href="https://instagram.com/mnimal.beats" class="social-icon" target="_blank"><img src="images/instagram-logo.png" alt="Instagram"></a>
+                <a href="https://youtube.com/@ggbbeats" class="social-icon" target="_blank"><img src="/images/youtube-logo.png" alt="YouTube"></a>
+                <a href="https://open.spotify.com/artist/0QrrPjP73pfBddZBUHUjd0" class="social-icon" target="_blank"><img src="/images/spotify-logo.png" alt="Spotify"></a>
+                <a href="https://instagram.com/gingerboybeats" class="social-icon" target="_blank"><img src="/images/instagram-logo.png" alt="Instagram"></a>
             </div>
         </div>
     </section>
@@ -63,61 +65,78 @@
     <div class="talent-content">
 
         <div style="margin-bottom: 3rem;">
-            <a href="productores.html" class="nav-back" style="margin-top: 0;">← Nuestros Productores</a>
+            <a href="/productores/" class="nav-back" style="margin-top: 0;">← Nuestros Productores</a>
         </div>
 
         <div class="content-section">
             <div class="video-grid">
-                <div class="video-item"><iframe src="https://www.youtube.com/embed/xZaHa4167Pc" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-                <div class="video-item"><iframe src="https://www.youtube.com/embed/jO11LLi5fR0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-                <div class="video-item"><iframe src="https://www.youtube.com/embed/HWZqkOKTZuI" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-                <div class="video-item"><iframe src="https://www.youtube.com/embed/a13X09bD6yg" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                <div class="video-item"><iframe src="https://www.youtube.com/embed/OAMM8ji9pr0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                <div class="video-item"><iframe src="https://www.youtube.com/embed/3uBheqK9yXc" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                <div class="video-item"><iframe src="https://www.youtube.com/embed/66iNvxEKZVg" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                <div class="video-item"><iframe src="https://www.youtube.com/embed/57JNWfVP75M" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             </div>
         </div>
         <div class="content-section">
             <div class="music-embed">
-                <iframe src="https://open.spotify.com/embed/artist/5b68nrj7BkhjkAkTQg6CSn?utm_source=generator&theme=0" height="380" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe src="https://open.spotify.com/embed/artist/0QrrPjP73pfBddZBUHUjd0?utm_source=generator&theme=0" height="380" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
         <div class="content-section licences-section">
             <p class="licences-intro">¿Quieres un beat?<br>Elige una licencia y ponte en contacto con nosotros.<br><span style="font-size:0.8rem;opacity:0.6;">*precios en dólares</span></p>
             <div class="licence-grid">
+
+                <!-- WAV LEASE -->
                 <div class="licence-card">
                     <div class="licence-header">
                         <span class="licence-name">Licencia Básica</span>
-                        <span class="licence-price">$25</span>
+                        <span class="licence-price">$100</span>
                         <span class="licence-type">WAV Lease</span>
                     </div>
                     <p class="licence-formats">MP3 + WAV</p>
                     <ul class="licence-terms">
                         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>Grabación musical comercial</li>
                         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Distribución hasta 10.000 copias</li>
-                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M8 6v12M4 10v4M16 6v12M20 10v4"/></svg>20.000 streams online</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M8 6v12M4 10v4M16 6v12M20 10v4"/></svg>200.000 streams online</li>
                         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>1 videoclip</li>
                         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Actuaciones en directo con fines lucrativos</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="9" width="20" height="12" rx="2"/><path d="M17 13h2M2 5l6 4"/><circle cx="9" cy="15" r="3"/></svg>Emisión en radio — 2 emisoras</li>
                     </ul>
-                    <button type="button" onclick="openModal('WAV Lease','$25')" class="licence-cta">Contactar</button>
+                    <button type="button" onclick="openModal('WAV Lease','$100')" class="licence-cta">Contactar</button>
                 </div>
+
+                <!-- BEAT PERSONALIZADO (EXCLUSIVE) -->
                 <div class="licence-card featured">
                     <div class="licence-header">
-                        <span class="licence-name">Licencia Ilimitada</span>
-                        <span class="licence-price">$100</span>
-                        <span class="licence-type">Unlimited Lease</span>
+                        <span class="licence-name">Licencia Exclusiva</span>
+                        <span style="font-size: 0.85rem; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-secondary); margin-bottom: -5px; line-height: 1;">A partir de</span>
+                        <span class="licence-price">$200</span>
+                        <span class="licence-type">Beat Personalizado</span>
+                        <span style="display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.4; margin-top: 0.4rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px; opacity: 0.6;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Composición y arreglos. Con máx. 8 instrumentos.</span>
                     </div>
-                    <p class="licence-formats">MP3 + WAV</p>
+                    <p class="licence-formats">Stems + MP3 + WAV</p>
                     <ul class="licence-terms">
                         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>Grabación musical comercial</li>
                         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Distribución ilimitada de copias</li>
-                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M8 6v12M4 10v4M16 6v12M20 10v4"/></svg>Streams online ilimitados</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M8 6v12M4 10v4M16 6v12M20 10v4"/></svg>500.000 streams online</li>
                         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>1 videoclip</li>
                         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Actuaciones en directo con fines lucrativos</li>
-                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="9" width="20" height="12" rx="2"/><path d="M17 13h2M2 5l6 4"/><circle cx="9" cy="15" r="3"/></svg>Emisión en radio — 20 emisoras</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="9" width="20" height="12" rx="2"/><path d="M17 13h2M2 5l6 4"/><circle cx="9" cy="15" r="3"/></svg>Emisión en radio — 2 emisoras</li>
                     </ul>
-                    <button type="button" onclick="openModal('Unlimited Lease','$100')" class="licence-cta">Contactar</button>
+                    <button type="button" onclick="openModal('Licencia Exclusiva (Beat Personalizado)','A partir de $200')" class="licence-cta">Contactar</button>
                 </div>
+
             </div>
         </div>
-        <a href="productores.html" class="nav-back">← Nuestros Productores</a>
+
+        <!-- MERCH -->
+        <div class="content-section">
+            <h2 class="section-title" style="font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1.5rem;color:var(--text-white);">Merch Oficial</h2>
+            <div id="artist-merch-container" class="products-grid">
+                <!-- Merch will be loaded here -->
+            </div>
+        </div>
+        
+        <a href="/productores/" class="nav-back">← Nuestros Productores</a>
     </div>
 
     <!-- Licence Request Modal -->
@@ -128,19 +147,19 @@
             <p class="modal-sub">Completa el formulario y te contactamos.</p>
             <form onsubmit="submitLicenceForm(event)">
                 <div class="modal-field">
+                    <label for="licence-type">Tipo de Licencia</label>
+                    <select id="licence-type">
+                        <option value="WAV Lease — $100">WAV Lease — $100</option>
+                        <option value="Licencia Exclusiva (Beat Personalizado) — A partir de $200">Licencia Exclusiva (Beat Personalizado) — A partir de $200</option>
+                    </select>
+                </div>
+                <div class="modal-field" id="beat-name-container">
                     <label for="beat-name">Nombre del Beat</label>
                     <input type="text" id="beat-name" placeholder="¿Cuál es el beat?" required>
                 </div>
                 <div class="modal-field">
                     <label for="client-name">Tu Nombre</label>
                     <input type="text" id="client-name" placeholder="Tu Nombre o Alias" required>
-                </div>
-                <div class="modal-field">
-                    <label for="licence-type">Tipo de Licencia</label>
-                    <select id="licence-type">
-                        <option value="WAV Lease — $25">WAV Lease — $25</option>
-                        <option value="Unlimited Lease — $100">Unlimited Lease — $100</option>
-                    </select>
                 </div>
                 <div class="modal-field">
                     <label for="client-email">Tu Email</label>
@@ -150,13 +169,49 @@
             </form>
         </div>
     </div>
-    <script src="navigation.js"></script>
+
+    <!-- Footer will be loaded here by navigation.js -->
+    <script src="/navigation.js"></script>
+    <!-- Modal Success -->
+    <div id="payment-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 20000; justify-content: center; align-items: center;">
+        <div style="background: #111; border: 1px solid rgba(255,255,255,0.1); padding: 3rem; border-radius: 40px; max-width: 500px; width: 90%; text-align: center;">
+            <h2 id="modal-title-success" style="font-size: 2rem; margin-bottom: 1rem; background: linear-gradient(135deg, #300359, #8B3FCC); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">¡Pedido Recibido!</h2>
+            <p id="modal-body-success" style="color: rgba(255,255,255,0.7); margin-bottom: 2rem;">Gracias por tu compra. Pronto recibirás un correo con los detalles del envío.</p>
+            <button onclick="document.getElementById('payment-modal').style.display='none'" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: 700;">Cerrar</button>
+        </div>
+    </div>
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
     <script>
         function openModal(type, price) {
-            document.getElementById('licence-type').value = type + ' — ' + price;
             document.getElementById('licenceModal').classList.add('open');
             document.body.style.overflow = 'hidden';
+            const select = document.getElementById('licence-type');
+            for(let i=0; i<select.options.length; i++){
+                if(select.options[i].value.includes(type)){
+                    select.selectedIndex = i;
+                    break;
+                }
+            }
+            toggleBeatNameField();
         }
+
+        document.getElementById('licence-type').addEventListener('change', toggleBeatNameField);
+
+        function toggleBeatNameField() {
+            const val = document.getElementById('licence-type').value;
+            const beatContainer = document.getElementById('beat-name-container');
+            const beatInput = document.getElementById('beat-name');
+            if (val.includes('Beat Personalizado')) {
+                beatContainer.style.display = 'none';
+                beatInput.removeAttribute('required');
+                if(beatInput.value === '') beatInput.value = 'N/A - Beat Personalizado';
+            } else {
+                beatContainer.style.display = 'block';
+                beatInput.setAttribute('required', 'true');
+                if(beatInput.value === 'N/A - Beat Personalizado') beatInput.value = '';
+            }
+        }
+
         function closeModal() {
             document.getElementById('licenceModal').classList.remove('open');
             document.body.style.overflow = '';
@@ -186,6 +241,13 @@
                 } else { alert('Error al enviar. Inténtalo de nuevo.'); }
             }).catch(() => { alert('Error de conexión.'); });
         }
+    </script>
+            <script>
+        window.addEventListener('load', () => {
+            if (typeof renderMerchGrid === 'function') {
+                renderMerchGrid('artist-merch-container', 'GGB BEATS LOGO', true);
+            }
+        });
     </script>
 </body>
 </html>
