@@ -449,6 +449,81 @@
         background: #4a0e8f;
         transform: scale(1.05);
     }
+
+    /* ── Mobile Optimization ── */
+    @media (max-width: 640px) {
+        .container {
+            margin-top: 80px;
+            padding: 1rem;
+        }
+        .page-header {
+            margin-bottom: 3rem;
+        }
+        .main-header {
+            margin-bottom: 2rem;
+        }
+        .service-section {
+            margin-bottom: 4rem;
+        }
+        .service-item h3 {
+            font-size: 1.2rem;
+        }
+        .service-price {
+            font-size: 1.1rem;
+        }
+        .service-desc {
+            font-size: 0.9rem;
+        }
+        .purple-title {
+            font-size: clamp(1.6rem, 6vw, 2.5rem);
+        }
+        .action-btn-container {
+            flex-direction: column !important;
+            align-items: stretch !important;
+        }
+        .promo-trigger-btn,
+        .btn-outline-custom,
+        .btn-solid-custom {
+            width: 100%;
+            text-align: center;
+            min-height: 44px;
+        }
+        .modal-content {
+            padding: 1.5rem;
+            border-radius: 16px;
+            max-height: 85vh;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"] {
+            font-size: 16px; /* iOS zoom fix */
+            padding: 1rem 1.5rem;
+        }
+        .service-checkbox {
+            padding: 1rem 0;
+            min-height: 44px;
+        }
+        .service-info span {
+            font-size: 0.85rem;
+        }
+        .promo-header {
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .promo-name {
+            font-size: 1.05rem;
+        }
+        .promo-price-group {
+            align-self: flex-start;
+        }
+        .promo-btn-select {
+            width: 100%;
+            text-align: center;
+            min-height: 44px;
+        }
+        #btn-submit-form {
+            min-height: 48px;
+        }
+    }
 </style>
 
 

@@ -52,7 +52,19 @@
         .bio-text{color:var(--text-secondary);line-height:1.9;font-size:1rem;max-width:720px;}
         .nav-back{display:inline-flex;align-items:center;gap:0.5rem;padding:10px 24px;border:1px solid var(--glass-border);border-radius:8px;color:var(--text-secondary);text-decoration:none;font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;transition:all 0.3s;}
         .nav-back:hover{border-color:var(--purple-core);color:var(--text-white);}
-        @media(max-width:600px){.video-grid{flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;}}
+        @media (max-width: 600px) {
+            .hero-section { min-height: 50vh; padding-bottom: 1.5rem; }
+            .hero-content { padding: 0 1rem; }
+            .artist-name { font-size: clamp(1.8rem, 9vw, 3rem); letter-spacing: -1px; }
+            .talent-content { padding: 1.5rem 1rem 3rem; }
+            .content-section { margin-bottom: 2rem; }
+            .video-grid { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0.5rem 0; }
+            .video-item { flex: 0 0 85vw; max-width: 85vw; transform: scale(1); }
+            .music-embed iframe { height: 352px; }
+            .nav-back { padding: 12px 20px; min-height: 44px; font-size: 0.75rem; }
+            .modal-box { padding: 1.5rem; }
+            .modal-field input, .modal-field select { font-size: 16px; }
+        }
         .licences-section { margin-bottom: 5rem; }
         .licences-intro { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.7; }
         .licence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }

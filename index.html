@@ -23,6 +23,12 @@
             text-align: center;
         }
 
+        @media (max-width: 600px) {
+            .hero-section {
+                padding-top: 70px;
+            }
+        }
+
     .hero-image {
            width: 300px;
            height: 300px;
@@ -52,9 +58,10 @@
         .description {
             max-width: 800px;
             margin: 1.5rem auto;
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
             line-height: 1.8;
             color: var(--text-secondary);
+            padding: 0 0.5rem;
         }
 
         .contact-section {
@@ -89,6 +96,14 @@
             outline: none;
             border-color: var(--purple-glow);
             background: rgba(255, 255, 255, 0.08);
+        }
+
+        @media (max-width: 600px) {
+            .form-input,
+            .form-textarea {
+                font-size: 16px; /* Prevent iOS auto-zoom */
+                padding: 0.9rem 1.2rem;
+            }
         }
 
         .form-textarea {
@@ -189,6 +204,24 @@
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+            .talent-item img {
+                width: 110px;
+                height: 110px;
+            }
+            .talent-item span {
+                font-size: 0.9rem;
+            }
+            .gliding-stream {
+                gap: 1.25rem;
+                padding: 1.5rem 1rem;
+            }
+            .talent-item {
+                min-width: 44px;
+                min-height: 44px;
+            }
         }
 
         /* Success message */
