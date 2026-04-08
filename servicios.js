@@ -236,7 +236,7 @@
                 id: serviceProduct.id,
                 name: "SERVICIOS MYOOZ InC",
                 price: currentTotal,
-                image: 'images/myooz-inc-logo.png', // Fallback icon
+                image: '/images/myooz-inc-logo.png', // Fallback icon
                 details: trackingDetails
             }, {
                 id: variantId,
