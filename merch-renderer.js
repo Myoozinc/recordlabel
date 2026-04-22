@@ -165,7 +165,7 @@ function openQuickView(productId) {
     
     // Update URL without reloading
     const url = new URL(window.location);
-    url.searchParams.set('product', productId.split('/').pop());
+    url.searchParams.set('product', product.handle);
     window.history.pushState({}, '', url);
 }
 
@@ -231,9 +231,8 @@ function closeQuickView() {
 async function shareProduct(productId) {
     const product = shopifyProducts.find(p => p.id === productId);
     if (!product) return;
-    
-    const shortId = productId.split('/').pop();
-    const shareUrl = `${window.location.origin}${window.location.pathname}?product=${shortId}`;
+
+    const shareUrl = `${window.location.origin}${window.location.pathname}?product=${product.handle}`;
     const shareText = `¡Mira este producto en MYOOZ InC: ${product.title}!`;
     
     if (navigator.share) {
@@ -267,6 +266,7 @@ async function fetchAllProducts() {
                 node {
                     id
                     title
+                    handle
                     vendor
                     productType
                     tags
@@ -663,10 +663,12 @@ async function addShopifyToCart(productId, btnEl) {
 // ========== DEEP LINKING ==========
 function checkUrlParams() {
     const params = new URLSearchParams(window.location.search);
-    const productIdShort = params.get('product');
-    if (productIdShort && shopifyProducts.length > 0) {
-        // Try to find the full Shopify ID that ends with this short ID
-        const product = shopifyProducts.find(p => p.id.endsWith(productIdShort));
+    const productRef = params.get('product');
+    if (productRef && shopifyProducts.length > 0) {
+        // Try to find by handle first, then fallback to suffix ID
+        const product = shopifyProducts.find(p => p.handle === productRef) || 
+                      shopifyProducts.find(p => p.id.endsWith(productRef));
+        
         if (product) {
             openQuickView(product.id);
         }
