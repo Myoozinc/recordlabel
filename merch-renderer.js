@@ -36,6 +36,7 @@ function initQuickView() {
                 <div class="quick-view-image-side">
                     <div class="zoom-container" id="qv-zoom-container">
                         <img id="qv-image" src="" alt="">
+                        <div class="magnifier-lens" id="qv-magnifier"></div>
                     </div>
                 </div>
                 <div class="quick-view-info-side">
@@ -107,21 +108,31 @@ function openQuickView(productId) {
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
 
-    // Zoom Lens logic
+    // Magnifying Glass logic
     const zoomContainer = document.getElementById('qv-zoom-container');
     const zoomImg = document.getElementById('qv-image');
+    const magnifier = document.getElementById('qv-magnifier');
     
     zoomContainer.onmousemove = (e) => {
-        const { left, top, width, height } = zoomContainer.getBoundingClientRect();
-        const x = ((e.pageX - left) / width) * 100;
-        const y = ((e.pageY - (top + window.scrollY)) / height) * 100;
+        magnifier.style.display = 'block';
         
-        zoomImg.style.transformOrigin = `${x}% ${y}%`;
-        zoomImg.style.transform = "scale(2)";
+        const { left, top, width, height } = zoomContainer.getBoundingClientRect();
+        const x = e.pageX - left;
+        const y = e.pageY - (top + window.scrollY);
+        
+        // Lens position
+        magnifier.style.left = `${x - magnifier.offsetWidth / 2}px`;
+        magnifier.style.top = `${y - magnifier.offsetHeight / 2}px`;
+        
+        // Zoomed background position
+        const zoomLevel = 2.5;
+        magnifier.style.backgroundImage = `url(${zoomImg.src})`;
+        magnifier.style.backgroundSize = `${width * zoomLevel}px ${height * zoomLevel}px`;
+        magnifier.style.backgroundPosition = `-${x * zoomLevel - magnifier.offsetWidth / 2}px -${y * zoomLevel - magnifier.offsetHeight / 2}px`;
     };
     
     zoomContainer.onmouseleave = () => {
-        zoomImg.style.transform = "scale(1)";
+        magnifier.style.display = 'none';
     };
     
     // Update URL without reloading

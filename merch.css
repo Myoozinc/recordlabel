@@ -536,28 +536,42 @@
     max-height: 75vh;
     object-fit: contain;
     filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
-    transition: transform 0.1s ease-out;
-    pointer-events: none; /* Let the container handle mouse events */
+    pointer-events: none;
 }
 
-/* Zoom Lens Container */
+/* Magnifier Lens */
+.magnifier-lens {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    pointer-events: none;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1);
+    background-repeat: no-repeat;
+    background-color: #0a0a0a;
+}
+
 .zoom-container {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: zoom-in;
+    cursor: none; /* Hide cursor to show lens instead */
 }
 
 .quick-view-info-side {
     flex: 1;
-    padding: 3.5rem;
+    padding: 4.5rem 3.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     border-left: 1px solid rgba(255, 255, 255, 0.05);
     position: relative;
+    background: linear-gradient(135deg, rgba(10, 10, 10, 1) 0%, rgba(20, 10, 30, 1) 100%);
 }
 
 .quick-view-close {
@@ -614,18 +628,30 @@
 }
 
 .quick-view-name {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     font-weight: 800;
     text-transform: uppercase;
-    margin-bottom: 1rem;
-    line-height: 1;
+    margin-bottom: 0.5rem;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .quick-view-price {
     font-size: 2rem;
     font-weight: 900;
-    color: #8B3FCC;
-    margin-bottom: 2rem;
+    color: #fff;
+    margin-bottom: 2.5rem;
+}
+
+.quick-view-price small {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
+    margin-right: 5px;
 }
 
 .share-toast {
@@ -641,9 +667,14 @@
     z-index: 40000;
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     box-shadow: 0 10px 30px rgba(139, 63, 204, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .share-toast.show {
+    opacity: 1;
+    visibility: visible;
     transform: translateX(-50%) translateY(0);
 }
 
