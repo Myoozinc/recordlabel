@@ -537,6 +537,8 @@
     object-fit: contain;
     filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
     pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 /* Magnifier Lens */
@@ -560,7 +562,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: none; /* Hide cursor to show lens instead */
+    cursor: none;
+    touch-action: none; /* Critical for mobile movement */
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .quick-view-info-side {
