@@ -25,6 +25,14 @@ let shopifyProducts = [];
 const selectedVariants = {};
 const activeOptions = {};
 
+function slugify(text) {
+    if (!text) return "";
+    return text.toString().toLowerCase().trim()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-');         // Replace multiple - with single -
+}
+
 // ========== QUICK VIEW LOGIC ==========
 function initQuickView() {
     if (document.getElementById('quick-view-overlay')) return;
@@ -167,7 +175,7 @@ function openQuickView(productId) {
     
     // Update URL without reloading
     const url = new URL(window.location);
-    url.searchParams.set('product', product.handle);
+    url.searchParams.set('product', slugify(product.title));
     window.history.pushState({}, '', url);
 }
 
@@ -234,7 +242,7 @@ async function shareProduct(productId) {
     const product = shopifyProducts.find(p => p.id === productId);
     if (!product) return;
 
-    const shareUrl = `${window.location.origin}${window.location.pathname}?product=${product.handle}`;
+    const shareUrl = `${window.location.origin}${window.location.pathname}?product=${slugify(product.title)}`;
     const shareText = `¡Mira este producto en MYOOZ InC: ${product.title}!`;
     
     if (navigator.share) {
@@ -667,8 +675,9 @@ function checkUrlParams() {
     const params = new URLSearchParams(window.location.search);
     const productRef = params.get('product');
     if (productRef && shopifyProducts.length > 0) {
-        // Try to find by handle first, then fallback to suffix ID
-        const product = shopifyProducts.find(p => p.handle === productRef) || 
+        // Try to find by slugified title first, then fallback to handle, then suffix ID
+        const product = shopifyProducts.find(p => slugify(p.title) === productRef) || 
+                      shopifyProducts.find(p => p.handle === productRef) || 
                       shopifyProducts.find(p => p.id.endsWith(productRef));
         
         if (product) {
