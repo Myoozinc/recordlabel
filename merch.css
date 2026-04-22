@@ -628,13 +628,13 @@
 }
 
 .quick-view-name {
-    font-size: 3.5rem;
+    font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 800;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
-    line-height: 0.95;
-    letter-spacing: -2px;
-    background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.2) 100%);
+    line-height: 1;
+    letter-spacing: -1.5px;
+    background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.4) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -715,6 +715,10 @@
     .quick-view-close {
         top: 20px;
         right: 20px;
+    }
+    .magnifier-lens {
+        width: 150px;
+        height: 150px;
     }
 }
 

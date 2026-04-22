@@ -114,14 +114,14 @@ function openQuickView(productId) {
     const magnifier = document.getElementById('qv-magnifier');
     
     const handleMove = (e) => {
-        const pageX = e.pageX || e.touches?.[0].pageX;
-        const pageY = e.pageY || e.touches?.[0].pageY;
+        const isTouch = e.type.startsWith('touch');
+        const point = isTouch ? e.touches[0] : e;
         
         const { left, top, width, height } = zoomImg.getBoundingClientRect();
-        const mouseX = pageX - left;
-        const mouseY = pageY - (top + window.scrollY);
+        const mouseX = point.clientX - left;
+        const mouseY = point.clientY - top;
         
-        // Only show if mouse/touch is over the actual image
+        // Only show if over the actual image
         if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
             magnifier.style.display = 'none';
             zoomContainer.style.cursor = 'default';
@@ -133,8 +133,13 @@ function openQuickView(productId) {
         
         // Lens position relative to container
         const containerRect = zoomContainer.getBoundingClientRect();
-        const lensX = pageX - containerRect.left;
-        const lensY = pageY - (containerRect.top + window.scrollY);
+        let lensX = point.clientX - containerRect.left;
+        let lensY = point.clientY - containerRect.top;
+
+        // Offset on mobile to avoid finger coverage
+        if (isTouch) {
+            lensY -= 60; 
+        }
         
         magnifier.style.left = `${lensX - magnifier.offsetWidth / 2}px`;
         magnifier.style.top = `${lensY - magnifier.offsetHeight / 2}px`;
@@ -144,24 +149,21 @@ function openQuickView(productId) {
         magnifier.style.backgroundImage = `url(${zoomImg.src})`;
         magnifier.style.backgroundSize = `${width * zoomLevel}px ${height * zoomLevel}px`;
         
-        // Calculate background position to align with the image
         const bgX = (mouseX * zoomLevel) - magnifier.offsetWidth / 2;
         const bgY = (mouseY * zoomLevel) - magnifier.offsetHeight / 2;
         magnifier.style.backgroundPosition = `-${bgX}px -${bgY}px`;
         
-        if (e.touches) e.preventDefault(); // Prevent scrolling while zooming
+        if (isTouch) e.preventDefault();
     };
 
-    zoomContainer.onmousemove = handleMove;
-    zoomContainer.ontouchmove = handleMove;
-    zoomContainer.ontouchstart = handleMove;
+    // Use addEventListener for better control (especially passive: false for touch)
+    zoomContainer.addEventListener('mousemove', handleMove);
+    zoomContainer.addEventListener('touchstart', handleMove, { passive: false });
+    zoomContainer.addEventListener('touchmove', handleMove, { passive: false });
     
-    zoomContainer.onmouseleave = () => {
-        magnifier.style.display = 'none';
-    };
-    zoomContainer.ontouchend = () => {
-        magnifier.style.display = 'none';
-    };
+    const hideMagnifier = () => { magnifier.style.display = 'none'; };
+    zoomContainer.addEventListener('mouseleave', hideMagnifier);
+    zoomContainer.addEventListener('touchend', hideMagnifier);
     
     // Update URL without reloading
     const url = new URL(window.location);
