@@ -371,9 +371,10 @@ async function renderMerchGrid(containerId, filterCategory = 'all', isCompact = 
             shopifyProducts = await fetchAllProducts();
         }
 
-        // Exclude the services bridge product from the merch grid
+        // Exclude internal service products from the merch grid
         const merchProducts = shopifyProducts.filter(p =>
-            !p.title.toLowerCase().includes('servicios myooz')
+            !p.title.toLowerCase().includes('servicios myooz') &&
+            !p.title.toLowerCase().includes('licencia de beat')
         );
 
         // Custom sort order for "all" view
