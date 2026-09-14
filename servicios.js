@@ -215,39 +215,31 @@
         }
     }
 
-    async function addServicesToCart() {
+    function addServicesToCart() {
         const btn = document.getElementById('btn-submit-form');
         const originalText = btn.innerText;
-        btn.innerText = 'PROCESSING...';
+        btn.innerText = '¡AÑADIDO!';
         btn.disabled = true;
 
         try {
-            // Fetch products to find bridge product (needed for variant ID)
-            if (shopifyProducts.length === 0) {
-                shopifyProducts = await fetchAllProducts();
-            }
-            const serviceProduct = shopifyProducts.find(p => p.title.toLowerCase().includes('servicios myooz'));
-            if (!serviceProduct) throw new Error('Bridge product not found');
-
-            const variantId = serviceProduct.variants[0].id;
-            const trackingDetails = `Servicios: ${hiddenServicesInput.value} | Total: $${currentTotal}`;
+            const trackingDetails = `Servicios: ${hiddenServicesInput.value || 'Personalizados'} | Total: $${currentTotal} USD`;
 
             window.addItemToCart({
-                id: serviceProduct.id,
-                name: "SERVICIOS MYOOZ InC",
+                id: 'servicios-myooz',
+                name: 'SERVICIOS MYOOZ InC',
                 price: currentTotal,
-                image: '/images/myooz-inc-logo.png', // Fallback icon
+                image: '/images/myooz-inc-logo.png',
                 details: trackingDetails
             }, {
-                id: variantId,
-                label: "Servicios"
-            }, true);
+                id: 'servicios-standard',
+                label: hiddenServicesInput.value || 'Servicios Profesionales'
+            }, true, btn);
 
-            btn.innerText = 'AÑADIDO';
             setTimeout(() => {
+                btn.innerText = originalText;
+                btn.disabled = false;
                 closeModal();
-                toggleCart();
-            }, 800);
+            }, 600);
 
         } catch (e) {
             console.error('Error adding services to cart', e);

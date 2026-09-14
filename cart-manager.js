@@ -1,5 +1,12 @@
 // Shared Cart Management for MYOOZ InC
+// Pagos Directos con PayPal Business + Pedidos a Printful + Notificaciones
+
+// Credencial de PayPal Business (Modo Sandbox 'sb' por defecto, cámbialo por tu Client ID en vivo)
+const PAYPAL_CLIENT_ID = 'sb';
+
 let cart = JSON.parse(localStorage.getItem('myooz_cart')) || [];
+let paypalButtonsRendered = false;
+let lastRenderedTotal = 0;
 
 function saveCart() {
     localStorage.setItem('myooz_cart', JSON.stringify(cart));
@@ -21,42 +28,34 @@ function toggleCart() {
 
 window.addItemToCart = function(product, variant, isService = false, triggerBtn = null) {
     if (isService) {
-        // Handle services as a special bundle or update existing service item
+        // Un solo servicio o paquete activo a la vez
         const existingServiceIndex = cart.findIndex(item => item.isService);
+        const servicePayload = {
+            uniqueId: 'services-bundle-' + Date.now(),
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            variantId: variant ? variant.id : 'service-std',
+            variantName: variant ? variant.label : 'Servicio',
+            image: product.image || '/images/myooz-inc-logo.png',
+            isService: true,
+            details: product.details || product.name
+        };
+
         if (existingServiceIndex > -1) {
-            cart[existingServiceIndex] = {
-                uniqueId: 'services-bundle',
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                variantId: variant.id,
-                variantName: variant.label,
-                image: product.image,
-                isService: true,
-                details: product.details // attributes for Shopify
-            };
+            cart[existingServiceIndex] = servicePayload;
         } else {
-            cart.push({
-                uniqueId: 'services-bundle',
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                variantId: variant.id,
-                variantName: variant.label,
-                image: product.image,
-                isService: true,
-                details: product.details
-            });
+            cart.push(servicePayload);
         }
     } else {
-        // Standard merch item
+        // Producto de Merchandising
         cart.push({
             uniqueId: (Date.now() + Math.random()).toString(),
             id: product.id,
             name: product.name,
             price: product.price,
-            variantId: variant.id,
-            variantName: variant.label,
+            variantId: variant ? variant.id : 'default',
+            variantName: variant ? variant.label : 'Estándar',
             image: product.image,
             isService: false
         });
@@ -64,7 +63,7 @@ window.addItemToCart = function(product, variant, isService = false, triggerBtn 
     
     saveCart();
     
-    // Feedback on trigger button if possible
+    // Feedback visual en botón que lo originó
     const _btn = triggerBtn || (typeof event !== 'undefined' && event && event.target && event.target.tagName === 'BUTTON' ? event.target : null);
     if (_btn && _btn.innerText) {
         const btn = _btn;
@@ -76,16 +75,12 @@ window.addItemToCart = function(product, variant, isService = false, triggerBtn 
             btn.innerText = originalText;
             btn.style.background = originalBg;
             
-            // Auto open the cart drawer for better UX
-            if (btn.innerText !== 'PROCESSING...') {
-                const drawer = document.getElementById('cart-drawer');
-                if (drawer && !drawer.classList.contains('open')) {
-                    toggleCart();
-                }
+            const drawer = document.getElementById('cart-drawer');
+            if (drawer && !drawer.classList.contains('open')) {
+                toggleCart();
             }
-        }, 800);
+        }, 600);
     } else {
-        // Fallback open if no event
         const drawer = document.getElementById('cart-drawer');
         if (drawer && !drawer.classList.contains('open')) {
             toggleCart();
@@ -94,39 +89,48 @@ window.addItemToCart = function(product, variant, isService = false, triggerBtn 
 };
 
 window.removeFromCart = function(uniqueId) {
-    // String comparison to be safe
     cart = cart.filter(item => String(item.uniqueId) !== String(uniqueId));
     saveCart();
     renderCart();
-}
+};
 
 function renderCart() {
     const container = document.getElementById('cart-items');
     const totalDisplay = document.getElementById('cart-total-display');
+    const paypalContainer = document.getElementById('paypal-button-container');
+    const checkoutBtn = document.getElementById('checkout-continue-btn');
+    const statusMsg = document.getElementById('order-status-msg');
+
     if (!container || !totalDisplay) return;
+
+    if (statusMsg) {
+        statusMsg.style.display = 'none';
+        statusMsg.innerText = '';
+    }
 
     if (cart.length === 0) {
         container.innerHTML = '<p style="text-align:center; opacity:0.5; margin-top:3rem;">Tu carrito está vacío</p>';
         totalDisplay.innerText = '$0.00';
-        const checkoutBtn = document.getElementById('checkout-continue-btn');
+        if (paypalContainer) paypalContainer.innerHTML = '';
         if (checkoutBtn) checkoutBtn.style.display = 'none';
+        paypalButtonsRendered = false;
+        lastRenderedTotal = 0;
         return;
     }
 
     container.innerHTML = cart.map(item => `
         <div class="cart-item">
-            <img src="${item.image}" class="cart-item-img">
+            <img src="${item.image}" class="cart-item-img" alt="${item.name}">
             <div class="cart-item-info">
                 <div class="cart-item-name">${item.name}</div>
                 <div class="cart-item-variant">${item.variantName || ''}</div>
                 <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                ${item.isService ? `<div style="font-size:0.6rem; color:rgba(255,255,255,0.4); margin-top:4px;">${item.details}</div>` : ''}
+                ${item.isService ? `<div style="font-size:0.65rem; color:rgba(255,255,255,0.5); margin-top:4px;">${item.details || ''}</div>` : ''}
             </div>
             <div class="remove-item" data-action="remove-item" data-unique-id="${item.uniqueId}" style="cursor:pointer;">Eliminar</div>
         </div>
     `).join('');
 
-    // ── Event Delegation (CSP-compliant — replaces inline onclick) ──
     container.onclick = function(e) {
         const removeBtn = e.target.closest('[data-action="remove-item"]');
         if (removeBtn) removeFromCart(removeBtn.dataset.uniqueId);
@@ -134,106 +138,193 @@ function renderCart() {
 
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     totalDisplay.innerText = '$' + total.toFixed(2);
-    const checkoutBtn = document.getElementById('checkout-continue-btn');
-    if (checkoutBtn) checkoutBtn.style.display = 'block';
-}
 
-async function processUnifiedCheckout() {
-    const btn = document.getElementById('checkout-continue-btn');
-    if (!btn) return;
-    
-    btn.innerText = 'PROCESSING...';
-    btn.disabled = true;
-
-    try {
-        // Group items for Shopify
-        // For services, we use the bridge product variant and quantity = total price
-        // For merch, we use variant ID and quantity = count
-        
-        const lineItems = [];
-        const attributes = [];
-        
-        // Find service bridge product variant ID if services are present
-        const hasServices = cart.some(item => item.isService);
-        let serviceVariantId = null;
-        
-        if (hasServices) {
-            // We'll use the ID stored in the item or fetch it
-            const serviceItem = cart.find(item => item.isService);
-            serviceVariantId = serviceItem.variantId;
-            
-            lineItems.push({
-                variantId: serviceVariantId,
-                quantity: Math.round(serviceItem.price) // Price as quantity
-            });
-            
-            attributes.push({
-                key: "Detalle de Servicios Contratados",
-                value: serviceItem.details
-            });
+    // Renderiza o refresca los botones de PayPal
+    if (paypalContainer) {
+        if (!paypalButtonsRendered || lastRenderedTotal !== total) {
+            initPayPalButtons(paypalContainer, total);
         }
-        
-        // Process merch items
-        const merchItems = cart.filter(item => !item.isService);
-        const variantCounts = {};
-        merchItems.forEach(item => {
-            variantCounts[item.variantId] = (variantCounts[item.variantId] || 0) + 1;
-        });
-        
-        for (const [vId, qty] of Object.entries(variantCounts)) {
-            lineItems.push({
-                variantId: vId,
-                quantity: qty
-            });
-        }
-
-        // Create the cart via Storefront API (merch-renderer.js should be loaded)
-        if (typeof createCart !== 'function') {
-            throw new Error('Shopify API not loaded');
-        }
-        
-        const shopifyCart = await createCart(lineItems, attributes);
-        
-        // Final Redirect - MOBILE FRIENDLY
-        if (shopifyCart && shopifyCart.checkoutUrl) {
-            btn.innerText = 'REDIRECCIONANDO...';
-            
-            // Try direct location change first
-            window.location.href = shopifyCart.checkoutUrl;
-            
-            // Fallback for some mobile browsers that block redirect after async
-            setTimeout(() => {
-                const fallbackLink = document.createElement('a');
-                fallbackLink.href = shopifyCart.checkoutUrl;
-                fallbackLink.innerText = 'Si no has sido redireccionado, haz clic aquí';
-                fallbackLink.style.cssText = 'color: #8B3FCC; font-size: 0.8rem; display: block; margin-top: 1rem; text-align: center; text-decoration: underline;';
-                btn.parentNode.insertBefore(fallbackLink, btn.nextSibling);
-                btn.innerText = 'PAGAR';
-                btn.disabled = false;
-            }, 3000);
-        } else {
-            throw new Error('No checkout URL returned from Shopify');
-        }
-        
-    } catch (err) {
-        console.error("Error creating unified Shopify cart", err);
-        btn.innerText = 'Error. Intenta de nuevo.';
-        alert("Hubo un problema al conectar con Shopify: " + (err.message || 'Error desconocido'));
-        
-        setTimeout(() => {
-            btn.innerText = 'PAGAR';
-            btn.disabled = false;
-            btn.style.opacity = '1';
-        }, 3000);
     }
 }
 
-// Global initialization
+// Inicialización de Botones de PayPal Smart
+function initPayPalButtons(container, total) {
+    if (typeof paypal === 'undefined') {
+        // Carga dinámica del SDK de PayPal si no está en la página
+        if (!document.getElementById('paypal-sdk-script')) {
+            const s = document.createElement('script');
+            s.id = 'paypal-sdk-script';
+            s.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD&components=buttons`;
+            s.onload = () => initPayPalButtons(container, total);
+            document.head.appendChild(s);
+        }
+        return;
+    }
+
+    container.innerHTML = '';
+    paypalButtonsRendered = true;
+    lastRenderedTotal = total;
+
+    const hasMerch = cart.some(i => !i.isService);
+
+    paypal.Buttons({
+        style: {
+            layout: 'vertical',
+            color: 'gold',
+            shape: 'pill',
+            label: 'pay'
+        },
+        createOrder: function(data, actions) {
+            const currentTotalStr = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+            
+            const items = cart.map(i => ({
+                name: (i.name + (i.variantName ? ' - ' + i.variantName : '')).substring(0, 120),
+                unit_amount: { currency_code: 'USD', value: i.price.toFixed(2) },
+                quantity: '1'
+            }));
+
+            return actions.order.create({
+                purchase_units: [{
+                    description: 'MYOOZ InC - Pedido',
+                    amount: {
+                        currency_code: 'USD',
+                        value: currentTotalStr,
+                        breakdown: {
+                            item_total: { currency_code: 'USD', value: currentTotalStr }
+                        }
+                    },
+                    items: items
+                }],
+                application_context: {
+                    shipping_preference: hasMerch ? 'GET_FROM_FILE' : 'NO_SHIPPING'
+                }
+            });
+        },
+        onApprove: function(data, actions) {
+            const statusMsg = document.getElementById('order-status-msg');
+            if (statusMsg) {
+                statusMsg.style.display = 'block';
+                statusMsg.innerText = 'PROCESANDO PAGO Y CREANDO ORDEN...';
+            }
+
+            return actions.order.capture().then(async function(orderData) {
+                const payer = orderData.payer || {};
+                const purchaseUnit = (orderData.purchase_units && orderData.purchase_units[0]) ? orderData.purchase_units[0] : {};
+                const shipping = purchaseUnit.shipping || {};
+                const transactionId = (purchaseUnit.payments && purchaseUnit.payments.captures && purchaseUnit.payments.captures[0]) 
+                    ? purchaseUnit.payments.captures[0].id 
+                    : orderData.id;
+
+                const recipientName = (shipping.name && shipping.name.full_name) || 
+                                      (payer.name ? `${payer.name.given_name || ''} ${payer.name.surname || ''}`.trim() : 'Cliente');
+
+                const payload = {
+                    orderId: orderData.id,
+                    transactionId: transactionId,
+                    payer: {
+                        name: recipientName,
+                        email: payer.email_address || ''
+                    },
+                    shippingAddress: shipping.address || null,
+                    recipientName: recipientName,
+                    cart: [...cart],
+                    total: cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)
+                };
+
+                // 1. Enviar a Vercel Serverless Function (/api/process-order)
+                try {
+                    await fetch('/api/process-order', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                } catch (apiErr) {
+                    console.warn('Backend serverless error, fallback activo:', apiErr);
+                }
+
+                // 2. Respaldo por Web3Forms (Asegura entrega garantizada de correo a Myooz InC)
+                await sendBackupEmailNotification(payload);
+
+                // 3. Limpiar carrito y mostrar modal de éxito
+                const orderSummaryText = cart.map(i => `${i.name} (${i.variantName})`).join(', ');
+                cart = [];
+                saveCart();
+                renderCart();
+
+                if (typeof showModal === 'function') {
+                    showModal('¡PAGO EXITOSO!', `Muchas gracias por tu compra. Tu pedido #${transactionId.substring(0, 10)} está confirmado. Recibirás todos los detalles en tu correo.`);
+                } else {
+                    alert(`¡Pago completado con éxito!\nID de Transacción: ${transactionId}\nRecibirás la confirmación en tu correo.`);
+                }
+            });
+        },
+        onError: function(err) {
+            console.error('PayPal Checkout Error:', err);
+            const statusMsg = document.getElementById('order-status-msg');
+            if (statusMsg) {
+                statusMsg.style.display = 'block';
+                statusMsg.style.color = '#ff4444';
+                statusMsg.innerText = 'Hubo un error procesando el pago. Por favor intenta de nuevo.';
+            }
+        }
+    }).render(container);
+}
+
+// Respaldo inmediato por Web3Forms
+async function sendBackupEmailNotification(payload) {
+    try {
+        const itemsList = payload.cart.map(i => `- ${i.name} [${i.variantName}] x 1: $${i.price} USD`).join('\n');
+        const addr = payload.shippingAddress;
+        const shippingDetails = addr ? `
+DIRECCIÓN DE ENVÍO:
+- Destinatario: ${payload.recipientName}
+- Dirección: ${addr.address_line_1 || ''} ${addr.address_line_2 || ''}
+- Ciudad: ${addr.admin_area_2 || addr.city || ''}
+- Estado/Provincia: ${addr.admin_area_1 || addr.state || ''}
+- Código Postal: ${addr.postal_code || ''}
+- País: ${addr.country_code || ''}
+` : 'NO REQUIERE ENVÍO FÍSICO (Servicios)';
+
+        const bodyMsg = `
+¡NUEVO PAGO CONFIRMADO EN MYOOZ INC!
+========================================
+ID de Transacción PayPal: ${payload.transactionId}
+Total Pagado: $${payload.total} USD
+
+CLIENTE:
+- Nombre: ${payload.payer.name}
+- Email: ${payload.payer.email}
+
+${shippingDetails}
+
+PRODUCTOS / SERVICIOS CONTRATADOS:
+${itemsList}
+
+Fecha: ${new Date().toLocaleString()}
+========================================
+`;
+
+        await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                access_key: 'b91241a6-e5bd-482b-b19b-7d1f707121fa',
+                subject: `💰 ¡NUEVO PEDIDO PAGADO! - $${payload.total} USD - ${payload.payer.name}`,
+                from_name: 'MYOOZ InC Tienda',
+                message: bodyMsg
+            })
+        });
+    } catch (e) {
+        console.error('Error enviando notificación de respaldo:', e);
+    }
+}
+
+// Inicialización Global
 window.addEventListener('load', () => {
     updateCartUI();
 });
 
-window.addEventListener('pageshow', (event) => {
+window.addEventListener('pageshow', () => {
     const btn = document.getElementById('checkout-continue-btn');
     if (btn) {
         btn.innerText = 'PAGAR';

@@ -22,6 +22,11 @@
                 <span id="cart-total-display">$0.00</span>
             </div>
 
-            <button id="checkout-continue-btn" class="add-to-cart-btn" style="margin-top: 1.5rem; width: 100%; padding: 16px; font-size: 1rem; cursor:pointer;" data-action="checkout">PAGAR</button>
+            <!-- PayPal Smart Buttons Container -->
+            <div id="paypal-button-container" style="width: 100%; min-height: 48px; margin-top: 1rem;"></div>
+
+            <!-- Botón de Respaldo / Estado -->
+            <button id="checkout-continue-btn" class="add-to-cart-btn" style="margin-top: 1rem; width: 100%; padding: 16px; font-size: 1rem; cursor:pointer; display:none;" data-action="checkout">PAGAR</button>
+            <div id="order-status-msg" style="display:none; font-size: 0.85rem; text-align: center; color: var(--purple-glow); margin-top: 0.8rem;"></div>
         </div>
     </div>
