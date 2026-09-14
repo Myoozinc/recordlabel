@@ -1,8 +1,8 @@
 // Shared Cart Management for MYOOZ InC
 // Pagos Directos con PayPal Business + Pedidos a Printful + Notificaciones
 
-// Credencial de PayPal Business (Modo Sandbox 'sb' por defecto, cámbialo por tu Client ID en vivo)
-const PAYPAL_CLIENT_ID = 'sb';
+// Credencial de PayPal Business (Modo En Vivo)
+const PAYPAL_CLIENT_ID = 'BAAbCe7Zx61uFdJGTQWbOSlYgdDKBL8r4Q-G3eUOjZ1GpqaVkm4c4LQRsqKHJBXUzrGiNmd207OkgiAyPg';
 
 let cart = JSON.parse(localStorage.getItem('myooz_cart')) || [];
 let paypalButtonsRendered = false;
